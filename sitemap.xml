@@ -2,22 +2,22 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <sitemap>
-        <loc>http://yoursite-url/post-sitemap.xml</loc>
+        <loc>http://yoursite.com/post-sitemap.xml</loc>
         <lastmod>2018-01-12T15:12:37.623Z</lastmod>
     </sitemap>
 
     <sitemap>
-        <loc>http://yoursite-url/page-sitemap.xml</loc>
+        <loc>http://yoursite.com/page-sitemap.xml</loc>
         <lastmod>2018-01-09T09:55:23.247Z</lastmod>
     </sitemap>
 
     <sitemap>
-        <loc>http://yoursite-url/category-sitemap.xml</loc>
+        <loc>http://yoursite.com/category-sitemap.xml</loc>
         <lastmod>2018-01-12T15:12:37.623Z</lastmod>
     </sitemap>
 
     <sitemap>
-        <loc>http://yoursite-url/tag-sitemap.xml</loc>
+        <loc>http://yoursite.com/tag-sitemap.xml</loc>
         <lastmod>2018-01-12T15:12:37.623Z</lastmod>
     </sitemap>
 
