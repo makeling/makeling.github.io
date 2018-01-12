@@ -146,6 +146,13 @@
 
                         
                         <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/archive/">Archives</a>
                         </li>
                         
@@ -154,13 +161,6 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -300,7 +300,7 @@
 <p>这里我只举一个例子，将keytab通过scp命令从hadoop01服务器拷贝到hadoop03,牢记这个keytab需要在所有客户端和服务器端分发和保密：</p>
 <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop<span class="number">03</span> krb<span class="number">5</span>kdc]<span class="attr"># scp root@hadoop01</span>:/var/kerberos/krb<span class="number">5</span>kdc/kad<span class="name">m5.</span>keytab /var/kerberos/krb<span class="number">5</span>kdc/kad<span class="name">m5.</span>keytab</span><br><span class="line">kad<span class="name">m5.</span>keytab                                  <span class="number">100</span><span class="meta">%</span> <span class="number">1220</span>     <span class="number">2.1</span>MB/s   <span class="number">00</span>:<span class="number">00</span></span><br></pre></td></tr></table></figure>
 <h6><span id="44验证免密登陆">4.4）验证免密登陆：</span></h6>
-<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop03 krb5kdc]# kinit -kt /var/kerberos/krb5kdc/kadm5.keytab makl/admin@ESRICHINA.COM</span><br><span class="line">[root@hadoop03 krb5kdc]# kadmin -kt /var/kerberos/krb5kdc/kadm5.keytab -p makl/admin@ESRICHINA.COM</span><br><span class="line">Authenticating <span class="keyword">as</span> principal makl/admin@ESRICHINA.COM <span class="keyword">with</span> keytab /var/kerberos/krb5kdc/kadm5.keytab.</span><br><span class="line">kadmin:   </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">&gt;提示：kadmin 命令中在输入principal之前，有一个-p 标识符，和kinit命令规则并不同，如果你忽略了，就可能遭遇登陆失败。</span><br><span class="line"></span><br><span class="line">最后，简单总结几个常用的kerberos命令。</span><br><span class="line"></span><br><span class="line">#### <span class="number">5</span> 常用kerberos 命令  </span><br><span class="line"></span><br><span class="line">##### <span class="number">1</span>）退出kadmin</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop03 krb5kdc]# kinit -kt /var/kerberos/krb5kdc/kadm5.keytab makl/admin@ESRICHINA.COM</span><br><span class="line">[root@hadoop03 krb5kdc]# kadmin -kt /var/kerberos/krb5kdc/kadm5.keytab -p makl/admin@ESRICHINA.COM</span><br><span class="line">Authenticating <span class="keyword">as</span> principal makl/admin@ESRICHINA.COM <span class="keyword">with</span> keytab /var/kerberos/krb5kdc/kadm5.keytab.</span><br><span class="line">kadmin:   </span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">&gt;提示：kadmin 命令中在输入principal之前，有一个-p 标识符，和kinit命令规则并不同，如果你忽略了，就可能遭遇登陆失败。</span><br><span class="line"></span><br><span class="line">最后，简单总结几个常用的kerberos命令。  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### <span class="number">5</span> 常用kerberos 命令  </span><br><span class="line"></span><br><span class="line">##### <span class="number">1</span>）退出kadmin</span><br></pre></td></tr></table></figure>
 <p>kadmin:  exit</p>
 <figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">##### <span class="number">2</span>）删除当前认证缓存</span><br></pre></td></tr></table></figure>
 <p>[root@hadoop03 krb5kdc]# kdestroy</p>
