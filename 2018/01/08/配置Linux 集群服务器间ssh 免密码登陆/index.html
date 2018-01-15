@@ -230,16 +230,23 @@
 <p>在hadoop01服务器上通过ssh 免密访问hadoop02和hadoop03服务器。可以理解为hadoop01服务器作为ssh客户端，远程访问hadoop02和hadoop03，那hadoop02和hadoop03相当于ssh服务器端。</p>
 <h2><span id="配置过程">配置过程</span></h2>
 <h3><span id="1安装openssh">1，安装openssh</span></h3>
-<p>- 在所有机器上安装ssh客户端</p>
+<ul>
+<li>在所有机器上安装ssh客户端</li>
+</ul>
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> ~]<span class="meta">#  yum -y install openssh-clients  </span></span><br><span class="line">[root<span class="symbol">@hadoop02</span> ~]<span class="meta">#  yum -y install openssh-clients  </span></span><br><span class="line">[root<span class="symbol">@hadoop03</span> ~]<span class="meta">#  yum -y install openssh-clients</span></span><br></pre></td></tr></table></figure>
 <p>*客户端必须装，否则后面没办法使用scp命令传输文件。</p>
-<p>-在hadoop02，hadoop03上安装ssh服务器端，并启动ssh服务</p>
+<ul>
+<li>在hadoop02，hadoop03上安装ssh服务器端，并启动ssh服务</li>
+</ul>
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop02</span> ~]<span class="meta"># yum instsll openssh-server</span></span><br><span class="line">[root<span class="symbol">@hadoop03</span> ~]<span class="meta"># yum instsll openssh-server</span></span><br></pre></td></tr></table></figure>
-<p>-修改sshd_config 允许root用户登陆</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop02 .ssh]<span class="comment"># vim /etc/ssh/sshd_config</span></span><br><span class="line">PermitRootLogin <span class="literal">yes</span></span><br><span class="line">[root@hadoop03 .ssh]<span class="comment"># vim /etc/ssh/sshd_config</span></span><br><span class="line">PermitRootLogin <span class="literal">yes</span></span><br><span class="line">```<span class="javascript">  </span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">-启动ssd服务</span></span><br></pre></td></tr></table></figure>
-<p>[root@hadoop02 ~]# systemctl restart sshd<br>
-[root@hadoop03 ~]# systemctl restart sshd</p>
-<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">### 2, 在客户端服务器hadoop01上创建公钥和私钥</span></span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line">[root<span class="meta">@hadoop01</span> /]<span class="comment"># ssh-keygen -t rsa                                          *1</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/root/.ssh/id_rsa):  test_rsa    <span class="symbol">*</span>2</span><br><span class="line">Enter passphrase (empty for no passphrase):                              <span class="symbol">*</span>3</span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved in /root/.ssh/test_rsa.            <span class="symbol">*</span>4</span><br><span class="line">Your public key has been saved in /root/.ssh/test_rsa.pub.          <span class="symbol">*</span>5</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:6QdVD4E2S6x0O/PJ6NhciuQ03BaXm4o4luD1zIeJ6D0 [root<span class="meta">@hadoop01.esrichina.com](mailto:root</span><span class="meta">@hadoop01.esrichina.com)</span>               <span class="symbol">*</span>6</span><br><span class="line">The key's randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|<span class="string">         . .+.   </span>|</span><br><span class="line">|<span class="string">        . B. o   </span>|</span><br><span class="line">|<span class="string">       . =.+ ..  </span>|</span><br><span class="line">|<span class="string">        .o* o    </span>|</span><br><span class="line">|<span class="string">       .S. O +   </span>|</span><br><span class="line">|<span class="string">    . ..=.+ B    </span>|</span><br><span class="line">|<span class="string">   . + @.%.+     </span>|</span><br><span class="line">|<span class="string">    o.E @.B      </span>|</span><br><span class="line">|<span class="string">   ....o .       </span>|</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改sshd_config 允许root用户登陆</li>
+</ul>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop02 .ssh]<span class="comment"># vim /etc/ssh/sshd_config</span></span><br><span class="line">PermitRootLogin <span class="literal">yes</span></span><br><span class="line">[root@hadoop03 .ssh]<span class="comment"># vim /etc/ssh/sshd_config</span></span><br><span class="line">PermitRootLogin <span class="literal">yes</span></span><br></pre></td></tr></table></figure>
+<p>-启动ssd服务</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop02</span> ~]<span class="meta"># systemctl restart sshd</span></span><br><span class="line">[root<span class="symbol">@hadoop03</span> ~]<span class="meta"># systemctl restart sshd</span></span><br></pre></td></tr></table></figure>
+<h3><span id="2-在客户端服务器hadoop01上创建公钥和私钥">2, 在客户端服务器hadoop01上创建公钥和私钥</span></h3>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="meta">@hadoop01</span> /]<span class="comment"># ssh-keygen -t rsa                                          *1</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/root/.ssh/id_rsa):  test_rsa    <span class="symbol">*</span>2</span><br><span class="line">Enter passphrase (empty for no passphrase):                              <span class="symbol">*</span>3</span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved in /root/.ssh/test_rsa.            <span class="symbol">*</span>4</span><br><span class="line">Your public key has been saved in /root/.ssh/test_rsa.pub.          <span class="symbol">*</span>5</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:6QdVD4E2S6x0O/PJ6NhciuQ03BaXm4o4luD1zIeJ6D0 [root<span class="meta">@hadoop01.esrichina.com](mailto:root</span><span class="meta">@hadoop01.esrichina.com)</span>               <span class="symbol">*</span>6</span><br><span class="line">The key's randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|<span class="string">         . .+.   </span>|</span><br><span class="line">|<span class="string">        . B. o   </span>|</span><br><span class="line">|<span class="string">       . =.+ ..  </span>|</span><br><span class="line">|<span class="string">        .o* o    </span>|</span><br><span class="line">|<span class="string">       .S. O +   </span>|</span><br><span class="line">|<span class="string">    . ..=.+ B    </span>|</span><br><span class="line">|<span class="string">   . + @.%.+     </span>|</span><br><span class="line">|<span class="string">    o.E @.B      </span>|</span><br><span class="line">|<span class="string">   ....o .       </span>|</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure>
 <p>*1: ssh-keygen是用来生成密钥的工具， 参数-t rsa用来指明生成的密钥以rsa加密公钥算法加密。</p>
 <p><strong>加餐</strong>：RSA<a href="https://baike.baidu.com/item/%E5%85%AC%E9%92%A5" target="_blank" rel="noopener">公钥</a><a href="https://baike.baidu.com/item/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">加密算法</a>是1977年由<a href="https://baike.baidu.com/item/%E7%BD%97%E7%BA%B3%E5%BE%B7%C2%B7%E6%9D%8E%E7%BB%B4%E6%96%AF%E7%89%B9" target="_blank" rel="noopener">罗纳德·李维斯特</a>（Ron Rivest）、<a href="https://baike.baidu.com/item/%E9%98%BF%E8%BF%AA%C2%B7%E8%90%A8%E8%8E%AB%E5%B0%94" target="_blank" rel="noopener">阿迪·萨莫尔</a>（Adi Shamir）和<a href="https://baike.baidu.com/item/%E4%BC%A6%E7%BA%B3%E5%BE%B7%C2%B7%E9%98%BF%E5%BE%B7%E6%9B%BC" target="_blank" rel="noopener">伦纳德·阿德曼</a>（Leonard Adleman）一起提出的。1987年7月首次在美国公布，当时他们三人都在麻省理工学院工作实习。RSA就是他们三人姓氏开头字母拼在一起组成的。</p>
 <p>*2: 这一行提示密钥会默认生成到 /root/.ssh/id_rsa文件中，这个规则是和当前执行keygen的用户挂钩的，默认会在当前用户的主目录下创建.ssh的隐藏文件夹，密钥文件就被保存到这个文件夹下。如果没有特别的要求，可以不必输入新的文件，保留默认值就好。</p>
@@ -263,9 +270,9 @@
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> .ssh]<span class="meta"># vim config</span></span><br></pre></td></tr></table></figure>
 <p>在打开的文件中填入：</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Host hadoop02.esrichina.com                  <span class="number">*1</span></span><br><span class="line">​        IdentityFile ~/.ssh/test_rsa         <span class="number">*2</span></span><br><span class="line">​       <span class="built_in"> User </span>root                            <span class="number">*3</span></span><br></pre></td></tr></table></figure>
-<p>*1：指定要连接的ssh server的host name;</p>
-<p>*2: 配置IdentityFile，指定配对的私钥；</p>
-<p>*3: 设置登录ssh server的用户</p>
+<p>*1：指定要连接的ssh server的host name;<br>
+*2: 配置IdentityFile，指定配对的私钥；<br>
+*3: 设置登录ssh server的用户</p>
 
                 
 
@@ -299,6 +306,17 @@
             
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">理解SSH</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">准备测试环境</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">配置过程</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">1，安装openssh</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">2, 在客户端服务器hadoop01上创建公钥和私钥</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">3，上传客户端公钥到ssh服务器端</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">4，将公钥复制到authorized_keys</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">5，验证成果</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.6.</span> <span class="toc-nav-text">6，坑</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
 
                 
             <!-- Sidebar Container -->
@@ -376,7 +394,7 @@
         anchors.options = {
           visible: 'hover',
           placement: 'left',
-          icon: 'ℬ'
+          icon: '💡'
         };
         anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
     })
@@ -436,11 +454,11 @@
                 <p class="copyright text-muted">
                     Copyright &copy; Keling Ma 2018 
                     <br>
-                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    Customized by <a href="https://makeling.github.io">UbuntuSpace</a> |
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
                         frameborder="0" scrolling="0" width="91px" height="20px"
