@@ -213,6 +213,41 @@
 
 <div class="post-preview">
 
+    <a href="/2018/01/09/CustomTianDiTuLayerV100.2示范工程/">
+        <h2 class="post-title">
+            CustomTianDiTuLayerV100.x示范工程
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            概览
+这个示例是为了解决如何基于ArcGIS Runtime SDK for iOS 100.x，通过客户化图层访问天地图WMTS服务。这个Demo包含Swift和ObjC两种语言的实现，基于Xcode8.2版本开发，支持iOS9以上的系统部署。
+说明
+工程中包含的TianDiTuLayer，是用于访问天地图服务的自定义图层。TianDiTuLayerInfo封装了天地图wmts服务的缓存s......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Keling Ma on
+            2018-01-09
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+            
+              <a href="/tags/#iOS" title="iOS">iOS</a>
+            
+              <a href="/tags/#Demo" title="Demo">Demo</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/01/08/配置Linux 集群服务器间ssh 免密码登陆/">
         <h2 class="post-title">
             配置Linux集群服务器间ssh免密码登陆
@@ -276,12 +311,257 @@ Internet是一个非常不安全的地方。在Internet中使用的很多协议�
 </div>
 <hr>
 
+<div class="post-preview">
+
+    <a href="/2017/12/18/如何为windows文件共享开启“盘符$”访问权限/">
+        <h2 class="post-title">
+            如何为windows 文件共享开启”盘符$”访问权限
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            [问题描述]
+通过samba远程更新服务器资源，如果需要使用c$, d$类似这种盘符的共享接口，可能会遇到“拒绝访问”的错误。
+
+￼
+[问题分析]
+导致问题出现的原因是微软系统默认开启了一个非常小众的安全策略叫做“UAC 远程限制”，它会为本地用户账户或Windows账户过滤访问token. 这将限制局域网内用户以管理员用户通过“盘符$”的方式访问共享目录。
+[解决办法]
+在运行中，输入re......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Keling Ma on
+            2017-12-18
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#OS" title="OS">OS</a>
+            
+              <a href="/tags/#Windows" title="Windows">Windows</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/08/04/解除hosting Server和Data Store的注册关系/">
+        <h2 class="post-title">
+            解除Hosting Server和Data Store的注册关系
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            在ArcGIS Enterprise的部署中，每一个ArcGIS Data Store安装后都需要注册ArcGIS Server，建立和站点的联系，这个过程中DataStore完成了建库（可能是关系型数据库，可能是切片缓存库，也可能是时空大数据库），Server从普通的ArcGIS Server升级为hosting Server。建立关系的过程很美好，但是总有那么一个理由，需要我们解除关系来......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Keling Ma on
+            2017-08-04
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+            
+              <a href="/tags/#Enterprise" title="Enterprise">Enterprise</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/07/27/ArcGIS 时空大数据库的备份与恢复/">
+        <h2 class="post-title">
+            ArcGIS时空大数据库的备份与恢复
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            在ArcGIS Enterprise 产品中最闪亮的特性之一就是支持时空大数据的分析和展示。时空大数据在整个平台中存储在ArcGIS Datastore 的时空大数据库（spatiotemporal datastore）中。这个时空大数据库是否安全？是否能应对各种可能出现的比如数据库崩溃，系统崩溃等等意外？如果因为项目需要，想从一台服务器上迁移时空大数据库到另外一台服务器上，数据该如何迁移？......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Keling Ma on
+            2017-07-27
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+            
+              <a href="/tags/#Enterprise" title="Enterprise">Enterprise</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/07/25/通过python自动化修正矢量切片符号和标注压盖问题/">
+        <h2 class="post-title">
+            通过python自动化修正矢量切片符号和标注压盖问题
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            通过Pro2.0生成矢量切片时，我们会发现针对点图层，生成的矢量切片在绘制时会出现标注略微压盖符号的现象。
+
+问题分析
+这个问题可以说是现行版本中矢量切片拾取Pro制图参数之间存在一定的技术缺陷引起的，毕竟矢量切片技术遵从的是Mapbox style 规范来绘制地图和Pro中的制图规则并不完全一致，官方预计在未来版本中会针对这个问题增强修复。
+规避方案
+矢量切片最大的优势之一就是可以基于现有......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Keling Ma on
+            2017-07-25
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+            
+              <a href="/tags/#VectorTiles" title="VectorTiles">VectorTiles</a>
+            
+              <a href="/tags/#python" title="python">python</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/07/19/CustomLocationDataSourceV100.0-ObjC示范工程/">
+        <h2 class="post-title">
+            CustomLocationDataSourceV100.x-ObjC示范工程
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            概览
+在使用ArcGIS Runtime SDK for iOS 100.0开发iOS地图应用时，我们经常会碰到iphone定位的位置信息，在底图上显示位置不正确的情况。导致这一结果的原因，可能是由于安全原因，底图进行了算法偏移，也可能是因为底图本身就是自定义坐标系。解决这一问题，可以通过自定义位置数据源来实现，在自定义数据源中通过算法来调整设备获取的位置坐标。这个工程演示了基于ArcGIS......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Keling Ma on
+            2017-07-19
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+            
+              <a href="/tags/#iOS" title="iOS">iOS</a>
+            
+              <a href="/tags/#Demo" title="Demo">Demo</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/03/16/arcgis_runtime_sdk_100.0.0_loadable设计模式剖析/">
+        <h2 class="post-title">
+            ArcGIS Runtime SDK 100.x Loadable设计模式剖析
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            在基于ArcGIS SDK开发的各平台地图应用中，都会涉及到很多资源型对象，比如基于远程服务的layers, maps, portal items和tasks，基于离线地图的offline geodatabase, Mobile map package等对象。
+参照帮助文档中的样例，可能很多ArcGIS开发者都知道如何初始化一个Map, 如何在Map中添加Layer，如何将一个portal中......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Keling Ma on
+            2017-03-16
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+            
+              <a href="/tags/#iOS" title="iOS">iOS</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/03/15/修复iOS Xcode 8 Error 01/">
+        <h2 class="post-title">
+            修复iOS Xcode 8 Error : Protocol not available, dumping backtrace[duplicate]
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            在基于Xcode8.2新建工程时，可能会碰到如下错误：
+
+修复办法：
+
+
+在Xcode 菜单中，选择Product &gt; Scheme &gt; Edit Scheme
+
+
+添加环境变量：OS_ACTIVITY_MODE 值为 disable
+
+
+
+
+点击Close按钮，关闭窗口后，重新运行工程，你会发现错误解除。
+
+...
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Keling Ma on
+            2017-03-15
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#iOS" title="iOS">iOS</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
 
 
 <!-- Pager -->
 
 <ul class="pager">
     
+    
+        <li class="next">
+            <a href="/archives/2/">Older Posts &rarr;</a>
+        </li>
     
 </ul>
 
@@ -308,11 +588,35 @@ Internet是一个非常不安全的地方。在Internet中使用的很多协议�
     <div class="tags">
         
             
+            <a href="/tags/#ArcGIS" title="ArcGIS" rel="9">ArcGIS</a>
+            
+        
+            
+            <a href="/tags/#iOS" title="iOS" rel="6">iOS</a>
+            
+        
+            
+            <a href="/tags/#Demo" title="Demo" rel="3">Demo</a>
+            
+        
+            
+            <a href="/tags/#Enterprise" title="Enterprise" rel="2">Enterprise</a>
+            
+        
+            
             <a href="/tags/#security" title="security" rel="2">security</a>
             
         
             
             <a href="/tags/#bigdata" title="bigdata" rel="2">bigdata</a>
+            
+        
+            
+        
+            
+        
+            
+        
             
         
     </div>
@@ -376,11 +680,23 @@ Internet是一个非常不安全的地方。在Internet中使用的很多协议�
     <ul>
       
         <li>
+          <a href="/2018/01/09/CustomTianDiTuLayerV100.2示范工程/">CustomTianDiTuLayerV100.x示范工程</a>
+        </li>
+      
+        <li>
           <a href="/2018/01/08/配置Linux 集群服务器间ssh 免密码登陆/">配置Linux集群服务器间ssh免密码登陆</a>
         </li>
       
         <li>
           <a href="/2017/12/30/Kerberos 简单配置攻略/">Kerberos 简单配置攻略</a>
+        </li>
+      
+        <li>
+          <a href="/2017/12/18/如何为windows文件共享开启“盘符$”访问权限/">如何为windows 文件共享开启”盘符$”访问权限</a>
+        </li>
+      
+        <li>
+          <a href="/2017/08/04/解除hosting Server和Data Store的注册关系/">解除Hosting Server和Data Store的注册关系</a>
         </li>
       
     </ul>
@@ -391,7 +707,7 @@ Internet是一个非常不安全的地方。在Internet中使用的很多协议�
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li></ul>
     </div>
 
         <hr>
@@ -400,7 +716,7 @@ Internet是一个非常不安全的地方。在Internet中使用的很多协议�
 
     <h5>categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ArcGIS/">ArcGIS</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/OS/">OS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">1</span></li></ul>
     </div>
 
         <hr>
