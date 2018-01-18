@@ -73,14 +73,14 @@
 
     <url>
         <loc>http://yoursite.com/tags/quantum/</loc>
-        <lastmod>2018-01-18T12:19:58.678Z</lastmod>
+        <lastmod>2018-01-18T12:22:25.709Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite.com/tags/IBMQ/</loc>
-        <lastmod>2018-01-18T12:19:58.678Z</lastmod>
+        <lastmod>2018-01-18T12:22:25.709Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
