@@ -7,6 +7,13 @@
     </url>
 
     <url>
+        <loc>http://yoursite.com/categories/bigdata/</loc>
+        <lastmod>2018-01-15T13:05:09.141Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://yoursite.com/categories/OS/</loc>
         <lastmod>2018-01-15T13:45:53.740Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -28,8 +35,8 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/categories/bigdata/</loc>
-        <lastmod>2018-01-18T12:13:48.722Z</lastmod>
+        <loc>http://yoursite.com/categories/quantum-computing/</loc>
+        <lastmod>2018-01-18T12:19:58.678Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
