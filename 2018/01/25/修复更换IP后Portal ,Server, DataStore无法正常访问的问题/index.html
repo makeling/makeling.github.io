@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          认识量子比特世界 - UbuntuSpace | 分享空间
+          修复更换IP后Portal ,Server, DataStore无法正常访问的问题 - UbuntuSpace | 分享空间
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/2018/01/18/认识量子比特世界/">
+    <link rel="canonical" href="http://yoursite.com/2018/01/25/修复更换IP后Portal ,Server, DataStore无法正常访问的问题/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -90,16 +90,16 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#quantum" title="quantum">quantum</a>
+                              <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                             
-                              <a class="tag" href="/tags/#IBMQ" title="IBMQ">IBMQ</a>
+                              <a class="tag" href="/tags/#Enterprise" title="Enterprise">Enterprise</a>
                             
                         </div>
-                        <h1>认识量子比特世界</h1>
+                        <h1>修复更换IP后Portal ,Server, DataStore无法正常访问的问题</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Keling Ma on
-                            2018-01-18
+                            2018-01-25
                         </span>
                     </div>
                 
@@ -216,24 +216,23 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>几年前第一次接触到量子力学，就被量子世界的奇幻和诡异深深吸引。虽然它看上去和我们精确度量的科学世界那么格格不入，甚至连伟大的爱因斯坦都为其困扰终生，但是它却用实践一遍遍告诉我们“我才是真理，我才是物质本质”。</p>
-<p>我们目前正在以前所未有的加速度驶向未来，量子计算机作为注定在未来世界大展拳脚的黑科技，已经离我们越来越近，2018年1月IBM重磅发布了基于python的量子计算API，让研究者和我这样的好奇体验者有机会实战下基于量子计算机的编程，在动手编程前，让我们先一起通过IBM Q体验下量子比特世界。</p>
-<p>量子比特（qubit）是一种由两个能量级组成的量子系统，通过 |0⟩和|1⟩表达。这两个符号设计的真是非常传神，你是否感受到了它们就像在亚原子世界不断震动的微观粒子？其中 |0⟩态通常被称作ground态（不知道翻译成中文准确的表达），因为它是两个能量级中更低的一个。 |0⟩和|1⟩一起，组成“标准基向量”。就像数学中的向量一样，它们指向一个方向，并拥有大小。定义基向量是从线性代数借鉴的非常有用的技巧。基本思想是一旦定义了这些向量，就可以从基向量的各种线性组合中构造出其它向量。</p>
-<p>除此之外，量子比特也有“相位”的概念，它的结果来自叠加态可能相当复杂的事实。为了表达叠加态，可以采用状态|0⟩和|1⟩的线性组合的方式，即：a|0⟩+b|1⟩。两种状态的比重由系数a和b决定。系数a和b可能是正数，负数甚至复数。如果采用a和b绝对值的平方，我们就获得了分别测得0或1结果的可能。</p>
-<p>基准状态|0⟩和|1⟩以及它们的线性组合a|0⟩  + b|1⟩描述了单个量子比特的状态。但是由于系数a和b不仅可以为实数，也可能是虚数或复数，可视化一个量子比特需要一种特殊的工具叫做布洛赫球面（Bloch sphere）。</p>
+                <h2><span id="问题场景">问题场景：</span></h2>
+<p>最近有多位同事反应，在单位用的好好的ArcGIS平台环境，到了家里就挂了，回到单位，所有产品又会神奇般的恢复正常，这个问题让人非常痛苦，原来计划好好的回家加班计划全部泡汤，各种折腾后依然无法修复。</p>
+<p>病症：出问题的症状是Portal home主页进去后显示空白。Server admin页面可以成功访问。datastore从日志中可以看到端口无法连接成功。</p>
+<p>Portal 日志中的报错信息：<br>
+The portal has been initialized and configured but is not accessible. The internal portal database does not appear to be running or accepting connections.</p>
+<h2><span id="分析原因">分析原因：</span></h2>
+<p>在datastore的配置文件中包含一个hostidentifier.properties文件，这个文件用来识别host身份，如果不做任何配置，默认是使用了ip地址进行连接。在更换网络环境后，由于IP地址发生了变动，导致datastore的连接失败。</p>
+<h2><span id="解决办法">解决办法：</span></h2>
+<p>解决这个问题很简单，就是通过hostidentifier.properties文件，将主机名作为身份标识，这样怎么更换网络环境都不会有问题啦。</p>
+<p>通过记事本打开C:\Program Files\ArcGIS\DataStore\framework\etc\hostidentifier.properties文件，参照下图方式修改，“<a href="http://120win105.esrichina.com" target="_blank" rel="noopener">120win105.esrichina.com</a>”是我的服务器全域名，你需要替换为自己的主机全域名。</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/repair-portal-change-ip.png" alt="change-portal-ip"></p>
 <blockquote>
-<p>在量子机制中，布洛赫球面是一种对两个能级量子力学系统（qubit）中纯态空间的几何表达，这个名字以已故自旋物理与核磁共振专家Felix Bloch的姓氏命名。费利克斯·布洛赫（德語：Felix Bloch，1905年10月23日－1983年9月10日），瑞士物理学家，1952年诺贝尔物理学奖获得者。</p>
+<p>注意：</p>
 </blockquote>
-<p>布洛赫球面通过半径和半径指向球面的点来表达量子比特的状态。 就像地球使用经纬度描述地表的点一样，布洛赫球面也可以使用角度描述量子比特的状态。这种表达允许任意量子态，包括那些复数系数的量子态都可以以点的形式表现在布洛赫球面上。布洛赫球面的点依赖于X,Y,Z轴，相应的表达如下图：</p>
-<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/bloch-sphere.png" alt="bloch-sphere"></p>
-<p>图中橘色的线表达了量子态，|0⟩和|1⟩分别位于球体的两级。当量子比特处于|0⟩和|1⟩的叠加态时，向量会指向球体两级之间的某点（例如图中 θ角在0（垂直向上）-180度（垂直向下）之间，这个值也可以用π 弧度表达。注意，在弧度中，1/4是指 π /2)。</p>
-<p>布洛赫球面中还有基于球体的另外一个自由度：围绕Z轴旋转，可以通过角ϕ描述。当ϕ非零时，指示了量子比特相位的改变。布洛赫球面仅仅描述了单量子比特的表达。使用这种图的目的是为了假设布洛赫向量的长度等于布洛赫球面的半径。</p>
-<p>参考文献：</p>
 <ul>
-<li>
-<p><a href="https://quantumexperience.ng.bluemix.net/qx/tutorial?sectionId=beginners-guide&amp;page=004-The_Weird_and_Wonderful_World_of_the_Qubit~2F001-The_Weird_and_Wonderful_World_of_the_Qubit" target="_blank" rel="noopener">IBM Q Guide: The Weird and Wonderful World of the Qubit</a></p>
-<p>​</p>
-</li>
+<li>更换网络环境后，Enterprise还是有很多内部配置要自动化更新，所以可能会出现服务启动较慢的情况，需要耐心等待。</li>
+<li>更换环境后建议按照datastore, server, portal的顺序启动服务。</li>
 </ul>
 
                 
@@ -242,13 +241,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2018/01/25/修复更换IP后Portal ,Server, DataStore无法正常访问的问题/" data-toggle="tooltip" data-placement="top" title="修复更换IP后Portal ,Server, DataStore无法正常访问的问题">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2018/01/09/CustomTianDiTuLayerV100.2示范工程/" data-toggle="tooltip" data-placement="top" title="CustomTianDiTuLayerV100.x示范工程">Next Post &rarr;</a>
+                            <a href="/2018/01/18/认识量子比特世界/" data-toggle="tooltip" data-placement="top" title="认识量子比特世界">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -287,9 +282,9 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#quantum" title="quantum">quantum</a>
+                          <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                         
-                          <a class="tag" href="/tags/#IBMQ" title="IBMQ">IBMQ</a>
+                          <a class="tag" href="/tags/#Enterprise" title="Enterprise">Enterprise</a>
                         
                     </div>
                 </section>
@@ -318,8 +313,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite.com/2018/01/18/认识量子比特世界/";
-    var disqus_url = "http://yoursite.com/2018/01/18/认识量子比特世界/";
+    var disqus_identifier = "http://yoursite.com/2018/01/25/修复更换IP后Portal ,Server, DataStore无法正常访问的问题/";
+    var disqus_url = "http://yoursite.com/2018/01/25/修复更换IP后Portal ,Server, DataStore无法正常访问的问题/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

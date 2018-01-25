@@ -2,20 +2,6 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>http://yoursite.com/tags/security/</loc>
-        <lastmod>2018-01-15T13:05:09.141Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/bigdata/</loc>
-        <lastmod>2018-01-15T13:05:09.141Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite.com/tags/OS/</loc>
         <lastmod>2018-01-15T13:45:53.740Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -44,13 +30,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/Enterprise/</loc>
-        <lastmod>2018-01-15T14:26:52.654Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite.com/tags/iOS/</loc>
         <lastmod>2018-01-15T14:28:38.268Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -65,13 +44,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/ArcGIS/</loc>
-        <lastmod>2018-01-18T12:38:10.613Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite.com/tags/quantum/</loc>
         <lastmod>2018-01-18T12:38:30.476Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -81,6 +53,34 @@
     <url>
         <loc>http://yoursite.com/tags/IBMQ/</loc>
         <lastmod>2018-01-18T12:38:30.476Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/security/</loc>
+        <lastmod>2018-01-19T03:29:08.226Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/bigdata/</loc>
+        <lastmod>2018-01-19T03:29:08.226Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/ArcGIS/</loc>
+        <lastmod>2018-01-25T03:50:38.732Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/Enterprise/</loc>
+        <lastmod>2018-01-25T03:50:38.732Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
