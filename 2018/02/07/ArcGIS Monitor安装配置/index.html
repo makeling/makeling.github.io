@@ -240,10 +240,10 @@
 <li>Email: 需要一个email邮箱，用来发送告警信息。</li>
 </ul>
 <h2><span id="安装实践">安装实践</span></h2>
-<h3><span id="本次安装的测试环境">本次安装的测试环境</span></h3>
-<p>1 硬件：基于VMWare虚拟机，16G内存/4核CPU<br>
-2 操作系统：Windows Server 2008 R2 Standard SP1<br>
-3 软件：</p>
+<h3><span id="测试环境">测试环境</span></h3>
+<p>1，硬件：基于VMWare虚拟机，16G内存/4核CPU<br>
+2， 操作系统：Windows Server 2008 R2 Standard SP1<br>
+3， 软件：</p>
 <ul>
 <li>mongodb-win32-x86_64-2008plus-ssl-3.6.2-signed.msi</li>
 <li>dotnetfx45_full_x86_x64.exe</li>
@@ -251,9 +251,9 @@
 </ul>
 <p>ArcGIS Monitor需要依赖MongoDB来存储监控数据，因此对ArcGIS Monitor的使用首先要安装MongoDB。</p>
 <h3><span id="安装mongodb">安装MongoDB</span></h3>
-<p>1 直接双击运行mongodb-win32-x86_64-2008plus-ssl-3.6.2-signed.msi,按照提示，一路next到安装完成。默认会安装到c:\Program Files\MongoDB\Server\3.6。<br>
-2 创建用于保存数据和日志的目录：d:\mongo_db。</p>
-<h3><span id="安装net-framework-45"> Framework 4.5</span></h3>
+<p>1，直接双击运行mongodb-win32-x86_64-2008plus-ssl-3.6.2-signed.msi,按照提示，一路next到安装完成。默认会安装到c:\Program Files\MongoDB\Server\3.6。<br>
+2，创建用于保存数据和日志的目录：d:\mongo_db。</p>
+<h3><span id="安装-net-framework-45">安装 .Net Framework 4.5</span></h3>
 <p>.Net Framework 4.5是安装Monitor的前提，从微软官网下载相应的安装包，双击安装即可。</p>
 <h3><span id="安装arcgis-monitor-106">安装ArcGIS Monitor 10.6</span></h3>
 <p>ArcGIS Monitor产品包含下面两个核心组件：</p>
@@ -262,7 +262,6 @@
 <li>ArcGIS Monitor Server - 用来显示矩阵和报告</li>
 </ul>
 <p>在这次的安装测试中，我会将所有组件部署到一台虚机中，在部署之前需要从Esri官方获取正版授权许可。</p>
-<h4><span id="安装过程">安装过程：</span></h4>
 <p>1，双击ArcGIS_Monitor_106_161880.exe, 安装包首先会在C:\Users\Administrator\Documents\ArcGIS 10.6\Monitor目录下解压。然后按照流程窗口提示顺次下一步，在Custom Setup窗口中可以看到即将安装的组件包括ArcGIS Monitor Administrator 和ArcGIS Monitor Server ，直接点击Next。<br>
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Components.png" alt="ArcGIS_Monitor_Components"></p>
 <p>2， 在主模块安装结束后，会提示激活许可，在授权向导中选择第三项，然后导入授权文件即可。<br>
@@ -281,10 +280,10 @@
 安装好后，打开浏览器，输入https://localhost:9443 (这个端口，要和后配置过程中指定的端口保持一致)。在用户名密码处输入Site\123456 ( 替换为你设置的密码)点击登陆。如果能看到以下界面，就说明安装成功啦。<br>
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Verify.png" alt="ArcGIS_Monitor_post_install"></p>
 <h2><span id="遇到的问题">遇到的问题</span></h2>
-<p>1，安装后无法通过浏览器https://localhost:9443登陆Monitor Server。<br>
-确认密码输入的没错，但是死活无法登陆Monitor。这可能是因为Monitor配置Mongo db存在冲突。因为最初安装好Mongo db后，按照Mongo的官方配置文档，我手动创建了mongod.cfg配置文件，并创建和启动了mongod服务。实践证明这是画蛇添足的操作。在Monitor安装中，只需要把Mongo db简单安装即可。</p>
-<p>2，后配置结束后，发现原来的配置的参数存在问题，无法修改。<br>
-这个问题，相信很多小伙伴儿也会碰到。一旦完成后配置，当我们通过开始-&gt;所有程序-&gt; ArcGIS Monitor -&gt; Server -&gt; ArcGIS Monitor Post Install 再次运行后配置程序时，会发现所有编辑项都灰化，处于无法编辑状态。<br>
+<p>1，安装后无法通过浏览器https://localhost:9443登陆Monitor Server。</p>
+<p>确认密码输入的没错，但是死活无法登陆Monitor。这可能是因为Monitor配置Mongo db存在冲突。因为最初安装好Mongo db后，按照Mongo的官方配置文档，我手动创建了mongod.cfg配置文件，并创建和启动了mongod服务。实践证明这是画蛇添足的操作。在Monitor安装中，只需要把Mongo db简单安装即可。</p>
+<p>2，后配置结束后，发现原来的配置的参数存在问题，无法修改。</p>
+<p>这个问题，相信很多小伙伴儿也会碰到。一旦完成后配置，当我们通过开始-&gt;所有程序-&gt; ArcGIS Monitor -&gt; Server -&gt; ArcGIS Monitor Post Install 再次运行后配置程序时，会发现所有编辑项都灰化，处于无法编辑状态。<br>
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_post_install_repair.png" alt="ArcGIS_Monitor_post_install"></p>
 <p>解决办法：</p>
 <ul>
@@ -294,9 +293,9 @@
 </ul>
 <p>ArcGIS Monitor作为一个监控软件，简单安装好是不够的，为了驱动它顺利工作，还需要完成后续的针对ArcGIS Monitor Administrator的配置过程，这个过程我会在另外一篇文章中跟大家分享。</p>
 <p>参考资料：</p>
-<p>1 <a href="http://www.runoob.com/mongodb/mongodb-window-install.html" target="_blank" rel="noopener">Windows平台安装MongoDB</a><br>
-2 <a href="http://enterprise.arcgis.com/en/monitor/" target="_blank" rel="noopener">ArcGIS Monitor 官方帮助</a><br>
-3 <a href="http://enterprise.arcgis.com/en/monitor/latest/get-started/arcgis-monitor-system-requirements.htm" target="_blank" rel="noopener">ArcGIS Monitor 系统需求</a></p>
+<p>1， <a href="http://www.runoob.com/mongodb/mongodb-window-install.html" target="_blank" rel="noopener">Windows平台安装MongoDB</a><br>
+2， <a href="http://enterprise.arcgis.com/en/monitor/" target="_blank" rel="noopener">ArcGIS Monitor 官方帮助</a><br>
+3， <a href="http://enterprise.arcgis.com/en/monitor/latest/get-started/arcgis-monitor-system-requirements.htm" target="_blank" rel="noopener">ArcGIS Monitor 系统需求</a></p>
 
                 
 
@@ -336,7 +335,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">关键组件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">系统需求</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">安装实践</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">本次安装的测试环境</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">安装MongoDB</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text"> Framework 4.5</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">安装ArcGIS Monitor 10.6</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.4.1.</span> <span class="toc-nav-text">安装过程：</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">遇到的问题</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">关键组件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">系统需求</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">安装实践</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">测试环境</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">安装MongoDB</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">安装 .Net Framework 4.5</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">安装ArcGIS Monitor 10.6</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">遇到的问题</span></a></li></ol>
         
         </div>
       </aside>
