@@ -22,21 +22,21 @@
 
     <url>
         <loc>http://yoursite.com/categories/ArcGIS/</loc>
-        <lastmod>2018-02-07T06:06:47.699Z</lastmod>
+        <lastmod>2018-02-07T06:12:19.795Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite.com/categories/QuantumComputing/</loc>
-        <lastmod>2018-02-07T06:07:07.251Z</lastmod>
+        <lastmod>2018-02-07T06:12:30.675Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite.com/categories/bigdata/</loc>
-        <lastmod>2018-02-07T06:08:03.339Z</lastmod>
+        <lastmod>2018-02-07T06:13:00.942Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
