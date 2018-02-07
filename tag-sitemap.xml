@@ -51,57 +51,57 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/quantum/</loc>
-        <lastmod>2018-01-18T12:38:30.476Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/IBMQ/</loc>
-        <lastmod>2018-01-18T12:38:30.476Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/security/</loc>
-        <lastmod>2018-01-30T01:33:33.102Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/bigdata/</loc>
-        <lastmod>2018-01-30T01:33:33.102Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/hadoop/</loc>
-        <lastmod>2018-01-30T01:33:33.102Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/apache/</loc>
-        <lastmod>2018-01-30T01:33:33.102Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite.com/tags/ArcGIS/</loc>
-        <lastmod>2018-02-07T06:00:47.905Z</lastmod>
+        <lastmod>2018-02-07T06:06:47.699Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite.com/tags/Monitor/</loc>
-        <lastmod>2018-02-07T06:00:47.905Z</lastmod>
+        <lastmod>2018-02-07T06:06:47.699Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/quantum/</loc>
+        <lastmod>2018-02-07T06:07:07.251Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/IBMQ/</loc>
+        <lastmod>2018-02-07T06:07:07.251Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/security/</loc>
+        <lastmod>2018-02-07T06:08:03.339Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/bigdata/</loc>
+        <lastmod>2018-02-07T06:08:03.339Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/hadoop/</loc>
+        <lastmod>2018-02-07T06:08:03.339Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/apache/</loc>
+        <lastmod>2018-02-07T06:08:03.339Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
