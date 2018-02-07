@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          ArcGIS Monitor 10.6 安装入门 - UbuntuSpace | 分享空间
+          更换IP后Portal ,Server, DataStore无法正常访问 - UbuntuSpace | 分享空间
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/2018/02/07/ArcGIS Monitor安装配置/">
+    <link rel="canonical" href="http://yoursite.com/2018/02/08/修复更换IP后Portal ,Server, DataStore无法正常访问的问题/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -92,14 +92,14 @@
                             
                               <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                             
-                              <a class="tag" href="/tags/#Monitor" title="Monitor">Monitor</a>
+                              <a class="tag" href="/tags/#Enterprise" title="Enterprise">Enterprise</a>
                             
                         </div>
-                        <h1>ArcGIS Monitor 10.6 安装入门</h1>
+                        <h1>更换IP后Portal ,Server, DataStore无法正常访问</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Keling Ma on
-                            2018-02-07
+                            2018-02-08
                         </span>
                     </div>
                 
@@ -216,86 +216,33 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>随着ArcGIS 10.6版本的发布，Esri Enterprise家族又推出了重量级产品ArcGIS Monitor。这个产品主要用来监控和收集Enterprise平台各个维度的状态信息，紧急情况告警，以保障平台持续稳定的运行。</p>
-<h2><span id="关键组件">关键组件</span></h2>
-<p>ArcGIS Monitor 由以下关键组件构成：</p>
-<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Key_components.png" alt="ArcGIS_Monitor_Key_components"></p>
+                <h2><span id="问题场景">问题场景：</span></h2>
+<p>最近有多位同事反应，在单位用的好好的ArcGIS平台环境，到了家里就挂了，回到单位，所有产品又会神奇般的恢复正常，这个问题让人非常痛苦，原来计划好好的加班计划全部泡汤，各种折腾后依然无法修复，折腾坏了，最后只能重装全部软件。</p>
+<h3><span id="-病症">- 病症：</span></h3>
+<p>出问题的症状是Portal home主页进去后显示空白。Server admin页面可以成功访问。datastore从日志中可以看到端口无法连接成功。</p>
+<p>Portal 日志中的报错信息：<br>
+The portal has been initialized and configured but is not accessible. The internal portal database does not appear to be running or accepting connections.</p>
+<h2><span id="分析原因">分析原因：</span></h2>
+<p>datastore默认会使用IP地址来建立连接。当机器从单位到家，IP地址发生变更，如果Portal, Server ,Datastore的服务都设置为自动启动，那启动顺序可能随机，在datastore来不及更新到新IP时，portal可能就已经在启动时检测datastore的连接状态，就会导致启动失败，出现上述描述的症状。</p>
+<h2><span id="解决办法">解决办法：</span></h2>
+<p>针对这个问题，提供两种场景的解决办法。</p>
+<h3><span id="场景一临时修复故障">场景一：临时修复故障</span></h3>
+<p>如果已经在单位装好了全套的Enterprise环境，到家或者到用户现场，发生了上述产品无法使用的场景。那可以参照如下步骤修复：</p>
 <ul>
-<li>ArcGIS Monitor Administrator: 一个桌面工具，主要用来管理ArcGIS Monitor Server 和 ArcGIS Monitor services 和 counters， 以及性能管理任务。</li>
-<li>ArcGIS Monitor services: Windows 服务， 主要用于监控和记录系统矩阵，包括Enterprise GIS的状态，可用性，使用情况，系统性能和资源使用情况等等。</li>
-<li>ArcGIS Monitor Server: 基于web的仪表盘，支持查看告警，细节报告，针对各种时间区间可视化历史数据。</li>
-<li>ArcGIS Monitor Counter: 计数器，监控和记录各种数据。我们可以把Counter理解为针对不同方面的测量仪。在ArcGIS Monitor 中有很多种类型的Counter，从系统到进程，arcgis, http请求等各个维度进行监控。</li>
+<li>在Windows服务中手动停掉DataStore, Server, Portal的服务，停止的顺序无所谓；</li>
+<li>打开任务管理器，你会发现前面停止的服务并没有顺利回收所有 arcgis相关的进程，特别是postgresql的进程。这时候要识别出所有arcgis账户运行的进程，并手动结束这些进程。确保所有相关进程都清除干净。</li>
+<li>回到服务管理里，先启动DataStore的进程，这个过程可能会有点儿慢，因为DataStore会自动识别新的网络IP，并更新所有相关配置。可以通过监测任务管理器中的进程来判断Datastore进程是否启动完成。</li>
+<li>继续依次启动Server, Portal服务。</li>
 </ul>
-<p>这篇入门文章主要跟大家分享如何安装ArcGIS Monitor。</p>
-<h2><span id="系统需求">系统需求</span></h2>
-<p>ArcGIS Monitor包含了两大核心部分ArcGIS Monitor Administrator 和ArcGIS Monitor Server，可以单独安装在不同的机器上，安装的系统需求需要满足以下条件。</p>
-<ul>
-<li>操作系统： 目前仅支持Windows 64位主流操作系统，暂不支持Linux操作系统。</li>
-<li>硬件需求：Monitor Server需要4 核/16G内存的配置，另外每个monitor service需要2核/4GB内存的硬件资源。实际的硬件需求总量需要根据业务情况计算后获得。</li>
-<li>防火墙设置：默认，Monitor Server通过443端口通信，MongoDB基于27017端口通信。如果服务器上IIS已经占用了443端口，那需要选择不同的端口通信，例如9443端口。如果在注册表HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters中设置了MaxUserPort，需要将这个值设置为65534。Monitor Administrator基于端口7999，8000通信，并且为每一个monitor service添加了一个端口。要确保没有针对这些端口的其它监听，并且防火墙规则不会阻塞这些端口。</li>
-<li>用于Monitor Server的SSL 证书： Monitor Server预配置了自签名证书，主要用于满足测试需要。对于生产环境建议从CA申请受信任证书，或者是从组织颁发的域证书或CA签发的证书。</li>
-<li>Microsoft .NET Framework: 要求4.5以上版本。</li>
-<li>支持的浏览器：Chrome, Firefox, Internet Explorer 11, Microsoft Edge(必须使用全域名)。</li>
-<li>依赖的数据库： MongoDB 3.4.x 或3.6.x, 用于存储counters收集的数据。</li>
-<li>Email: 需要一个email邮箱，用来发送告警信息。</li>
-</ul>
-<h2><span id="安装实践">安装实践</span></h2>
-<h3><span id="测试环境">测试环境</span></h3>
-<p>1，硬件：基于VMWare虚拟机，16G内存/4核CPU<br>
-2， 操作系统：Windows Server 2008 R2 Standard SP1<br>
-3， 软件：</p>
-<ul>
-<li>mongodb-win32-x86_64-2008plus-ssl-3.6.2-signed.msi</li>
-<li>dotnetfx45_full_x86_x64.exe</li>
-<li>ArcGIS_Monitor_106_161880.exe</li>
-</ul>
-<p>ArcGIS Monitor需要依赖MongoDB来存储监控数据，因此对ArcGIS Monitor的使用首先要安装MongoDB。</p>
-<h3><span id="安装mongodb">安装MongoDB</span></h3>
-<p>1，直接双击运行mongodb-win32-x86_64-2008plus-ssl-3.6.2-signed.msi,按照提示，一路next到安装完成。默认会安装到c:\Program Files\MongoDB\Server\3.6。<br>
-2，创建用于保存数据和日志的目录：d:\mongo_db。</p>
-<h3><span id="安装-net-framework-45">安装 .Net Framework 4.5</span></h3>
-<p>.Net Framework 4.5是安装Monitor的前提，从微软官网下载相应的安装包，双击安装即可。</p>
-<h3><span id="安装arcgis-monitor-106">安装ArcGIS Monitor 10.6</span></h3>
-<p>ArcGIS Monitor产品包含下面两个核心组件：</p>
-<ul>
-<li>ArcGIS Monitor Administrator - 用来管理counters</li>
-<li>ArcGIS Monitor Server - 用来显示矩阵和报告</li>
-</ul>
-<p>在这次的安装测试中，我会将所有组件部署到一台虚机中，在部署之前需要从Esri官方获取正版授权许可。</p>
-<p>1，双击ArcGIS_Monitor_106_161880.exe, 安装包首先会在C:\Users\Administrator\Documents\ArcGIS 10.6\Monitor目录下解压。然后按照流程窗口提示顺次下一步，在Custom Setup窗口中可以看到即将安装的组件包括ArcGIS Monitor Administrator 和ArcGIS Monitor Server ，直接点击Next。<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Components.png" alt="ArcGIS_Monitor_Components"></p>
-<p>2， 在主模块安装结束后，会提示激活许可，在授权向导中选择第三项，然后导入授权文件即可。<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_monitor_authorization.png" alt="ArcGIS_monitor_authorization"></p>
-<p>3，ArcGIS Monitor 后配置：<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_post_install.png" alt="ArcGIS_Monitor_post_install"></p>
-<ul>
-<li>ArcGIS Monitor Server port : 如果443端口没有被占用，那保持默认就好, 建议修改为绝对不会和已有端口冲突的端口如9443。</li>
-<li>ArcGIS Monitor Server Email From： 需要配置实际可用的邮箱，这个邮箱将被用来发送告警信息。</li>
-<li>User Name: Site是默认的站点管理员，这个值不能修改。</li>
-<li>Password &amp; Confirm Password:   输入管理员密码，并牢记，后续需要这个密码来登陆ArcGIS Monitor。</li>
-<li>Mongo DB的配置：这部分需要配置Mongo的服务启动路径，端口和数据存放路径。</li>
-</ul>
-<p>做好上述配置后，点击Run Post Install完成后配置过程，这个操作会启动ArcGIS Monitor服务。</p>
-<p>4，检验安装成果<br>
-安装好后，打开浏览器，输入https://localhost:9443 (这个端口，要和后配置过程中指定的端口保持一致)。在用户名密码处输入Site\123456 ( 替换为你设置的密码)点击登陆。如果能看到以下界面，就说明安装成功啦。<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Verify.png" alt="ArcGIS_Monitor_post_install"></p>
-<h2><span id="遇到的问题">遇到的问题</span></h2>
-<p>1，安装后无法通过浏览器https://localhost:9443登陆Monitor Server。</p>
-<p>确认密码输入的没错，但是死活无法登陆Monitor。这可能是因为Monitor配置Mongo db存在冲突。因为最初安装好Mongo db后，按照Mongo的官方配置文档，我手动创建了mongod.cfg配置文件，并创建和启动了mongod服务。实践证明这是画蛇添足的操作。在Monitor安装中，只需要把Mongo db简单安装即可。</p>
-<p>2，后配置结束后，发现原来的配置的参数存在问题，无法修改。</p>
-<p>这个问题，相信很多小伙伴儿也会碰到。一旦完成后配置，当我们通过开始-&gt;所有程序-&gt; ArcGIS Monitor -&gt; Server -&gt; ArcGIS Monitor Post Install 再次运行后配置程序时，会发现所有编辑项都灰化，处于无法编辑状态。<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_post_install_repair.png" alt="ArcGIS_Monitor_post_install"></p>
-<p>解决办法：</p>
-<ul>
-<li>在服务管理器中，停掉ArcGIS Monitor Server服务；</li>
-<li>进入C:\ArcGIS Monitor\Server\settings目录，删除config.db文件;</li>
-<li>再次运行ArcGIS Monitor Post Install程序，你会发现项目重置到初始状态，可以自由编辑了。</li>
-</ul>
-<p>ArcGIS Monitor作为一个监控软件，简单安装好是不够的，为了驱动它顺利工作，还需要完成后续的针对ArcGIS Monitor Administrator的配置过程，这个过程我会在另外一篇文章中跟大家分享。</p>
-<p>参考资料：</p>
-<p>1， <a href="http://www.runoob.com/mongodb/mongodb-window-install.html" target="_blank" rel="noopener">Windows平台安装MongoDB</a><br>
-2， <a href="http://enterprise.arcgis.com/en/monitor/" target="_blank" rel="noopener">ArcGIS Monitor 官方帮助</a><br>
-3， <a href="http://enterprise.arcgis.com/en/monitor/latest/get-started/arcgis-monitor-system-requirements.htm" target="_blank" rel="noopener">ArcGIS Monitor 系统需求</a></p>
+<p>经过上面的步骤，Enterprise就可以在新环境中重新开始工作啦。</p>
+<h3><span id="场景二永久修复问题">场景二：永久修复问题</span></h3>
+<p>通过前面的分析，我们已经知道问题的核心故障点在于datastore通过ip来建立连接，那有没有方法能让datastore通过主机全域名来建立通信，绕开IP呢？ 事实上Esri提供了相应的配置接口，在C:\Program Files\ArcGIS\DataStore\framework\etc\目录下有一个hostidentifier.properties文件，这个配置文件可以配置将主机名作为身份标识。</p>
+<p>通过记事本打开C:\Program Files\ArcGIS\DataStore\framework\etc\hostidentifier.properties文件，参照下图方式修改，“<a href="http://120win105.esrichina.com" target="_blank" rel="noopener">120win105.esrichina.com</a>”是我的服务器全域名，你需要替换为自己的主机全域名。</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/repair-portal-change-ip.png" alt="change-portal-ip"></p>
+<blockquote>
+<p>注意：这种方式需要在创建关系库之前配置才有效。针对已经建好关系库的环境，手动修改该参数是无效的。如果我们针对已经创建好的关系库更改C:\arcgisdatastore\etc\ 下的hostidentifier.properties配置文件，会产生新的问题。更换网络环境后，Portal，Server，Datastore貌似正常，但是原来已经发布的hosting feature service将会出现无法访问数据的情况，服务内部的数据源连接会出现错误。</p>
+</blockquote>
+<p>采用上述配置，就可以彻底解决更换IP时Portal挂掉需要手动修复的问题了。当然，你可以将Portal, Server, DataStore设置为手动启动，每次开机时依次启动DataStore, Server,Portal来绕开问题，但是依旧要忍受更换环境时，服务启动异常缓慢的痛苦。所以长痛不如短痛，对于经常需要更换网络环境的同学，还是建议给Enterprise 彻底动一次手术，重新配置relational datastore，将连接方式切换为全域名。</p>
 
                 
 
@@ -303,13 +250,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2018/02/08/修复更换IP后Portal ,Server, DataStore无法正常访问的问题/" data-toggle="tooltip" data-placement="top" title="更换IP后Portal ,Server, DataStore无法正常访问">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2018/01/30/基于Kerberos认证配置Hadoop集群在安全模式下运行/" data-toggle="tooltip" data-placement="top" title="基于Kerberos认证配置Hadoop集群在安全模式下运行">Next Post &rarr;</a>
+                            <a href="/2018/02/07/ArcGIS Monitor安装配置/" data-toggle="tooltip" data-placement="top" title="ArcGIS Monitor 10.6 安装入门">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -334,17 +277,6 @@
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
 
-    
-      <aside id="sidebar">
-        <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
-        
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">关键组件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">系统需求</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">安装实践</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">测试环境</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">安装MongoDB</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">安装 .Net Framework 4.5</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">安装ArcGIS Monitor 10.6</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">遇到的问题</span></a></li></ol>
-        
-        </div>
-      </aside>
-    
-
                 
             <!-- Sidebar Container -->
             <div class="
@@ -361,7 +293,7 @@
                        
                           <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                         
-                          <a class="tag" href="/tags/#Monitor" title="Monitor">Monitor</a>
+                          <a class="tag" href="/tags/#Enterprise" title="Enterprise">Enterprise</a>
                         
                     </div>
                 </section>
@@ -390,8 +322,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite.com/2018/02/07/ArcGIS Monitor安装配置/";
-    var disqus_url = "http://yoursite.com/2018/02/07/ArcGIS Monitor安装配置/";
+    var disqus_identifier = "http://yoursite.com/2018/02/08/修复更换IP后Portal ,Server, DataStore无法正常访问的问题/";
+    var disqus_url = "http://yoursite.com/2018/02/08/修复更换IP后Portal ,Server, DataStore无法正常访问的问题/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
