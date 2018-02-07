@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          ArcGIS Runtime 100 许可策略解读 - UbuntuSpace | 分享空间
+          ArcGIS Monitor 10.6 安装入门 - UbuntuSpace | 分享空间
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/2017/03/01/ArcGIS Runtime 100 许可策略解读/">
+    <link rel="canonical" href="http://yoursite.com/2018/02/07/ArcGIS Monitor安装配置/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -92,14 +92,14 @@
                             
                               <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                             
-                              <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                              <a class="tag" href="/tags/#Monitor" title="Monitor">Monitor</a>
                             
                         </div>
-                        <h1>ArcGIS Runtime 100 许可策略解读</h1>
+                        <h1>ArcGIS Monitor 10.6 安装入门</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Keling Ma on
-                            2017-03-01
+                            2018-02-07
                         </span>
                     </div>
                 
@@ -223,64 +223,87 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2><span id="概览">概览</span></h2>
-<p>ArcGIS Runtime SDK 100 的许可政策，从大方向上依然延续了之前版本的策略。面向开发者支持ArcGIS Runtime SDK的在线下载，并且支持开发模式下的全功能开放。在开发模式下地图或场景依然会打上Esri的水印，在调试消息中会添加仅用于开发使用的声明。SDK的下载和free级别许可的生成需要注册开发者账户，面对中国区开发者账户暂未开放的情况，我们可以通过注册ArcGIS Online试用账户来替代，效果是一样一样的。</p>
-<p>在开发结束后，应用要以产品的形式对外发布，这时我们就要关心如何激活Runtime许可，去除水印并获得正版授权。在ArcGIS Runtime SDK 100中，许可级别相较于之前的版本有所调整，Esri提供了四种级别的授权：Lite, Base, Standard和Advanced。</p>
-<h2><span id="许可激活模式">许可激活模式</span></h2>
-<p>针对这四种级别的许可，Esri提供了两种激活许可的方式：license key 和Named User。</p>
+                <p>随着ArcGIS 10.6版本的发布，Esri Enterprise家族又推出了重量级产品ArcGIS Monitor。这个产品主要用来监控和收集Enterprise平台各个维度的状态信息，紧急情况告警，以保障平台持续稳定的运行。</p>
+<h2><span id="关键组件">关键组件</span></h2>
+<p>ArcGIS Monitor 由以下关键组件构成：</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Key_components.png" alt="ArcGIS_Monitor_Key_components"></p>
 <ul>
-<li>
-<p>license key是文本字符串，将其添加到Runtime 应用中即可激活许可。这个key对于Lite级别可以通过online账户免费获得，对于更高级别，则需要以ArcGIS Runtime许可包的方式从官方购买。这种方式适合由于网络或安全原因，应用无法连接网络，同时应用本身也不需要访问任何在线服务的场景。</p>
-</li>
-<li>
-<p>Named User获取授权，熟悉Esri产品的GISer应该知道Portal for ArcGIS 和ArcGIS Online的授权模式是基于Named User的（ArcGIS组织账户）。为Runtime应用授权是Named User的重要特性之一。授权的过程需要在应用中通过代码登录Online或Portal，然后返回与Named User账户相关的许可信息。使用Named User申请的许可有效期是30天，过期后只需要再次连接Online 或Portal重新申请授权即可。这个许可支持保存到本地用于离线使用，但是牢记30天的有效期，别忘了定期更新许可。这种模式的好处是同一个Named User并不限定授权一个应用，而是可以同时授权很多ArcGIS Runtime apps。</p>
-</li>
+<li>ArcGIS Monitor Administrator: 一个桌面工具，主要用来管理ArcGIS Monitor Server 和 ArcGIS Monitor services 和 counters， 以及性能管理任务。</li>
+<li>ArcGIS Monitor services: Windows 服务， 主要用于监控和记录系统矩阵，包括Enterprise GIS的状态，可用性，使用情况，系统性能和资源使用情况等等。</li>
+<li>ArcGIS Monitor Server: 基于web的仪表盘，支持查看告警，细节报告，针对各种时间区间可视化历史数据。</li>
+<li>ArcGIS Monitor Counter: 计数器，监控和记录各种数据。我们可以把Counter理解为针对不同方面的测量仪。在ArcGIS Monitor 中有很多种类型的Counter，从系统到进程，arcgis, http请求等各个维度进行监控。</li>
 </ul>
-<h2><span id="许可级别对比分析">许可级别对比分析</span></h2>
-<p>下面的表格对比了四种许可级别、对应的功能以及两种授权模式之间的对应关系。</p>
-<p>![许可级别对比](<a href="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/ArcGIS" target="_blank" rel="noopener">https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/ArcGIS</a> Runtime 100 许可策略解读01.png)</p>
-<p><strong><em>注意</em></strong>：</p>
+<p>这篇入门文章主要跟大家分享如何安装ArcGIS Monitor。</p>
+<h2><span id="系统需求">系统需求</span></h2>
+<p>ArcGIS Monitor包含了两大核心部分ArcGIS Monitor Administrator 和ArcGIS Monitor Server，可以单独安装在不同的机器上，安装的系统需求需要满足以下条件。</p>
 <ul>
-<li>从ArcGIS 10.5开始，ArcGIS Online或者Portal for ArcGIS的成员有两种许可级别供选择。Level1 可以被用来授权Runtime Lite级别的许可，Level2可以被用来授权Lite和Basic级别的许可。对于10.5之前的portal，所有的Named User等效于Level2,可以被用于激活Runime Lite和Basic级别的许可。</li>
-<li>ArcGIS Runtime Local Server仅可以用于面向桌面的ArcGIS Runtime SDKs: Runtime SDK for .NET(WPF), Runtime SDK for Java,Runtime SDK for Qt。</li>
+<li>操作系统： 目前仅支持Windows 64位主流操作系统，暂不支持Linux操作系统。</li>
+<li>硬件需求：Monitor Server需要4 核/16G内存的配置，另外每个monitor service需要2核/4GB内存的硬件资源。实际的硬件需求总量需要根据业务情况计算后获得。</li>
+<li>防火墙设置：默认，Monitor Server通过443端口通信，MongoDB基于27017端口通信。如果服务器上IIS已经占用了443端口，那需要选择不同的端口通信，例如9443端口。如果在注册表HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters中设置了MaxUserPort，需要将这个值设置为65534。Monitor Administrator基于端口7999，8000通信，并且为每一个monitor service添加了一个端口。要确保没有针对这些端口的其它监听，并且防火墙规则不会阻塞这些端口。</li>
+<li>用于Monitor Server的SSL 证书： Monitor Server预配置了自签名证书，主要用于满足测试需要。对于生产环境建议从CA申请受信任证书，或者是从组织颁发的域证书或CA签发的证书。</li>
+<li>Microsoft .NET Framework: 要求4.5以上版本。</li>
+<li>支持的浏览器：Chrome, Firefox, Internet Explorer 11, Microsoft Edge(必须使用全域名)。</li>
+<li>依赖的数据库： MongoDB 3.4.x 或3.6.x, 用于存储counters收集的数据。</li>
+<li>Email: 需要一个email邮箱，用来发送告警信息。</li>
 </ul>
-<h2><span id="扩展">扩展</span></h2>
-<p>ArcGIS Runtime提供了下列可选扩展，以支持其它的功能，分析工具和数据：</p>
-<p>ArcGIS Runtime Local Server 的 GP Services</p>
+<h2><span id="安装实践">安装实践</span></h2>
+<h3><span id="本次安装的测试环境">本次安装的测试环境</span></h3>
+<p>1，硬件：基于VMWare虚拟机，16G内存/4核CPU</p>
+<p>2，操作系统：Windows Server 2008 R2 Standard SP1</p>
+<p>3，软件：</p>
 <ul>
-<li>Analysis</li>
-<li>Network Analyst</li>
-<li>Spatial Analyst</li>
-<li>3D Analyst</li>
+<li>mongodb-win32-x86_64-2008plus-ssl-3.6.2-signed.msi</li>
+<li>dotnetfx45_full_x86_x64.exe</li>
+<li>ArcGIS_Monitor_106_161880.exe</li>
 </ul>
-<h2><span id="激活许可向导">激活许可向导</span></h2>
-<p>在完成应用开发和测试后，可以通过以下向导完成许可的激活，以消除底图水印并获得正版官方授权。</p>
-<h3><span id="license-key模式激活许可">License key模式激活许可</span></h3>
-<p><code>——通过ArcGIS Online申请免费许可:</code></p>
-<p>1、注册ArcGIS Online试用账号或者Esri开发者账号（中国区暂不支持）</p>
-<p>打开浏览器，访问www.arcgis.com网站，点击Try ArcGIS按钮，按照页面向导，注册用户。</p>
-<p>![注册Online账户](<a href="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/ArcGIS" target="_blank" rel="noopener">https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/ArcGIS</a> Runtime 100 许可策略解读02.png)</p>
-<p>2，访问ArcGIS Runtime/Licensing页面，以前一步注册的试用账户登录网站</p>
-<p>打开浏览器，访问https://developers.arcgis.com/arcgis-runtime/licensing/，点击右上角的Sign In登录。</p>
-<p>登录成功后，点击Show my ArcGIS Runtime Lite license key按钮，即可获得免费的Lite级别的许可。</p>
-<p>![获取License key](<a href="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/ArcGIS" target="_blank" rel="noopener">https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/ArcGIS</a> Runtime 100 许可策略解读03.png)</p>
-<p>许可格式规则：</p>
-<p>runtimelite,1000,rud****,none***********</p>
-<p><code>——购买runtime SDK授权包:</code></p>
-<p>如果是从官方购买ArcGIS Runtime SDK的授权包，将会获得来自官方的授权文件，可以取文件中的授权码直接使用。</p>
-<p><code>——License key激活许可示范:</code></p>
-<p>For .NET, Java, Android:</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// license with a license key</span></span><br><span class="line"><span class="selector-tag">ArcGISRuntimeEnvironment</span><span class="selector-class">.setLicense</span>(<span class="string">"runtimelite,1000,rud#########,day-month-year,####################"</span>);</span><br></pre></td></tr></table></figure>
-<p>For iOS:</p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//license the app with the supplied License key</span></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line"> <span class="keyword">let</span> result = <span class="keyword">try</span> <span class="type">AGSArcGISRuntimeEnvironment</span>.setLicenseKey(<span class="string">"runtimelite,1000,rud#########,day-month-year,####################"</span>)</span><br><span class="line"> <span class="built_in">print</span>(<span class="string">"License Result : <span class="subst">\(result.licenseStatus)</span>"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> <span class="keyword">let</span> error <span class="keyword">as</span> <span class="type">NSError</span> &#123;</span><br><span class="line"> <span class="built_in">print</span>(<span class="string">"error: <span class="subst">\(error)</span>"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3><span id="named-user模式激活许可">Named User模式激活许可</span></h3>
-<p>前面已经讲过，通过Online 或者Portal的Named User也可以授权Runtime 应用,整个过程需要编程实现。详细的授权过程，可以参照以下链接中的示范工程来激活许可：</p>
+<p>ArcGIS Monitor需要依赖MongoDB来存储监控数据，因此对ArcGIS Monitor的使用首先要安装MongoDB。</p>
+<h3><span id="安装mongodb">安装MongoDB</span></h3>
+<p>1，直接双击运行mongodb-win32-x86_64-2008plus-ssl-3.6.2-signed.msi,按照提示，一路next到安装完成。默认会安装到c:\Program Files\MongoDB\Server\3.6。</p>
+<p>2，创建用于保存数据和日志的目录：d:\mongo_db。</p>
+<h3><span id="安装net-framework-45"> Framework 4.5</span></h3>
+<p>.Net Framework 4.5是安装Monitor的前提，从微软官网下载相应的安装包，双击安装即可。</p>
+<h3><span id="安装arcgis-monitor-106">安装ArcGIS Monitor 10.6</span></h3>
+<p>ArcGIS Monitor产品包含下面两个核心组件：</p>
 <ul>
-<li><a href="https://github.com/crazyxhz/License.NetAppByNamedUser.git" target="_blank" rel="noopener">For .NET</a></li>
-<li><a href="">For Java</a></li>
-<li><a href="">For Andoid</a></li>
-<li><a href="https://github.com/makeling/LicenseIOSAppByNamedUser.git" target="_blank" rel="noopener">For iOS</a></li>
+<li>ArcGIS Monitor Administrator - 用来管理counters</li>
+<li>ArcGIS Monitor Server - 用来显示矩阵和报告</li>
 </ul>
+<p>在这次的安装测试中，我会将所有组件部署到一台虚机中，在部署之前需要从Esri官方获取正版授权许可。</p>
+<h4><span id="安装过程">安装过程：</span></h4>
+<p>1，双击ArcGIS_Monitor_106_161880.exe, 安装包首先会在C:\Users\Administrator\Documents\ArcGIS 10.6\Monitor目录下解压。然后按照流程窗口提示顺次下一步，在Custom Setup窗口中可以看到即将安装的组件包括ArcGIS Monitor Administrator 和ArcGIS Monitor Server ，直接点击Next。</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Components.png" alt="ArcGIS_Monitor_Components"></p>
+<p>2， 在主模块安装结束后，会提示激活许可，在授权向导中选择第三项，然后导入授权文件即可。</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_monitor_authorization.png" alt="ArcGIS_monitor_authorization"></p>
+<p>3，ArcGIS Monitor 后配置：</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_post_install.png" alt="ArcGIS_Monitor_post_install"></p>
+<ul>
+<li>ArcGIS Monitor Server port : 如果443端口没有被占用，那保持默认就好, 建议修改为绝对不会和已有端口冲突的端口如9443。</li>
+<li>ArcGIS Monitor Server Email From： 需要配置实际可用的邮箱，这个邮箱将被用来发送告警信息。</li>
+<li>User Name: Site是默认的站点管理员，这个值不能修改。</li>
+<li>Password &amp; Confirm Password:   输入管理员密码，并牢记，后续需要这个密码来登陆ArcGIS Monitor。</li>
+<li>Mongo DB的配置：这部分需要配置Mongo的服务启动路径，端口和数据存放路径。</li>
+</ul>
+<p>做好上述配置后，点击Run Post Install完成后配置过程，这个操作会启动ArcGIS Monitor服务。</p>
+<p>4，检验安装成果</p>
+<p>安装好后，打开浏览器，输入https://localhost:9443 (这个端口，要和后配置过程中指定的端口保持一致)。在用户名密码处输入Site\123456 ( 替换为你设置的密码)点击登陆。如果能看到以下界面，就说明安装成功啦。</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Verify.png" alt="ArcGIS_Monitor_post_install"></p>
+<h2><span id="遇到的问题">遇到的问题</span></h2>
+<p>1，安装后无法通过浏览器https://localhost:9443登陆Monitor Server。</p>
+<p>确认密码输入的没错，但是死活无法登陆Monitor。这可能是因为Monitor配置Mongo db存在冲突。因为最初安装好Mongo db后，按照Mongo的官方配置文档，我手动创建了mongod.cfg配置文件，并创建和启动了mongod服务。实践证明这是画蛇添足的操作。在Monitor安装中，只需要把Mongo db简单安装即可。</p>
+<p>2，后配置结束后，发现原来的配置的参数存在问题，无法修改。</p>
+<p>这个问题，相信很多小伙伴儿也会碰到。一旦完成后配置，当我们通过开始-&gt;所有程序-&gt; ArcGIS Monitor -&gt; Server -&gt; ArcGIS Monitor Post Install 再次运行后配置程序时，会发现所有编辑项都灰化，处于无法编辑状态。</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_post_install_repair.png" alt="ArcGIS_Monitor_post_install"></p>
+<p>解决办法：</p>
+<ul>
+<li>在服务管理器中，停掉ArcGIS Monitor Server服务；</li>
+<li>进入C:\ArcGIS Monitor\Server\settings目录，删除config.db文件;</li>
+<li>再次运行ArcGIS Monitor Post Install程序，你会发现项目重置到初始状态，可以自由编辑了。</li>
+</ul>
+<p>ArcGIS Monitor作为一个监控软件，简单安装好是不够的，为了驱动它顺利工作，还需要完成后续的针对ArcGIS Monitor Administrator的配置过程，这个过程我会在另外一篇文章中跟大家分享。</p>
+<h2><span id="参考资料">参考资料：</span></h2>
+<p>1 <a href="http://www.runoob.com/mongodb/mongodb-window-install.html" target="_blank" rel="noopener">Windows平台安装MongoDB</a></p>
+<p>2 <a href="http://enterprise.arcgis.com/en/monitor/" target="_blank" rel="noopener">ArcGIS Monitor 官方帮助</a></p>
+<p>3 <a href="http://enterprise.arcgis.com/en/monitor/latest/get-started/arcgis-monitor-system-requirements.htm" target="_blank" rel="noopener">ArcGIS Monitor 系统需求</a></p>
 
                 
 
@@ -288,13 +311,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2017/03/01/ArcGIS Runtime for iOS SDK100.0.0 使用 Named User激活许可示范工程/" data-toggle="tooltip" data-placement="top" title="ArcGIS Runtime for iOS SDK100.x 使用 Named User激活许可示范工程">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2017/02/09/ArcGIS发展史/" data-toggle="tooltip" data-placement="top" title="ArcGIS发展史">Next Post &rarr;</a>
+                            <a href="/2018/01/30/基于Kerberos认证配置Hadoop集群在安全模式下运行/" data-toggle="tooltip" data-placement="top" title="基于Kerberos认证配置Hadoop集群在安全模式下运行">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -319,17 +338,6 @@
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
 
-    
-      <aside id="sidebar">
-        <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
-        
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概览</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">许可激活模式</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">许可级别对比分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">扩展</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">激活许可向导</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">License key模式激活许可</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">Named User模式激活许可</span></a></li></ol></li></ol>
-        
-        </div>
-      </aside>
-    
-
                 
             <!-- Sidebar Container -->
             <div class="
@@ -346,7 +354,7 @@
                        
                           <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                         
-                          <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                          <a class="tag" href="/tags/#Monitor" title="Monitor">Monitor</a>
                         
                     </div>
                 </section>
@@ -375,8 +383,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite.com/2017/03/01/ArcGIS Runtime 100 许可策略解读/";
-    var disqus_url = "http://yoursite.com/2017/03/01/ArcGIS Runtime 100 许可策略解读/";
+    var disqus_identifier = "http://yoursite.com/2018/02/07/ArcGIS Monitor安装配置/";
+    var disqus_url = "http://yoursite.com/2018/02/07/ArcGIS Monitor安装配置/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
