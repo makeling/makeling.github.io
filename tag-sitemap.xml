@@ -51,20 +51,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/ArcGIS/</loc>
-        <lastmod>2018-02-07T06:12:19.795Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/Monitor/</loc>
-        <lastmod>2018-02-07T06:12:19.795Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite.com/tags/quantum/</loc>
         <lastmod>2018-02-07T06:12:30.675Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -102,6 +88,20 @@
     <url>
         <loc>http://yoursite.com/tags/apache/</loc>
         <lastmod>2018-02-07T06:13:00.942Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/ArcGIS/</loc>
+        <lastmod>2018-02-07T06:22:59.826Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/Monitor/</loc>
+        <lastmod>2018-02-07T06:22:59.826Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
