@@ -16,43 +16,8 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/OS/</loc>
-        <lastmod>2018-02-08T06:25:25.448Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/Windows/</loc>
-        <lastmod>2018-02-08T06:25:25.448Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/quantum/</loc>
-        <lastmod>2018-02-08T06:25:49.941Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/IBMQ/</loc>
-        <lastmod>2018-02-08T06:25:49.941Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite.com/tags/Monitor/</loc>
         <lastmod>2018-02-08T06:56:26.460Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/iOS/</loc>
-        <lastmod>2018-02-08T06:57:10.757Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -102,6 +67,41 @@
     <url>
         <loc>http://yoursite.com/tags/bigdata/</loc>
         <lastmod>2018-02-08T08:11:42.586Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/OS/</loc>
+        <lastmod>2018-02-08T08:40:10.088Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/Windows/</loc>
+        <lastmod>2018-02-08T08:40:10.088Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/quantum/</loc>
+        <lastmod>2018-02-08T08:40:52.994Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/IBMQ/</loc>
+        <lastmod>2018-02-08T08:40:52.994Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/iOS/</loc>
+        <lastmod>2018-02-08T08:41:22.123Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
