@@ -79,13 +79,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/ArcGIS/</loc>
-        <lastmod>2018-02-08T06:25:57.927Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite.com/tags/VectorTiles/</loc>
         <lastmod>2018-02-08T06:25:57.927Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -95,6 +88,20 @@
     <url>
         <loc>http://yoursite.com/tags/python/</loc>
         <lastmod>2018-02-08T06:25:57.927Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/ArcGIS/</loc>
+        <lastmod>2018-02-08T06:40:24.531Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/Monitor/</loc>
+        <lastmod>2018-02-08T06:40:24.531Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
