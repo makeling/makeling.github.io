@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yoursite.com/bigdata/72ac84e3.html</loc>
+        <lastmod>2018-02-08T09:05:14.862Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite.com/quantum/15f208f9.html</loc>
         <lastmod>2018-02-08T08:42:01.986Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -25,14 +33,6 @@
     <url>
         <loc>http://yoursite.com/OS/5577a97e.html</loc>
         <lastmod>2018-02-08T08:40:10.088Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/bigdata/72ac84e3.html</loc>
-        <lastmod>2018-02-08T08:11:42.586Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

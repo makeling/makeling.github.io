@@ -58,20 +58,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/security/</loc>
-        <lastmod>2018-02-08T08:11:42.586Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/bigdata/</loc>
-        <lastmod>2018-02-08T08:11:42.586Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite.com/tags/OS/</loc>
         <lastmod>2018-02-08T08:40:10.088Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -102,6 +88,20 @@
     <url>
         <loc>http://yoursite.com/tags/IBMQ/</loc>
         <lastmod>2018-02-08T08:42:01.986Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/security/</loc>
+        <lastmod>2018-02-08T09:05:14.862Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/bigdata/</loc>
+        <lastmod>2018-02-08T09:05:14.862Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
