@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yoursite.com/ArcGIS/3bf4a27.html</loc>
+        <lastmod>2018-02-08T08:17:02.955Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite.com/bigdata/72ac84e3.html</loc>
         <lastmod>2018-02-08T08:11:42.586Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -145,14 +153,6 @@
     <url>
         <loc>http://yoursite.com/bigdata/dcb921f7.html</loc>
         <lastmod>2018-02-08T06:18:32.015Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/ArcGIS/3bf4a27.html</loc>
-        <lastmod>2018-02-07T06:38:13.399Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
