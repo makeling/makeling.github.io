@@ -146,14 +146,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -237,12 +237,21 @@ The portal has been initialized and configured but is not accessible. The intern
 <p>经过上面的步骤，Enterprise就可以在新环境中重新开始工作啦。</p>
 <h3><span id="场景二永久修复问题">场景二：永久修复问题</span></h3>
 <p>通过前面的分析，我们已经知道问题的核心故障点在于datastore通过ip来建立连接，那有没有方法能让datastore通过主机全域名来建立通信，绕开IP呢？ 事实上Esri提供了相应的配置接口，在C:\Program Files\ArcGIS\DataStore\framework\etc\目录下有一个hostidentifier.properties文件，这个配置文件可以配置将主机名作为身份标识。</p>
+<h4><span id="-全新安装的环境">- 全新安装的环境:</span></h4>
 <p>通过记事本打开C:\Program Files\ArcGIS\DataStore\framework\etc\hostidentifier.properties文件，参照下图方式修改，“<a href="http://120win105.esrichina.com" target="_blank" rel="noopener">120win105.esrichina.com</a>”是我的服务器全域名，你需要替换为自己的主机全域名。</p>
 <p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/repair-portal-change-ip.png" alt="change-portal-ip"></p>
 <blockquote>
-<p>注意：这种方式需要在创建关系库之前配置才有效。针对已经建好关系库的环境，手动修改该参数是无效的。如果我们针对已经创建好的关系库更改C:\arcgisdatastore\etc\ 下的hostidentifier.properties配置文件，会产生新的问题。更换网络环境后，Portal，Server，Datastore貌似正常，但是原来已经发布的hosting feature service将会出现无法访问数据的情况，服务内部的数据源连接会出现错误。</p>
+<p>注意：这种方式需要在创建关系库之前配置才有效。针对已经建好关系库的环境，仅修改该参数是无效的，需要参考下面的策略修复问题。</p>
 </blockquote>
-<p>采用上述配置，就可以彻底解决更换IP时Portal挂掉需要手动修复的问题了。当然，你可以将Portal, Server, DataStore设置为手动启动，每次开机时依次启动DataStore, Server,Portal来绕开问题，但是依旧要忍受更换环境时，服务启动异常缓慢的痛苦。所以长痛不如短痛，对于经常需要更换网络环境的同学，还是建议给Enterprise 彻底动一次手术，重新配置relational datastore，将连接方式切换为全域名。</p>
+<h4><span id="-已经创建好关系库的环境">- 已经创建好关系库的环境：</span></h4>
+<p>对于已经创建好关系库的环境，需要修改C:\arcgisdatastore\etc\ （替换为你环境下相应的目录）下的hostidentifier.properties配置文件。</p>
+<ul>
+<li>在Windows服务中手动停掉DataStore, Server, Portal的服务；</li>
+<li>打开任务管理器，如果存在没有顺利回收的 arcgis相关的进程，手动停止进程；</li>
+<li>参照上图修改C:\arcgisdatastore\etc\hostidentifier.properties文件中的hostidentifier为服务器全域名；</li>
+<li>重新启动Datastore, Server, Portal服务。</li>
+</ul>
+<p>采用上述配置，就可以彻底解决更换IP时Portal挂掉需要手动修复的问题了。当然，你可以将Portal, Server, DataStore设置为手动启动，每次开机时依次启动DataStore, Server,Portal来绕开问题，但是依旧要忍受更换环境时，服务启动异常缓慢的痛苦。所以长痛不如短痛，对于经常需要更换网络环境的同学，还是建议将datastore的连接方式切换为全域名。</p>
 
                 
 
