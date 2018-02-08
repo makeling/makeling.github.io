@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          解除Hosting Server和Data Store的注册关系 - UbuntuSpace | 分享空间
+          认识量子比特世界 - UbuntuSpace | 分享空间
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/arcgis/35dd3225.html">
+    <link rel="canonical" href="http://yoursite.com/quantum/15f208f9.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -90,16 +90,16 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                              <a class="tag" href="/tags/#quantum" title="quantum">quantum</a>
                             
-                              <a class="tag" href="/tags/#Enterprise" title="Enterprise">Enterprise</a>
+                              <a class="tag" href="/tags/#IBMQ" title="IBMQ">IBMQ</a>
                             
                         </div>
-                        <h1>解除Hosting Server和Data Store的注册关系</h1>
+                        <h1>认识量子比特世界</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Keling Ma on
-                            2017-08-04
+                            2018-01-18
                         </span>
                     </div>
                 
@@ -216,28 +216,25 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>在ArcGIS Enterprise的部署中，每一个ArcGIS Data Store安装后都需要注册ArcGIS Server，建立和站点的联系，这个过程中DataStore完成了建库（可能是关系型数据库，可能是切片缓存库，也可能是时空大数据库），Server从普通的ArcGIS Server升级为hosting Server。建立关系的过程很美好，但是总有那么一个理由，需要我们解除关系来恢复各自独立。</p>
-<p>解除hosting Server和Data Store的注册关系可以从两个方向入手。如果是因为Data Store意外故障，我们就可以从Server端解除对Data Store的注册。如果是因为Server端故障，比如重新安装了Server， 我们就需要从Data Store端解除对原有Server的绑定。</p>
-<h2><span id="从server端解除注册">从Server端解除注册</span></h2>
-<p>从Server端解除Data Store 的注册可以参照如下流程：</p>
-<p>1） 登录Server admin 管理站点；</p>
-<p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E8%A7%A3%E9%99%A4hostingServer%E5%92%8CDataStore%E7%9A%84%E6%B3%A8%E5%86%8C%E5%85%B3%E7%B3%BB01.png" alt="登录Server admin"></p>
-<p>2）导航到要解除的data item 信息页，拷贝Item Path；</p>
-<p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E8%A7%A3%E9%99%A4hostingServer%E5%92%8CDataStore%E7%9A%84%E6%B3%A8%E5%86%8C%E5%85%B3%E7%B3%BB02.png" alt="拷贝Item Path"></p>
-<p>3)导航到unregisterItem页面，输入Item path, 点击unregister Item按钮发送反注册请求。</p>
-<p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E8%A7%A3%E9%99%A4hostingServer%E5%92%8CDataStore%E7%9A%84%E6%B3%A8%E5%86%8C%E5%85%B3%E7%B3%BB03.png" alt="反注册Data Item"></p>
-<p>4）验证结果。</p>
-<p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E8%A7%A3%E9%99%A4hostingServer%E5%92%8CDataStore%E7%9A%84%E6%B3%A8%E5%86%8C%E5%85%B3%E7%B3%BB04.png" alt="验证结果"></p>
-<h2><span id="从data-store端解除注册">从Data Store端解除注册</span></h2>
-<p>在Data Store端解除Data Store和Server的绑定可以通过unregisterdatastore脚本工具来实现，这个工具位于“&lt;ArcGIS Data Store installation directory&gt;\datastore\tools”目录下。</p>
-<p>解除流程：</p>
-<p>1）检查DataStore中当前已经注册的库：</p>
-<p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E8%A7%A3%E9%99%A4hostingServer%E5%92%8CDataStore%E7%9A%84%E6%B3%A8%E5%86%8C%E5%85%B3%E7%B3%BB05.png" alt="检查注册库"></p>
-<p>从上图中可以看出当前测试的Data Store中注册了关系型和切片缓存型数据库。</p>
-<p>2）打开命令行工具，cd到 &lt;ArcGIS Data Store installation directory&gt;\datastore\tools目录下,参照下图执行解除操作：</p>
-<p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E8%A7%A3%E9%99%A4hostingServer%E5%92%8CDataStore%E7%9A%84%E6%B3%A8%E5%86%8C%E5%85%B3%E7%B3%BB06.png" alt="命令解除"></p>
-<p>这个工具非常简单，只有一个关键参数–store， 顾名思义就是指定解除哪个库，在这个测试中我解除的是切片缓存库。按照确认提示，输入yes，当看到&quot;Operation completed successfully&quot;，就表示解除成功啦。</p>
-<p>上面的过程是在故障的假设下，无论从Server端还是从Data Store端都可以成功解除绑定，解除的过程并不要求对方一定有效，也就是不会相互校验有效性，这样设计，确保当任意一方出现意外状况时，不至于死锁导致双方无法解除关系。反过来，如果是在正常运行的系统中测试这个功能，那无论从任意一方反注册，双方都会同时解除。经过在三台服务器组成的大数据集群环境下测试解除过程，同样符合上述规则。</p>
+                <p>几年前第一次接触到量子力学，就被量子世界的奇幻和诡异深深吸引。虽然它看上去和我们精确度量的科学世界那么格格不入，甚至连伟大的爱因斯坦都为其困扰终生，但是它却用实践一遍遍告诉我们“我才是真理，我才是物质本质”。</p>
+<p>我们目前正在以前所未有的加速度驶向未来，量子计算机作为注定在未来世界大展拳脚的黑科技，已经离我们越来越近，2018年1月IBM重磅发布了基于python的量子计算API，让研究者和我这样的好奇体验者有机会实战下基于量子计算机的编程，在动手编程前，让我们先一起通过IBM Q体验下量子比特世界。</p>
+<p>量子比特（qubit）是一种由两个能量级组成的量子系统，通过 |0⟩和|1⟩表达。这两个符号设计的真是非常传神，你是否感受到了它们就像在亚原子世界不断震动的微观粒子？其中 |0⟩态通常被称作ground态（不知道翻译成中文准确的表达），因为它是两个能量级中更低的一个。 |0⟩和|1⟩一起，组成“标准基向量”。就像数学中的向量一样，它们指向一个方向，并拥有大小。定义基向量是从线性代数借鉴的非常有用的技巧。基本思想是一旦定义了这些向量，就可以从基向量的各种线性组合中构造出其它向量。</p>
+<p>除此之外，量子比特也有“相位”的概念，它的结果来自叠加态可能相当复杂的事实。为了表达叠加态，可以采用状态|0⟩和|1⟩的线性组合的方式，即：a|0⟩+b|1⟩。两种状态的比重由系数a和b决定。系数a和b可能是正数，负数甚至复数。如果采用a和b绝对值的平方，我们就获得了分别测得0或1结果的可能。</p>
+<p>基准状态|0⟩和|1⟩以及它们的线性组合a|0⟩  + b|1⟩描述了单个量子比特的状态。但是由于系数a和b不仅可以为实数，也可能是虚数或复数，可视化一个量子比特需要一种特殊的工具叫做布洛赫球面（Bloch sphere）。</p>
+<blockquote>
+<p>在量子机制中，布洛赫球面是一种对两个能级量子力学系统（qubit）中纯态空间的几何表达，这个名字以已故自旋物理与核磁共振专家Felix Bloch的姓氏命名。费利克斯·布洛赫（德語：Felix Bloch，1905年10月23日－1983年9月10日），瑞士物理学家，1952年诺贝尔物理学奖获得者。</p>
+</blockquote>
+<p>布洛赫球面通过半径和半径指向球面的点来表达量子比特的状态。 就像地球使用经纬度描述地表的点一样，布洛赫球面也可以使用角度描述量子比特的状态。这种表达允许任意量子态，包括那些复数系数的量子态都可以以点的形式表现在布洛赫球面上。布洛赫球面的点依赖于X,Y,Z轴，相应的表达如下图：</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/bloch-sphere.png" alt="bloch-sphere"></p>
+<p>图中橘色的线表达了量子态，|0⟩和|1⟩分别位于球体的两级。当量子比特处于|0⟩和|1⟩的叠加态时，向量会指向球体两级之间的某点（例如图中 θ角在0（垂直向上）-180度（垂直向下）之间，这个值也可以用π 弧度表达。注意，在弧度中，1/4是指 π /2)。</p>
+<p>布洛赫球面中还有基于球体的另外一个自由度：围绕Z轴旋转，可以通过角ϕ描述。当ϕ非零时，指示了量子比特相位的改变。布洛赫球面仅仅描述了单量子比特的表达。使用这种图的目的是为了假设布洛赫向量的长度等于布洛赫球面的半径。</p>
+<p>参考文献：</p>
+<ul>
+<li>
+<p><a href="https://quantumexperience.ng.bluemix.net/qx/tutorial?sectionId=beginners-guide&amp;page=004-The_Weird_and_Wonderful_World_of_the_Qubit~2F001-The_Weird_and_Wonderful_World_of_the_Qubit" target="_blank" rel="noopener">IBM Q Guide: The Weird and Wonderful World of the Qubit</a></p>
+<p>​</p>
+</li>
+</ul>
 
                 
 
@@ -246,12 +243,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/os/5577a97e.html" data-toggle="tooltip" data-placement="top" title="如何为windows 文件共享开启”盘符$”访问权限">&larr; Previous Post</a>
+                            <a href="/bigdata/dcb921f7.html" data-toggle="tooltip" data-placement="top" title="理解和配置LinuxContainerExecutor">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/arcgis/54867fdd.html" data-toggle="tooltip" data-placement="top" title="ArcGIS时空大数据库的备份与恢复">Next Post &rarr;</a>
+                            <a href="/arcgis/feab923b.html" data-toggle="tooltip" data-placement="top" title="CustomTianDiTuLayerV100.x示范工程">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -276,17 +273,6 @@
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
 
-    
-      <aside id="sidebar">
-        <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
-        
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">从Server端解除注册</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">从Data Store端解除注册</span></a></li></ol>
-        
-        </div>
-      </aside>
-    
-
                 
             <!-- Sidebar Container -->
             <div class="
@@ -301,9 +287,9 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                          <a class="tag" href="/tags/#quantum" title="quantum">quantum</a>
                         
-                          <a class="tag" href="/tags/#Enterprise" title="Enterprise">Enterprise</a>
+                          <a class="tag" href="/tags/#IBMQ" title="IBMQ">IBMQ</a>
                         
                     </div>
                 </section>
@@ -332,8 +318,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite.com/arcgis/35dd3225.html";
-    var disqus_url = "http://yoursite.com/arcgis/35dd3225.html";
+    var disqus_identifier = "http://yoursite.com/quantum/15f208f9.html";
+    var disqus_url = "http://yoursite.com/quantum/15f208f9.html";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
