@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          ArcGIS Monitor 10.6 安装入门 - UbuntuSpace | 分享空间
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/uncategorized/ebcd2d71.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('Demo.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/MaklSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                            
+                              <a class="tag" href="/tags/#Monitor" title="Monitor">Monitor</a>
+                            
+                        </div>
+                        <h1>ArcGIS Monitor 10.6 安装入门</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Keling Ma on
+                            2018-02-07
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">UBUNTU SPACE</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>随着ArcGIS 10.6版本的发布，Esri Enterprise家族又推出了重量级产品ArcGIS Monitor。这个产品主要用来监控和收集Enterprise平台各个维度的状态信息，紧急情况告警，以保障平台持续稳定的运行。</p>
+<h2><span id="关键组件">关键组件</span></h2>
+<p>ArcGIS Monitor 由以下关键组件构成：</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Key_components.png" alt="ArcGIS_Monitor_Key_components"></p>
+<ul>
+<li>ArcGIS Monitor Administrator: 一个桌面工具，主要用来管理ArcGIS Monitor Server 和 ArcGIS Monitor services 和 counters， 以及性能管理任务。</li>
+<li>ArcGIS Monitor services: Windows 服务， 主要用于监控和记录系统矩阵，包括Enterprise GIS的状态，可用性，使用情况，系统性能和资源使用情况等等。</li>
+<li>ArcGIS Monitor Server: 基于web的仪表盘，支持查看告警，细节报告，针对各种时间区间可视化历史数据。</li>
+<li>ArcGIS Monitor Counter: 计数器，监控和记录各种数据。我们可以把Counter理解为针对不同方面的测量仪。在ArcGIS Monitor 中有很多种类型的Counter，从系统到进程，arcgis, http请求等各个维度进行监控。</li>
+</ul>
+<p>这篇入门文章主要跟大家分享如何安装ArcGIS Monitor。</p>
+<h2><span id="系统需求">系统需求</span></h2>
+<p>ArcGIS Monitor包含了两大核心部分ArcGIS Monitor Administrator 和ArcGIS Monitor Server，可以单独安装在不同的机器上，安装的系统需求需要满足以下条件。</p>
+<ul>
+<li>操作系统： 目前仅支持Windows 64位主流操作系统，暂不支持Linux操作系统。</li>
+<li>硬件需求：Monitor Server需要4 核/16G内存的配置，另外每个monitor service需要2核/4GB内存的硬件资源。实际的硬件需求总量需要根据业务情况计算后获得。</li>
+<li>防火墙设置：默认，Monitor Server通过443端口通信，MongoDB基于27017端口通信。如果服务器上IIS已经占用了443端口，那需要选择不同的端口通信，例如9443端口。如果在注册表HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters中设置了MaxUserPort，需要将这个值设置为65534。Monitor Administrator基于端口7999，8000通信，并且为每一个monitor service添加了一个端口。要确保没有针对这些端口的其它监听，并且防火墙规则不会阻塞这些端口。</li>
+<li>用于Monitor Server的SSL 证书： Monitor Server预配置了自签名证书，主要用于满足测试需要。对于生产环境建议从CA申请受信任证书，或者是从组织颁发的域证书或CA签发的证书。</li>
+<li>Microsoft .NET Framework: 要求4.5以上版本。</li>
+<li>支持的浏览器：Chrome, Firefox, Internet Explorer 11, Microsoft Edge(必须使用全域名)。</li>
+<li>依赖的数据库： MongoDB 3.4.x 或3.6.x, 用于存储counters收集的数据。</li>
+<li>Email: 需要一个email邮箱，用来发送告警信息。</li>
+</ul>
+<h2><span id="安装实践">安装实践</span></h2>
+<h3><span id="测试环境">测试环境</span></h3>
+<p>1，硬件：基于VMWare虚拟机，16G内存/4核CPU<br>
+2， 操作系统：Windows Server 2008 R2 Standard SP1<br>
+3， 软件：</p>
+<ul>
+<li>mongodb-win32-x86_64-2008plus-ssl-3.6.2-signed.msi</li>
+<li>dotnetfx45_full_x86_x64.exe</li>
+<li>ArcGIS_Monitor_106_161880.exe</li>
+</ul>
+<p>ArcGIS Monitor需要依赖MongoDB来存储监控数据，因此对ArcGIS Monitor的使用首先要安装MongoDB。</p>
+<h3><span id="安装mongodb">安装MongoDB</span></h3>
+<p>1，直接双击运行mongodb-win32-x86_64-2008plus-ssl-3.6.2-signed.msi,按照提示，一路next到安装完成。默认会安装到c:\Program Files\MongoDB\Server\3.6。<br>
+2，创建用于保存数据和日志的目录：d:\mongo_db。</p>
+<h3><span id="安装-net-framework-45">安装 .Net Framework 4.5</span></h3>
+<p>.Net Framework 4.5是安装Monitor的前提，从微软官网下载相应的安装包，双击安装即可。</p>
+<h3><span id="安装arcgis-monitor-106">安装ArcGIS Monitor 10.6</span></h3>
+<p>ArcGIS Monitor产品包含下面两个核心组件：</p>
+<ul>
+<li>ArcGIS Monitor Administrator - 用来管理counters</li>
+<li>ArcGIS Monitor Server - 用来显示矩阵和报告</li>
+</ul>
+<p>在这次的安装测试中，我会将所有组件部署到一台虚机中，在部署之前需要从Esri官方获取正版授权许可。</p>
+<p>1，双击ArcGIS_Monitor_106_161880.exe, 安装包首先会在C:\Users\Administrator\Documents\ArcGIS 10.6\Monitor目录下解压。然后按照流程窗口提示顺次下一步，在Custom Setup窗口中可以看到即将安装的组件包括ArcGIS Monitor Administrator 和ArcGIS Monitor Server ，直接点击Next。<br>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Components.png" alt="ArcGIS_Monitor_Components"></p>
+<p>2， 在主模块安装结束后，会提示激活许可，在授权向导中选择第三项，然后导入授权文件即可。<br>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_monitor_authorization.png" alt="ArcGIS_monitor_authorization"></p>
+<p>3，ArcGIS Monitor 后配置：<br>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_post_install.png" alt="ArcGIS_Monitor_post_install"></p>
+<ul>
+<li>ArcGIS Monitor Server port : 如果443端口没有被占用，那保持默认就好, 建议修改为绝对不会和已有端口冲突的端口如9443。</li>
+<li>ArcGIS Monitor Server Email From： 需要配置实际可用的邮箱，这个邮箱将被用来发送告警信息。</li>
+<li>User Name: Site是默认的站点管理员，这个值不能修改。</li>
+<li>Password &amp; Confirm Password:   输入管理员密码，并牢记，后续需要这个密码来登陆ArcGIS Monitor。</li>
+<li>Mongo DB的配置：这部分需要配置Mongo的服务启动路径，端口和数据存放路径。</li>
+</ul>
+<p>做好上述配置后，点击Run Post Install完成后配置过程，这个操作会启动ArcGIS Monitor服务。</p>
+<p>4，检验安装成果<br>
+安装好后，打开浏览器，输入https://localhost:9443 (这个端口，要和后配置过程中指定的端口保持一致)。在用户名密码处输入Site\123456 ( 替换为你设置的密码)点击登陆。如果能看到以下界面，就说明安装成功啦。<br>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Verify.png" alt="ArcGIS_Monitor_post_install"></p>
+<h2><span id="遇到的问题">遇到的问题</span></h2>
+<p>1，安装后无法通过浏览器https://localhost:9443登陆Monitor Server。</p>
+<p>确认密码输入的没错，但是死活无法登陆Monitor。这可能是因为Monitor配置Mongo db存在冲突。因为最初安装好Mongo db后，按照Mongo的官方配置文档，我手动创建了mongod.cfg配置文件，并创建和启动了mongod服务。实践证明这是画蛇添足的操作。在Monitor安装中，只需要把Mongo db简单安装即可。</p>
+<p>2，后配置结束后，发现原来的配置的参数存在问题，无法修改。</p>
+<p>这个问题，相信很多小伙伴儿也会碰到。一旦完成后配置，当我们通过开始-&gt;所有程序-&gt; ArcGIS Monitor -&gt; Server -&gt; ArcGIS Monitor Post Install 再次运行后配置程序时，会发现所有编辑项都灰化，处于无法编辑状态。<br>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_post_install_repair.png" alt="ArcGIS_Monitor_post_install"></p>
+<p>解决办法：</p>
+<ul>
+<li>在服务管理器中，停掉ArcGIS Monitor Server服务；</li>
+<li>进入C:\ArcGIS Monitor\Server\settings目录，删除config.db文件;</li>
+<li>再次运行ArcGIS Monitor Post Install程序，你会发现项目重置到初始状态，可以自由编辑了。</li>
+</ul>
+<p>ArcGIS Monitor作为一个监控软件，简单安装好是不够的，为了驱动它顺利工作，还需要完成后续的针对ArcGIS Monitor Administrator的配置过程，这个过程我会在另外一篇文章中跟大家分享。</p>
+<p>参考资料：</p>
+<p>1， <a href="http://www.runoob.com/mongodb/mongodb-window-install.html" target="_blank" rel="noopener">Windows平台安装MongoDB</a><br>
+2， <a href="http://enterprise.arcgis.com/en/monitor/" target="_blank" rel="noopener">ArcGIS Monitor 官方帮助</a><br>
+3， <a href="http://enterprise.arcgis.com/en/monitor/latest/get-started/arcgis-monitor-system-requirements.htm" target="_blank" rel="noopener">ArcGIS Monitor 系统需求</a></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/ArcGIS/e91ac247.html" data-toggle="tooltip" data-placement="top" title="更换IP后Portal ,Server, DataStore无法正常访问">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/bigdata/39395030.html" data-toggle="tooltip" data-placement="top" title="基于Kerberos认证配置Hadoop集群在安全模式下运行">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">关键组件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">系统需求</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">安装实践</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">测试环境</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">安装MongoDB</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">安装 .Net Framework 4.5</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">安装ArcGIS Monitor 10.6</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">遇到的问题</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                        
+                          <a class="tag" href="/tags/#Monitor" title="Monitor">Monitor</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://kikitamap.com/" target="_blank">kikita &amp; Maps</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite.com/uncategorized/ebcd2d71.html";
+    var disqus_url = "http://yoursite.com/uncategorized/ebcd2d71.html";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: '💡'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/makeling">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/keling ma">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Keling Ma 2018 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Customized by <a href="https://makeling.github.io">UbuntuSpace</a>
+                    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_uv">
+                         | Total Visits:<span id="busuanzi_value_site_uv"></span>
+                    </span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript  -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'null';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

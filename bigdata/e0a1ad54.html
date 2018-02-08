@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          配置Linux集群服务器间ssh免密码登陆 - UbuntuSpace | 分享空间
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/bigdata/e0a1ad54.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('Demo.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/MaklSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#security" title="security">security</a>
+                            
+                              <a class="tag" href="/tags/#bigdata" title="bigdata">bigdata</a>
+                            
+                        </div>
+                        <h1>配置Linux集群服务器间ssh免密码登陆</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Keling Ma on
+                            2018-01-08
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">UBUNTU SPACE</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>通过SSH访问远程Linux服务器，可能是每一个熟悉Linux系统的工程师最熟悉不过的了，但是通过ssh免密登陆控制远程Linux服务器确是近些年来随着大数据的迅猛发展，在大型服务器集群下才浮现出来的普遍需求，我第一次接触SSH免密配置即是在配置hadoop集群的过程中。ssh免密配置对大型服务器集群的通信非常非常重要，这篇文章是用来梳理ssh免密相关的原理和关键配置过程。</p>
+<h2><span id="理解ssh">理解SSH</span></h2>
+<p><strong>Secure Shell</strong>（安全外壳协议，简称<strong>SSH</strong>）是一种加密的网络传输协议，可在不安全的网络中为网络服务提供安全的传输环境。SSH通过在网络中创建安全隧道来实现SSH客户端与服务器之间的连接。虽然任何网络服务都可以通过SSH实现安全传输，SSH最常见的用途还是远程登录系统，人们通常利用SSH来传输和远程执行命令。</p>
+<p>SSH以<strong>非对称加密</strong>实现身份验证。最常用的身份验证有两种，一种方法是使用自动生成的公钥-私钥对来简单地加密网络连接，随后使用密码认证进行登录；第二种方法是人工生成一对公钥和私钥，通过生成的密钥进行认证，这样就可以在不输入密码的情况下登录。任何人都可以自行生成密钥，公钥需要放在待访问的机器上，而对应的私钥需要由用户自行保管，认证过程基于生成出来的私钥，但整个认证过程私钥本身并不会传输到网络中。今天的配置过程就是践行第二种认证方式。</p>
+<h2><span id="准备测试环境">准备测试环境</span></h2>
+<p>这次配置我们基于三台docker容器,主机名分别为hadoop01,hadoop02,hadoop03。</p>
+<p>它们的系统环境是Centos 7</p>
+<p>*在接下来的配置过程前确保集群内的所有服务器可以通过机器名或全域名通信，如果没有配置统一的DNS，可以通过配置所有服务器的hosts映射来简单替代。</p>
+<p>例如：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop02 etc]# vim /etc/hosts</span><br><span class="line"><span class="number">172.17</span><span class="number">.0</span><span class="number">.2</span>      hadoop01.esrichina.com hadoop01</span><br><span class="line"><span class="number">172.17</span><span class="number">.0</span><span class="number">.3</span>      hadoop02.esrichina.com hadoop02</span><br><span class="line"><span class="number">172.17</span><span class="number">.0</span><span class="number">.4</span>      hadoop03.esrichina.com hadoop03</span><br></pre></td></tr></table></figure>
+<p>任务</p>
+<p>在hadoop01服务器上通过ssh 免密访问hadoop02和hadoop03服务器。可以理解为hadoop01服务器作为ssh客户端，远程访问hadoop02和hadoop03，那hadoop02和hadoop03相当于ssh服务器端。</p>
+<h2><span id="配置过程">配置过程</span></h2>
+<h3><span id="1安装openssh">1，安装openssh</span></h3>
+<ul>
+<li>在所有机器上安装ssh客户端</li>
+</ul>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> ~]<span class="meta">#  yum -y install openssh-clients  </span></span><br><span class="line">[root<span class="symbol">@hadoop02</span> ~]<span class="meta">#  yum -y install openssh-clients  </span></span><br><span class="line">[root<span class="symbol">@hadoop03</span> ~]<span class="meta">#  yum -y install openssh-clients</span></span><br></pre></td></tr></table></figure>
+<p>*客户端必须装，否则后面没办法使用scp命令传输文件。</p>
+<ul>
+<li>在hadoop02，hadoop03上安装ssh服务器端，并启动ssh服务</li>
+</ul>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop02</span> ~]<span class="meta"># yum instsll openssh-server</span></span><br><span class="line">[root<span class="symbol">@hadoop03</span> ~]<span class="meta"># yum instsll openssh-server</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改sshd_config<br>
+允许root用户登陆，并开启PubkeyAuthentication。 对于Red Hat Enterprise Linux 和CentOS，‘UsePAM no’是不支持的，必须要设置成yes，sshd服务才能顺利启动。</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[root@hadoop02</span> <span class="string">.ssh]#</span> <span class="string">vim</span> <span class="string">/etc/ssh/sshd_config</span></span><br><span class="line"><span class="string">PermitRootLogin</span> <span class="literal">yes</span></span><br><span class="line"><span class="string">PubkeyAuthentication</span> <span class="literal">yes</span></span><br><span class="line"><span class="string">UsePAM</span> <span class="literal">yes</span></span><br><span class="line"><span class="string">[root@hadoop03</span> <span class="string">.ssh]#</span> <span class="string">vim</span> <span class="string">/etc/ssh/sshd_config</span></span><br><span class="line"><span class="string">PermitRootLogin</span> <span class="literal">yes</span></span><br><span class="line"><span class="string">PubkeyAuthentication</span> <span class="literal">yes</span></span><br><span class="line"><span class="string">UsePAM</span> <span class="literal">yes</span></span><br></pre></td></tr></table></figure>
+<p>-启动ssd服务</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop02</span> ~]<span class="meta"># systemctl restart sshd</span></span><br><span class="line">[root<span class="symbol">@hadoop03</span> ~]<span class="meta"># systemctl restart sshd</span></span><br></pre></td></tr></table></figure>
+<h3><span id="2-在客户端服务器hadoop01上创建公钥和私钥">2, 在客户端服务器hadoop01上创建公钥和私钥</span></h3>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="meta">@hadoop01</span> /]<span class="comment"># ssh-keygen -t rsa                                          *1</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/root/.ssh/id_rsa):  test_rsa    <span class="symbol">*</span>2</span><br><span class="line">Enter passphrase (empty for no passphrase):                              <span class="symbol">*</span>3</span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved in /root/.ssh/test_rsa.            <span class="symbol">*</span>4</span><br><span class="line">Your public key has been saved in /root/.ssh/test_rsa.pub.          <span class="symbol">*</span>5</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:6QdVD4E2S6x0O/PJ6NhciuQ03BaXm4o4luD1zIeJ6D0 [root<span class="meta">@hadoop01.esrichina.com](mailto:root</span><span class="meta">@hadoop01.esrichina.com)</span>               <span class="symbol">*</span>6</span><br><span class="line">The key's randomart image is:</span><br><span class="line">+---[RSA 2048]----+</span><br><span class="line">|<span class="string">         . .+.   </span>|</span><br><span class="line">|<span class="string">        . B. o   </span>|</span><br><span class="line">|<span class="string">       . =.+ ..  </span>|</span><br><span class="line">|<span class="string">        .o* o    </span>|</span><br><span class="line">|<span class="string">       .S. O +   </span>|</span><br><span class="line">|<span class="string">    . ..=.+ B    </span>|</span><br><span class="line">|<span class="string">   . + @.%.+     </span>|</span><br><span class="line">|<span class="string">    o.E @.B      </span>|</span><br><span class="line">|<span class="string">   ....o .       </span>|</span><br><span class="line">+----[SHA256]-----+</span><br></pre></td></tr></table></figure>
+<p>*1: ssh-keygen是用来生成密钥的工具， 参数-t rsa用来指明生成的密钥以rsa加密公钥算法加密。</p>
+<p><strong>加餐</strong>：RSA<a href="https://baike.baidu.com/item/%E5%85%AC%E9%92%A5" target="_blank" rel="noopener">公钥</a><a href="https://baike.baidu.com/item/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">加密算法</a>是1977年由<a href="https://baike.baidu.com/item/%E7%BD%97%E7%BA%B3%E5%BE%B7%C2%B7%E6%9D%8E%E7%BB%B4%E6%96%AF%E7%89%B9" target="_blank" rel="noopener">罗纳德·李维斯特</a>（Ron Rivest）、<a href="https://baike.baidu.com/item/%E9%98%BF%E8%BF%AA%C2%B7%E8%90%A8%E8%8E%AB%E5%B0%94" target="_blank" rel="noopener">阿迪·萨莫尔</a>（Adi Shamir）和<a href="https://baike.baidu.com/item/%E4%BC%A6%E7%BA%B3%E5%BE%B7%C2%B7%E9%98%BF%E5%BE%B7%E6%9B%BC" target="_blank" rel="noopener">伦纳德·阿德曼</a>（Leonard Adleman）一起提出的。1987年7月首次在美国公布，当时他们三人都在麻省理工学院工作实习。RSA就是他们三人姓氏开头字母拼在一起组成的。</p>
+<p>*2: 这一行提示密钥会默认生成到 /root/.ssh/id_rsa文件中，这个规则是和当前执行keygen的用户挂钩的，默认会在当前用户的主目录下创建.ssh的隐藏文件夹，密钥文件就被保存到这个文件夹下。如果没有特别的要求，可以不必输入新的文件，保留默认值就好。</p>
+<p>*3: 输入密码，为了避免提取的时候麻烦，这个密码可以不设置直接回车</p>
+<p>*4：这一行是说明生成的身份标识已经保存到/root/.ssh/test_rsa文件中了，这里保存的是私钥，会用于后续登陆服务器的身份校验</p>
+<p>*5:  这一行说明公钥保存到/root/.ssh/test_rsa.pub文件中了，这个公钥后续会被上传到ssh server所在的服务器。</p>
+<p>*6:  这是对指纹的说明，256位的加密指纹已经生成，专用于<a href="mailto:root@hadoop01.esrichina.com" target="_blank" rel="noopener">root@hadoop01.esrichina.com</a> 这台服务器。 这个标识符非常重要，可以理解为为<a href="http://hadoop01.esrichina.com" target="_blank" rel="noopener">hadoop01.esrichina.com</a>服务器root用户生成的专属密钥。后续私钥的提取会从root用户下的.ssh隐藏文件夹中的私钥文件中提取。这就意味着我以root用户生成的公钥，上传到服务器上后，是否能以其它用户（比如hdoop用户）免密登陆服务器呢？答案是no。</p>
+<h3><span id="3上传客户端公钥到ssh服务器端">3，上传客户端公钥到ssh服务器端</span></h3>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 .ssh]<span class="comment"># scp ~/.ssh/id_rsa.pub root<span class="doctag">@hadoop</span>02.esrichina.com:~/.ssh</span></span><br><span class="line">[root@hadoop01 .ssh]<span class="comment"># scp ~/.ssh/id_rsa.pub root<span class="doctag">@hadoop</span>03.esrichina.com:~/.ssh</span></span><br></pre></td></tr></table></figure>
+<p>scp 是openssh-clients包提供的命令，可以用于在服务器之间拷贝文件。上述命令的意思是：将hadoop01服务器，root用户主目录~ 下的.ssh/id_rsa.pub文件拷贝到目标服务器<a href="http://hadoop02.esrichina.com" target="_blank" rel="noopener">hadoop02.esrichina.com</a>: root用户主目录下的.ssh文件夹下。如果目标服务器不存在.ssh文件夹，那可以通过下述命令创建，并分配700权限：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop02</span> ssh]<span class="meta"># mkdir ~/.ssh</span></span><br><span class="line">[root<span class="symbol">@hadoop02</span> ssh]<span class="meta"># chmod -R 700 ~/.ssh</span></span><br><span class="line">[root<span class="symbol">@hadoop03</span> ssh]<span class="meta"># mkdir ~/.ssh</span></span><br><span class="line">[root<span class="symbol">@hadoop03</span> ssh]<span class="meta"># chmod -R 700 ~/.ssh</span></span><br></pre></td></tr></table></figure>
+<h3><span id="4将公钥复制到authorized_keys">4，将公钥复制到authorized_keys</span></h3>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="meta">@hadoop</span>02 .ssh]# cat ~<span class="regexp">/.ssh/i</span>d_rsa.pub &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys</span><br><span class="line">[root<span class="meta">@hadoop</span>03 .ssh]# cat ~<span class="regexp">/.ssh/i</span>d_rsa.pub &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys</span><br></pre></td></tr></table></figure>
+<h3><span id="5验证成果">5，验证成果</span></h3>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[root@hadoop01 .ssh]</span># <span class="selector-tag">ssh</span> <span class="selector-tag">root</span>@<span class="keyword">hadoop02</span>.<span class="keyword">esrichina</span>.<span class="keyword">com</span>                  </span><br><span class="line">Last login: Wed Jan <span class="number">10</span> <span class="number">08</span>:<span class="number">49</span>:<span class="number">16</span> <span class="number">2018</span></span><br></pre></td></tr></table></figure>
+<p>如果你看到上述成果，不用输入密码即可登陆，那就说明成功啦。</p>
+<h3><span id="6坑">6，坑</span></h3>
+<p>如果在同一台ssh客户端机器上创建多次密钥，那免密配置可能不会成功，无论怎么折腾，都会提示你输入密码登陆。</p>
+<p>解决办法：</p>
+<p>当存在多个私钥时，可以通过config文件明确为连接的ssh server指定需要匹配的私钥。具体操作如下：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> .ssh]<span class="meta"># vim config</span></span><br></pre></td></tr></table></figure>
+<p>在打开的文件中填入：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Host hadoop02.esrichina.com                  <span class="number">*1</span></span><br><span class="line">​        IdentityFile ~/.ssh/test_rsa         <span class="number">*2</span></span><br><span class="line">​       <span class="built_in"> User </span>root                            <span class="number">*3</span></span><br></pre></td></tr></table></figure>
+<p>*1：指定要连接的ssh server的host name;<br>
+*2: 配置IdentityFile，指定配对的私钥；<br>
+*3: 设置登录ssh server的用户</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/ArcGIS/feab923b.html" data-toggle="tooltip" data-placement="top" title="CustomTianDiTuLayerV100.x示范工程">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/bigdata/72ac84e3.html" data-toggle="tooltip" data-placement="top" title="Kerberos 简单配置攻略">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">理解SSH</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">准备测试环境</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">配置过程</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">1，安装openssh</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">2, 在客户端服务器hadoop01上创建公钥和私钥</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">3，上传客户端公钥到ssh服务器端</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">4，将公钥复制到authorized_keys</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.5.</span> <span class="toc-nav-text">5，验证成果</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.6.</span> <span class="toc-nav-text">6，坑</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#security" title="security">security</a>
+                        
+                          <a class="tag" href="/tags/#bigdata" title="bigdata">bigdata</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://kikitamap.com/" target="_blank">kikita &amp; Maps</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite.com/bigdata/e0a1ad54.html";
+    var disqus_url = "http://yoursite.com/bigdata/e0a1ad54.html";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: '💡'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/makeling">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/keling ma">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Keling Ma 2018 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Customized by <a href="https://makeling.github.io">UbuntuSpace</a>
+                    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_uv">
+                         | Total Visits:<span id="busuanzi_value_site_uv"></span>
+                    </span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript  -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'null';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

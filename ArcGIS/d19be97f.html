@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          通过python自动化修正矢量切片符号和标注压盖问题 - UbuntuSpace | 分享空间
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/ArcGIS/d19be97f.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('Demo.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/MaklSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                            
+                              <a class="tag" href="/tags/#VectorTiles" title="VectorTiles">VectorTiles</a>
+                            
+                              <a class="tag" href="/tags/#python" title="python">python</a>
+                            
+                        </div>
+                        <h1>通过python自动化修正矢量切片符号和标注压盖问题</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Keling Ma on
+                            2017-07-25
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">UBUNTU SPACE</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>通过Pro2.0生成矢量切片时，我们会发现针对点图层，生成的矢量切片在绘制时会出现标注略微压盖符号的现象。</p>
+<p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E9%80%9A%E8%BF%87python%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BF%AE%E6%AD%A3%E7%9F%A2%E9%87%8F%E5%88%87%E7%89%87%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%A0%87%E6%B3%A8%E5%8E%8B%E7%9B%96%E9%97%AE%E9%A2%9801.png" alt="标注压盖符号样图"></p>
+<h2><span id="问题分析">问题分析</span></h2>
+<p>这个问题可以说是现行版本中矢量切片拾取Pro制图参数之间存在一定的技术缺陷引起的，毕竟矢量切片技术遵从的是Mapbox style 规范来绘制地图和Pro中的制图规则并不完全一致，官方预计在未来版本中会针对这个问题增强修复。</p>
+<h2><span id="规避方案">规避方案</span></h2>
+<p>矢量切片最大的优势之一就是可以基于现有切片自定义符号。当然，一般的自定义符号我们是根据现有的配置参数更改值，来实现地图样式的再定制。那是否可以通过增加参数来解决标注和符号的压盖问题呢？答案是肯定的，在Mapbox规范中包含了&quot;text-offset&quot;参数，可以用来实现标注的偏移：<br>
+<img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E9%80%9A%E8%BF%87python%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BF%AE%E6%AD%A3%E7%9F%A2%E9%87%8F%E5%88%87%E7%89%87%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%A0%87%E6%B3%A8%E5%8E%8B%E7%9B%96%E9%97%AE%E9%A2%9802.png" alt="text_offset参数"></p>
+<p>＊说明：“Ems”单位是被用于网页文件媒介的可缩放的单位（即相对单位）。1em就等于当前字体的大小，举个例子来讲，如果文档中字体的大小为10pt，那么1em = 10pt。</p>
+<p>接下来我们就动手修复这个问题吧！</p>
+<h3><span id="修复过程">修复过程：</span></h3>
+<p>1）通过Pro2.0生成矢量切片包，具体的生成过程参照官方帮助：<a href="http://pro.arcgis.com/en/pro-app/tool-reference/data-management/create-vector-tile-package.htm" target="_blank" rel="noopener">创建矢量切片包</a>;</p>
+<p>2）将vptk包拷贝到测试目录，并修改扩展名为zip；</p>
+<p>3）解压缩，获取矢量切片样式文件root.json所在目录，默认目录结构参考：&lt;解压缩后目录&gt;\p12\resources\styles\root.json</p>
+<p>4）用记事本或浏览器打开这个文件，我们可以看到每一个图层的样式和标注分类已经被重新调整为新的layer。如果图层数很少，那找到我们要修改的图层id，手动对其添加“text-offset”参数就可以了。但是如果图层数量过多，手动修改每个图层参数显然不现实，一来容易出错，二来工作量也太大，并且不够灵活。这时，我们就可以通过python编程解析并修改root.json文件。为了方便大家，我写了一个精简版的自动化脚本工具可以通过以下地址获取：<a href="https://github.com/makeling/VTPKPythonTools/blob/master/repairtextoffsettool.py" target="_blank" rel="noopener">自动化修改矢量切片样式工具</a></p>
+<p>自动化脚本工具执行过程：<br>
+<img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E9%80%9A%E8%BF%87python%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BF%AE%E6%AD%A3%E7%9F%A2%E9%87%8F%E5%88%87%E7%89%87%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%A0%87%E6%B3%A8%E5%8E%8B%E7%9B%96%E9%97%AE%E9%A2%9806.png" alt="执行过程"></p>
+<p>在控制台中执行自动化修改工具会返回：<br>
+－ 当前切片包中的图层总数；<br>
+－ 返回当前切片包的图层列表；<br>
+－ 根据图层列表返回的值，在控制台中交互输入要修改的图层名（如果要修改多个图层可以简写名称匹配多个图层）；<br>
+－ 执行修改操作，并返回修改的图层列表。</p>
+<p>检验root.json文件：<br>
+修改前：<br>
+<img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E9%80%9A%E8%BF%87python%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BF%AE%E6%AD%A3%E7%9F%A2%E9%87%8F%E5%88%87%E7%89%87%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%A0%87%E6%B3%A8%E5%8E%8B%E7%9B%96%E9%97%AE%E9%A2%9803.png" alt="text_offset参数修改前"></p>
+<p>修改后：</p>
+<p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E9%80%9A%E8%BF%87python%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BF%AE%E6%AD%A3%E7%9F%A2%E9%87%8F%E5%88%87%E7%89%87%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%A0%87%E6%B3%A8%E5%8E%8B%E7%9B%96%E9%97%AE%E9%A2%9804.png" alt="text_offset参数修改后"></p>
+<p>5）修改完成后，将之前解包后的esriinfo,p12文件夹重新压缩为zip包（注意压缩文件夹结构不要含父级目录，压缩类型选择存储格式）；</p>
+<p>6）再次修改包扩展名为vtpk。</p>
+<p>至此，我们的修复工作就完成了，接下来就是鉴证奇迹的时刻…</p>
+<h2><span id="发布vtpk包检验成果">发布vtpk包，检验成果</span></h2>
+<p>检测过程包括两个关键环节：</p>
+<p>1）检测修改后的vtpk有效。这个判断准则就是在上传vtpk包时，我们勾选的同步发布一个Vector Tile Service是否可以成功发布。如果矢量切片服务可以成功发布出来，就说明包的修改已经成功了。如果不能发布，要检测修改后再压缩的zip包是否多打了一级目录，这样的压缩包是不会被portal正确识别的。</p>
+<p>2）验证标注已经正确偏移。下图是我修改后的结果：<br>
+<img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E9%80%9A%E8%BF%87python%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BF%AE%E6%AD%A3%E7%9F%A2%E9%87%8F%E5%88%87%E7%89%87%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%A0%87%E6%B3%A8%E5%8E%8B%E7%9B%96%E9%97%AE%E9%A2%9805.png" alt="成果验证"></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/ArcGIS/54867fdd.html" data-toggle="tooltip" data-placement="top" title="ArcGIS时空大数据库的备份与恢复">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/ArcGIS/2b986bb2.html" data-toggle="tooltip" data-placement="top" title="CustomLocationDataSourceV100.x-ObjC示范工程">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">问题分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">规避方案</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">修复过程：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">发布vtpk包，检验成果</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                        
+                          <a class="tag" href="/tags/#VectorTiles" title="VectorTiles">VectorTiles</a>
+                        
+                          <a class="tag" href="/tags/#python" title="python">python</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://kikitamap.com/" target="_blank">kikita &amp; Maps</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite.com/ArcGIS/d19be97f.html";
+    var disqus_url = "http://yoursite.com/ArcGIS/d19be97f.html";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: '💡'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/makeling">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/keling ma">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Keling Ma 2018 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Customized by <a href="https://makeling.github.io">UbuntuSpace</a>
+                    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_uv">
+                         | Total Visits:<span id="busuanzi_value_site_uv"></span>
+                    </span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript  -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'null';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

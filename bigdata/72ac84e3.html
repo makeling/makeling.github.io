@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Kerberos 简单配置攻略 - UbuntuSpace | 分享空间
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/bigdata/72ac84e3.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('Demo.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/MaklSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#security" title="security">security</a>
+                            
+                              <a class="tag" href="/tags/#bigdata" title="bigdata">bigdata</a>
+                            
+                        </div>
+                        <h1>Kerberos 简单配置攻略</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Keling Ma on
+                            2017-12-30
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">UBUNTU SPACE</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2><span id="一-kerberos简史">一 Kerberos简史</span></h2>
+<p>Kerberos是一种网络安全认证协议，最早由麻省理工研发，用来保护项目 Athena提供的网络服务器。这个协议以希腊神话中的人物Kerberos（或者Cerberus）命名，他在希腊神话中是Hades的一条凶猛的三头保卫神犬。</p>
+<p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/Kerberos%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A501.png" alt="kerberos"></p>
+<p>Internet是一个非常不安全的地方。在Internet中使用的很多协议并没有提供任何安全保障。一些站点尝试使用防火墙来解决网络安全问题。不幸的是，防火墙假设“坏蛋”都在外边，往往这是非常愚蠢的假设。现实情况是大多数计算机犯罪的毁灭事件都从内部发起。</p>
+<p>Kerberos作为网络安全问题的解决方案，使用强加密技术，以便客户端可以在不安全网络连接上向服务器端证明身份。在客户端和服务器端使用Kerberos证明彼此身份之后，它们也可以加密所有通信以确保隐私和数据的完整性。在系统设计上Kerberos采用C/S架构，基于DEC加密技术，支持客户端和服务器端双向认证。</p>
+<p>总之，Kerberos是一种网络安全问题的解决方案。它提供了认证和强加密工具用以在整个企业基于网络帮助你保护你的信息系统。</p>
+<p>在这篇文章写作时，Kerberos最新版本为2017年12月5日发布的krb5-1.16 版本。</p>
+<h2><span id="二-kerberos-基本原理">二 Kerberos 基本原理</span></h2>
+<p>Kerberos是第三方的认证机制，通过它，用户和用户希望访问的服务依赖于Kerberos服务器彼此认证。这种机制也支持加密用户和服务之间的所有通信。Kerberos 服务器作为密钥分发中心，简称KDC。在高级别上，它包含三部分：</p>
+<ul>
+<li>用户和服务的数据库（即principals）以及他们各自的Kerberos 密码</li>
+<li>认证服务器（AS），执行初始认证并签发授权票据（TGT）</li>
+<li>Ticket授予服务器（TGS）基于初始的TGT签发后续的服务票据（ST）</li>
+</ul>
+<p>关于AS, TGS , user client , Application server , TGT 以及ST的关系，可以参考下图：</p>
+<p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/Kerberos%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A502.png" alt="架构原理"></p>
+<p>用户principal，从AS请求认证，AS返回一个使用用户principal的kerberos密码加密的TGT,它仅被用户principal和AS知晓。用户principal使用Kerberos密码本地解密这个TGT，并且从这个点开始，直到票据过期，用户principal可以使用这个TGT从TGS获取服务票据（ST）。</p>
+<p>Kerberos 认证系统使用一系列的加密消息向验证机证明客户端正在以指定用户身份运行。Kerberos通过使用时间戳来减少需要基础校验的消息数量，除了“tikcket-granting”(TGS)服务被用来支持后续的认证外，不需要重复输入principal的密码。</p>
+<p>最初，客户端和服务器端并没有共享加密密钥。无论何时客户端到一个新的验证机认证自己都依赖于AS生成的新的加密密钥，并且将其安全地分发给彼此。这个新的加密密钥叫做 session key， Kerberos ticket被用来分发它到验证机。</p>
+<p>由于服务principal不可能每次提供密码来解密TGT，它会使用一个特定的文件，叫做keytab，这个文件包含了它的认证授权。<br>
+这种服务票据允许principal访问各种服务。Kerberos服务器控制的一套主机，用户和服务被称作一个域（realm）。</p>
+<blockquote>
+<p>注意：Kerberos是时间敏感型协议，在域内的所有主机必须是时间同步的。既使客户端的本地系统时间和KDC的差异小到5分钟，客户端都可能认证失败。</p>
+</blockquote>
+<h2><span id="三-kerberos-安装部署">三 Kerberos 安装部署</span></h2>
+<p>以下的测试过程是基于宿主在docker环境下的四台服务器hadoop01,hadoop02,hadoop03,hadoop04其中hadoop01作为服务器端KDC，其它三台机器作为客户端。</p>
+<h4><span id="1-系统环境">1 系统环境</span></h4>
+<ul>
+<li>三台docker容器都基于统一的CentOS7</li>
+<li>特殊说明：docker 环境下需要特别设置–priviledged=True 才能使用kerberos</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eg: docker <span class="builtin-name">run</span> -it --name hadoop01 --hostname hadoop01.esrichina.com <span class="attribute">--privileged</span>=<span class="literal">true</span> --mount <span class="attribute">source</span>=hdfs_db,target=/home/hdfs_db hadoopbase</span><br></pre></td></tr></table></figure>
+<h4><span id="2-安装kerberos服务器端">2 安装kerberos服务器端</span></h4>
+<h5><span id="1在hadoop01上部署服务器端软件">1）在hadoop01上部署服务器端软件</span></h5>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="meta-keyword">$yum</span> install krb5-libs krb5-server krb5-workstation</span></span><br></pre></td></tr></table></figure>
+<h5><span id="2修改主配置文件etckrb5conf这个配置文件后续将被下发给所有kerberos客户端服务器">2）修改主配置文件/etc/krb5.conf，这个配置文件后续将被下发给所有kerberos客户端服务器。</span></h5>
+<p><strong><em>确保默认realm设置为域名大写形式</em></strong></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 etc]# <span class="keyword">cat</span> /etc/krb5.<span class="keyword">conf</span></span><br><span class="line">#Configuration snippets may be placed <span class="keyword">in</span> this directory <span class="keyword">as</span> well</span><br><span class="line">includedir /etc/krb5.<span class="keyword">conf</span>.<span class="keyword">d</span>/</span><br><span class="line"></span><br><span class="line">[logging]</span><br><span class="line"> default = <span class="keyword">FILE</span>:/<span class="keyword">var</span>/<span class="keyword">log</span>/krb5libs.<span class="built_in">log</span></span><br><span class="line"> kdc = <span class="keyword">FILE</span>:/<span class="keyword">var</span>/<span class="keyword">log</span>/krb5kdc.<span class="built_in">log</span></span><br><span class="line"> admin_server = <span class="keyword">FILE</span>:/<span class="keyword">var</span>/<span class="keyword">log</span>/kadmind.<span class="built_in">log</span></span><br><span class="line"></span><br><span class="line">[libdefaults]</span><br><span class="line">    default_realm = ESRICHINA.COM</span><br><span class="line">    dns_lookup_realm = false</span><br><span class="line">    dns_lookup_kdc = false</span><br><span class="line">    ticket_lifetime = 24h</span><br><span class="line">    forwardable = true</span><br><span class="line">    udp_preference_limit = 1000000</span><br><span class="line">    default_tkt_enctypes = <span class="keyword">des</span>-cbc-md5 <span class="keyword">des</span>-cbc-<span class="keyword">crc</span> des3-cbc-sha1</span><br><span class="line">    default_tgs_enctypes = <span class="keyword">des</span>-cbc-md5 <span class="keyword">des</span>-cbc-<span class="keyword">crc</span> des3-cbc-sha1</span><br><span class="line">    permitted_enctypes = <span class="keyword">des</span>-cbc-md5 <span class="keyword">des</span>-cbc-<span class="keyword">crc</span> des3-cbc-sha1</span><br><span class="line">[realms]</span><br><span class="line">  ESRICHINA.COM = &#123;</span><br><span class="line">   kdc = hadoop01.esrichina.com:88</span><br><span class="line">   admin_server = hadoop01.esrichina.com:749</span><br><span class="line">   default_domain = esrichina.com</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">[domain_realm]</span><br><span class="line">  .esrichina.com = ESRICHINA.COM</span><br><span class="line">  esrichina.com = ESRICHINA.COM</span><br></pre></td></tr></table></figure>
+<h5><span id="3修改varkerberoskrb5kdckdcconf配置">3）修改/var/kerberos/krb5kdc/kdc.conf配置</span></h5>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@hadoop01 etc]<span class="comment"># cat /var/kerberos/krb5kdc/kdc.conf </span></span><br><span class="line"><span class="attr">default_realm</span> = ESRICHINA.COM</span><br><span class="line"></span><br><span class="line">[kdcdefaults]</span><br><span class="line"> <span class="attr">kdc_ports</span> = <span class="number">0</span></span><br><span class="line"> <span class="attr">v4_mode</span> = nopreauth</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line"> ESRICHINA.<span class="attr">COM</span> = &#123;</span><br><span class="line">	<span class="attr">kdc_ports</span> = <span class="number">88</span></span><br><span class="line">        <span class="attr">admin_keytab</span> = /etc/kadm5.keytab</span><br><span class="line">        <span class="attr">database_name</span> = /var/kerberos/krb5kdc/principal</span><br><span class="line">        <span class="attr">acl_file</span> = /var/kerberos/krb5kdc/kadm5.acl</span><br><span class="line">        <span class="attr">key_stash_file</span> = /var/kerberos/krb5kdc/stash</span><br><span class="line">        <span class="attr">max_life</span> = <span class="number">10</span>h <span class="number">0</span>m <span class="number">0</span>s</span><br><span class="line">        <span class="attr">max_renewable_life</span> = <span class="number">7</span>d <span class="number">0</span>h <span class="number">0</span>m <span class="number">0</span>s</span><br><span class="line">        <span class="attr">master_key_type</span> = des3-hmac-sha1</span><br><span class="line">        <span class="attr">supported_enctypes</span> = arcfour-hmac:normal des3-hmac-sha1:normal des-cbc-crc:normal des:normal des:v4 des:norealm des:onlyrealm des:afs3</span><br><span class="line">        <span class="attr">default_principal_flags</span> = +preauth</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h5><span id="4修改varkerberoskrb5kdckadm5acl-配置">4）修改/var/kerberos/krb5kdc/kadm5.acl 配置</span></h5>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> etc]<span class="meta"># cat /var/kerberos/krb5kdc/kadm5.acl  </span></span><br><span class="line">*/admin<span class="symbol">@ESRICHINA</span>.COM	*</span><br></pre></td></tr></table></figure>
+<p>这步配置的含义：所有匹配“ */admin@ESRICHINA.COM ”的principal都拥有全部权限 “*”</p>
+<p>至此，服务器端环境基本搭建完成了，接下来开始创建KDC数据库用以保存kerberos 数据</p>
+<h5><span id="5创建kdc数据库用以保存kerberos-数据">5）创建KDC数据库用以保存Kerberos 数据</span></h5>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> etc]<span class="meta"># kdb5_util create -r  </span></span><br><span class="line"> ESRICHINA.COM -s</span><br></pre></td></tr></table></figure>
+<p>创建完成后，可以检查下/var/kerberos/krb5kdc/目录，里面包含了相应的principal*文件：</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 etc]<span class="comment"># ll /var/kerberos/krb5kdc/           </span></span><br><span class="line">total<span class="number"> 32 </span> </span><br><span class="line">-rw-------<span class="number"> 1 </span>root root  <span class="number"> 24 </span>Dec<span class="number"> 20 </span>09:22 kadm5.acl</span><br><span class="line">-rw-------<span class="number"> 1 </span>root root<span class="number"> 1019 </span>Dec<span class="number"> 20 </span>09:37 kadm5.keytab</span><br><span class="line">-rw-------<span class="number"> 1 </span>root root <span class="number"> 630 </span>Dec<span class="number"> 20 </span>09:28 kdc.conf</span><br><span class="line">-rw-------<span class="number"> 1 </span>root root<span class="number"> 8192 </span>Dec<span class="number"> 21 </span>02:27 principal</span><br><span class="line">-rw-------<span class="number"> 1 </span>root root<span class="number"> 8192 </span>Dec<span class="number"> 20 </span>09:30 principal.kadm5</span><br><span class="line">-rw-------<span class="number"> 1 </span>root root   <span class="number"> 0 </span>Dec<span class="number"> 20 </span>09:30 principal.kadm5.lock</span><br><span class="line">-rw-------<span class="number"> 1 </span>root root   <span class="number"> 0 </span>Dec<span class="number"> 21 </span>02:27 principal.ok</span><br><span class="line">-rw-------<span class="number"> 1 </span>root root  <span class="number"> 70 </span>Dec<span class="number"> 20 </span>09:30 stash</span><br></pre></td></tr></table></figure>
+<h5><span id="6开始创建管理员和测试用户">6）开始创建管理员和测试用户</span></h5>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> etc]<span class="meta"># kadmin.local</span></span><br><span class="line">kadmin.<span class="keyword">local</span>:  addprinc root/admin</span><br><span class="line">kadmin.<span class="keyword">local</span>:  addprinc makl/admin</span><br><span class="line">kadmin.<span class="keyword">local</span>:  listprincs</span><br><span class="line">kadmin.<span class="keyword">local</span>:  <span class="keyword">exit</span></span><br></pre></td></tr></table></figure>
+<h5><span id="7启动kerberos-kdc-和kadmin-daemons">7）启动Kerberos KDC 和kadmin daemons ：</span></h5>
+<p>正常情况，基于linux 7系统，可以通过以下命令启动服务：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl start krb5kdc<span class="selector-class">.service</span>    </span><br><span class="line">systemctl start kadmin<span class="selector-class">.service</span>  </span><br><span class="line">systemctl enable krb5kdc<span class="selector-class">.service</span>  </span><br><span class="line">systemctl enable kadmin.service</span><br></pre></td></tr></table></figure>
+<p>但是由于docker环境众所周知的bug ， systemctl start命令会遭遇“Failed to get D-Bus connection: Operation not permitted”错误，我通过以下方式开启kerberos守护进程:</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> sbin]<span class="meta"># /usr/sbin/krb5kdc -start  </span></span><br><span class="line">[root<span class="symbol">@hadoop01</span> sbin]<span class="meta"># /usr/sbin/kadmind</span></span><br></pre></td></tr></table></figure>
+<p>OK，服务器端工作已经全部完成，接下来我们开始搭建kerberos客户端环境。</p>
+<h4><span id="3-安装kerberos-客户端">3  安装kerberos 客户端</span></h4>
+<h5><span id="1在所有客户端机器中安装kerberos客户端软件">1）在所有客户端机器中安装kerberos客户端软件：</span></h5>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop02</span> etc]<span class="meta"># yum -y install krb5-libs krb5-workstation  </span></span><br><span class="line">[root<span class="symbol">@hadoop03</span> etc]<span class="meta"># yum -y install krb5-libs krb5-workstation  </span></span><br><span class="line">[root<span class="symbol">@hadoop04</span> etc]<span class="meta"># yum -y install krb5-libs krb5-workstation</span></span><br></pre></td></tr></table></figure>
+<h5><span id="2将之前在hadoop01-kerberos-server上配置的etckrb5conf文件拷贝到客户端机器">2）将之前在hadoop01 kerberos server上配置的/etc/krb5.conf文件拷贝到客户端机器</span></h5>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop02 ssh]<span class="comment"># scp root<span class="doctag">@hadoop</span>01:/etc/krb5.conf /etc/krb5.conf  </span></span><br><span class="line">krb5.conf                                     <span class="number">100</span>%  <span class="number">828</span>     <span class="number">1.8</span>MB/s   <span class="number">00</span><span class="symbol">:</span><span class="number">00</span></span><br></pre></td></tr></table></figure>
+<p>同理，拷贝到hadoop03和hadoop04服务器上</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop03 ssh]<span class="comment"># scp root<span class="doctag">@hadoop</span>01:/etc/krb5.conf /etc/krb5.conf  </span></span><br><span class="line">[root@hadoop04 ssh]<span class="comment"># scp root<span class="doctag">@hadoop</span>01:/etc/krb5.conf /etc/krb5.conf</span></span><br></pre></td></tr></table></figure>
+<p>这步操作需要你在集群内所有服务器上配置了ssh环境，允许使用scp命令。如果没有，可以通过nfs共享文件也可以。</p>
+<h4><span id="4-检测kerberos安全验证">4 检测kerberos安全验证</span></h4>
+<p>kerberos支持在KDC上使用kadmin.local管理kerberos, 也支持使用kamin在远程客户端机器上管理kerberos。</p>
+<h5><span id="1在使用kadmin-之前先通过kinit验证是否可以登陆">1）在使用kadmin 之前，先通过kinit验证是否可以登陆：</span></h5>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop03 ssh]<span class="comment"># kinit makl/admin<span class="doctag">@ESRICHINA</span>.COM</span></span><br><span class="line">Password <span class="keyword">for</span> makl/admin@ESRICHINA.<span class="symbol">COM:</span></span><br></pre></td></tr></table></figure>
+<p>这步使用了principal + kerberos 密码的校验方式，如果校验正确，kerberos不会有任何提示，而是直接返回到命令行状态，接下来再输入kadmin命令，输入密码，即可进入kerberos管理状态。</p>
+<h5><span id="2进入kadmin">2）进入kadmin</span></h5>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop03</span> ssh]<span class="meta"># kadmin  </span></span><br><span class="line">Authenticating as principal makl/admin<span class="symbol">@ESRICHINA</span>.COM <span class="keyword">with</span> password.   </span><br><span class="line">Password <span class="keyword">for</span> makl/admin<span class="symbol">@ESRICHINA</span>.COM:</span><br></pre></td></tr></table></figure>
+<h5><span id="3在kadmin环境中通过list_principals命令列出当前kerberos-server中所有的用户">3）在kadmin环境中，通过list_principals命令列出当前kerberos server中所有的用户</span></h5>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">kadmin:</span>  list_principals</span><br></pre></td></tr></table></figure>
+<p>上述检测过程是通过客户端输入密码的方式来校验的，对于运行在客户端的程序上述方式显然不够便利，kerberos还提供了免交互式的验证方式，通过keytab来保存密钥，实现自动校验。</p>
+<h5><span id="4创建key-table密钥表命令">4）创建key table(密钥表)命令</span></h5>
+<h6><span id="41这些操作需要管理员权限执行因此我们首先进入kamin">4.1）这些操作需要管理员权限执行，因此我们首先进入kamin：</span></h6>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> krb5kdc]<span class="meta"># kinit makl/admin@ESRICHINA.COM    </span></span><br><span class="line">Password <span class="keyword">for</span> makl/admin<span class="symbol">@ESRICHINA</span>.COM:  </span><br><span class="line">[root<span class="symbol">@hadoop01</span> krb5kdc]<span class="meta"># kadmin  </span></span><br><span class="line">Authenticating as principal makl/admin<span class="symbol">@ESRICHINA</span>.COM <span class="keyword">with</span> password.  </span><br><span class="line">Password <span class="keyword">for</span> makl/admin<span class="symbol">@ESRICHINA</span>.COM:</span><br></pre></td></tr></table></figure>
+<h6><span id="42在kadmin下通过ktadd命令为用户principal创建密钥">4.2）在kadmin下，通过ktadd命令为用户principal创建密钥</span></h6>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">kadmin</span>:  ktadd -k /var/kerberos/krb5kdc/kadm5.keytab makl/admin<span class="variable">@ESRICHINA</span>.COM</span><br><span class="line">Entry for principal makl/admin<span class="variable">@ESRICHINA</span>.COM with kvno <span class="number">3</span>, encryption type arcfour-hmac added to keytab <span class="attribute">WRFILE</span>:/var/kerberos/krb5kdc/kadm5.keytab.</span><br><span class="line">Entry for principal makl/admin<span class="variable">@ESRICHINA</span>.COM with kvno <span class="number">3</span>, encryption type des3-cbc-sha1 added to keytab <span class="attribute">WRFILE</span>:/var/kerberos/krb5kdc/kadm5.keytab.</span><br><span class="line">Entry for principal makl/admin<span class="variable">@ESRICHINA</span>.COM with kvno <span class="number">3</span>, encryption type des-cbc-crc added to keytab <span class="attribute">WRFILE</span>:/var/kerberos/krb5kdc/kadm5.keytab.</span><br></pre></td></tr></table></figure>
+<h6><span id="43分发密钥表">4.3）分发密钥表</span></h6>
+<p>这个密钥表是服务器端和客户端免密认证的关键，也是服务器端和客户端最重要的秘密，因此创建好后，需要在集群内所有服务器上分发，用来后续的principal校验。</p>
+<p>这里我只举一个例子，将keytab通过scp命令从hadoop01服务器拷贝到hadoop03,牢记这个keytab需要在所有客户端和服务器端分发和保密：</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop<span class="number">03</span> krb<span class="number">5</span>kdc]<span class="attr"># scp root@hadoop01</span>:/var/kerberos/krb<span class="number">5</span>kdc/kad<span class="name">m5.</span>keytab /var/kerberos/krb<span class="number">5</span>kdc/kad<span class="name">m5.</span>keytab</span><br><span class="line">kad<span class="name">m5.</span>keytab                                  <span class="number">100</span><span class="meta">%</span> <span class="number">1220</span>     <span class="number">2.1</span>MB/s   <span class="number">00</span>:<span class="number">00</span></span><br></pre></td></tr></table></figure>
+<h6><span id="44验证免密登陆">4.4）验证免密登陆：</span></h6>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="meta">@hadoop</span>03 krb5kdc]# kinit -kt /<span class="keyword">var</span>/kerberos/krb5kdc/kadm5.keytab makl/admin<span class="meta">@ESRICHINA</span>.COM</span><br><span class="line">[root<span class="meta">@hadoop</span>03 krb5kdc]# kadmin -kt /<span class="keyword">var</span>/kerberos/krb5kdc/kadm5.keytab -p makl/admin<span class="meta">@ESRICHINA</span>.COM</span><br><span class="line">Authenticating <span class="keyword">as</span> principal makl/admin<span class="meta">@ESRICHINA</span>.COM <span class="keyword">with</span> keytab /<span class="keyword">var</span>/kerberos/krb5kdc/kadm5.keytab.</span><br><span class="line">kadmin:</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>提示：kadmin 命令中在输入principal之前，有一个-p 标识符，和kinit命令规则并不同，如果你忽略了，就可能遭遇登陆失败。</p>
+</blockquote>
+<p>最后，简单总结几个常用的kerberos命令。</p>
+<h4><span id="5-常用kerberos-命令">5 常用kerberos 命令</span></h4>
+<h5><span id="1退出kadmin">1）退出kadmin</span></h5>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kadmin:  <span class="keyword">exit</span></span><br></pre></td></tr></table></figure>
+<h5><span id="2删除当前认证缓存">2）删除当前认证缓存</span></h5>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop03</span> krb5kdc]<span class="meta"># kdestroy</span></span><br></pre></td></tr></table></figure>
+<h5><span id="3列出当前用户">3）列出当前用户</span></h5>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop03 ssh]# klist</span><br><span class="line">Ticket cache: FILE:/tmp/krb5cc_0</span><br><span class="line">Default principal: makl/admin@ESRICHINA.COM</span><br><span class="line"></span><br><span class="line">Valid starting     Expires           <span class="built_in"> Service </span>principal</span><br><span class="line">12/21/17 02:27:47  12/21/17 12:27:47  krbtgt/ESRICHINA.COM@ESRICHINA.COM</span><br><span class="line">	renew until 12/22/17 02:27:43</span><br></pre></td></tr></table></figure>
+<h5><span id="4删除已有principal">4）删除已有principal</span></h5>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 keytab]<span class="comment"># kadmin.local</span></span><br><span class="line">kadmin.local:  delprinc nn/esrichina.com@ESRICHINA.COM</span><br><span class="line">Are you sure you want <span class="keyword">to</span> <span class="keyword">delete</span> the principal <span class="string">"nn/esrichina.com@ESRICHINA.COM"</span>? (<span class="literal">yes</span>/<span class="literal">no</span>): <span class="literal">yes</span></span><br><span class="line">Principal <span class="string">"nn/esrichina.com@ESRICHINA.COM"</span> deleted.</span><br></pre></td></tr></table></figure>
+<p>这篇文档只是我在配置kerberos过程中一些过程的总结，更详细的信息建议阅读kerberos的在线帮助。</p>
+<h4><span id="6-靠谱的kerberos学习资源">6 靠谱的kerberos学习资源</span></h4>
+<p>-麻省在线帮助：<a href="https://web.mit.edu/kerberos/krb5-latest/doc/" target="_blank" rel="noopener">https://web.mit.edu/kerberos/krb5-latest/doc/</a><br>
+-相关论文：<a href="https://web.mit.edu/kerberos/papers.html" target="_blank" rel="noopener">https://web.mit.edu/kerberos/papers.html</a></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/bigdata/e0a1ad54.html" data-toggle="tooltip" data-placement="top" title="配置Linux集群服务器间ssh免密码登陆">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/OS/5577a97e.html" data-toggle="tooltip" data-placement="top" title="如何为windows 文件共享开启”盘符$”访问权限">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一 Kerberos简史</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二 Kerberos 基本原理</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三 Kerberos 安装部署</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.1.</span> <span class="toc-nav-text">1 系统环境</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.2.</span> <span class="toc-nav-text">2 安装kerberos服务器端</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.2.1.</span> <span class="toc-nav-text">1）在hadoop01上部署服务器端软件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.2.2.</span> <span class="toc-nav-text">2）修改主配置文件/etc/krb5.conf，这个配置文件后续将被下发给所有kerberos客户端服务器。</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.2.3.</span> <span class="toc-nav-text">3）修改/var/kerberos/krb5kdc/kdc.conf配置</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.2.4.</span> <span class="toc-nav-text">4）修改/var/kerberos/krb5kdc/kadm5.acl 配置</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.2.5.</span> <span class="toc-nav-text">5）创建KDC数据库用以保存Kerberos 数据</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.2.6.</span> <span class="toc-nav-text">6）开始创建管理员和测试用户</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.2.7.</span> <span class="toc-nav-text">7）启动Kerberos KDC 和kadmin daemons ：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.3.</span> <span class="toc-nav-text">3  安装kerberos 客户端</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.3.1.</span> <span class="toc-nav-text">1）在所有客户端机器中安装kerberos客户端软件：</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.3.2.</span> <span class="toc-nav-text">2）将之前在hadoop01 kerberos server上配置的/etc/krb5.conf文件拷贝到客户端机器</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.4.</span> <span class="toc-nav-text">4 检测kerberos安全验证</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.4.1.</span> <span class="toc-nav-text">1）在使用kadmin 之前，先通过kinit验证是否可以登陆：</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.4.2.</span> <span class="toc-nav-text">2）进入kadmin</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.4.3.</span> <span class="toc-nav-text">3）在kadmin环境中，通过list_principals命令列出当前kerberos server中所有的用户</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.4.4.</span> <span class="toc-nav-text">4）创建key table(密钥表)命令</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.4.4.1.</span> <span class="toc-nav-text">4.1）这些操作需要管理员权限执行，因此我们首先进入kamin：</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.4.4.2.</span> <span class="toc-nav-text">4.2）在kadmin下，通过ktadd命令为用户principal创建密钥</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.4.4.3.</span> <span class="toc-nav-text">4.3）分发密钥表</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.4.4.4.</span> <span class="toc-nav-text">4.4）验证免密登陆：</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.5.</span> <span class="toc-nav-text">5 常用kerberos 命令</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.5.1.</span> <span class="toc-nav-text">1）退出kadmin</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.5.2.</span> <span class="toc-nav-text">2）删除当前认证缓存</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.5.3.</span> <span class="toc-nav-text">3）列出当前用户</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.5.4.</span> <span class="toc-nav-text">4）删除已有principal</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.6.</span> <span class="toc-nav-text">6 靠谱的kerberos学习资源</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#security" title="security">security</a>
+                        
+                          <a class="tag" href="/tags/#bigdata" title="bigdata">bigdata</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://kikitamap.com/" target="_blank">kikita &amp; Maps</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite.com/bigdata/72ac84e3.html";
+    var disqus_url = "http://yoursite.com/bigdata/72ac84e3.html";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: '💡'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/makeling">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/keling ma">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Keling Ma 2018 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Customized by <a href="https://makeling.github.io">UbuntuSpace</a>
+                    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_uv">
+                         | Total Visits:<span id="busuanzi_value_site_uv"></span>
+                    </span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript  -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'null';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
