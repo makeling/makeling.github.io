@@ -86,22 +86,22 @@
     </url>
 
     <url>
+        <loc>http://yoursite.com/tags/iOS/</loc>
+        <lastmod>2018-02-08T08:42:01.985Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://yoursite.com/tags/quantum/</loc>
-        <lastmod>2018-02-08T08:40:52.994Z</lastmod>
+        <lastmod>2018-02-08T08:42:01.986Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite.com/tags/IBMQ/</loc>
-        <lastmod>2018-02-08T08:40:52.994Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/iOS/</loc>
-        <lastmod>2018-02-08T08:41:22.123Z</lastmod>
+        <lastmod>2018-02-08T08:42:01.986Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
