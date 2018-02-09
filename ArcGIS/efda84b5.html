@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          CustomTianDiTuLayerV100.x示范工程 - UbuntuSpace | 分享空间
+          ArcGIS Monitor 10.6管理员基本配置实践 - UbuntuSpace | 分享空间
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/ArcGIS/feab923b.html">
+    <link rel="canonical" href="http://yoursite.com/ArcGIS/efda84b5.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -92,16 +92,14 @@
                             
                               <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                             
-                              <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
-                            
-                              <a class="tag" href="/tags/#Demo" title="Demo">Demo</a>
+                              <a class="tag" href="/tags/#Monitor" title="Monitor">Monitor</a>
                             
                         </div>
-                        <h1>CustomTianDiTuLayerV100.x示范工程</h1>
+                        <h1>ArcGIS Monitor 10.6管理员基本配置实践</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Keling Ma on
-                            2018-01-09
+                            2018-02-01
                         </span>
                     </div>
                 
@@ -218,36 +216,117 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2><span id="概览">概览</span></h2>
-<p>这个示例是为了解决如何基于ArcGIS Runtime SDK for iOS 100.x，通过客户化图层访问天地图WMTS服务。这个Demo包含Swift和ObjC两种语言的实现，基于Xcode8.2版本开发，支持iOS9以上的系统部署。</p>
-<h2><span id="说明">说明</span></h2>
-<p>工程中包含的TianDiTuLayer，是用于访问天地图服务的自定义图层。TianDiTuLayerInfo封装了天地图wmts服务的缓存schema信息。</p>
-<p>这个Demo实现了对以下天地图服务的访问：</p>
-<ol>
-<li>天地图矢量服务，（地图，中文标注，英文标注）</li>
-<li>天地图影像服务，（地图，中文标注，英文标注）</li>
-<li>天地图地形服务，（地图，中文标注）</li>
-</ol>
-<p>支持Web Mercator和GCS2000两种坐标系的服务访问。</p>
-<h2><span id="更新">更新</span></h2>
-<p>目前Demo已经更新至支持ArcGIS Runtime SDK for iOS 100.2版本。</p>
-<h2><span id="系统需求">系统需求</span></h2>
-<ol>
-<li>ArcGIS Runtime SDK for iOS 100.0</li>
-<li>Xcode 8(或更高)</li>
-<li>iOS 10 SDK（或更高）</li>
-</ol>
-<h2><span id="工程下载地址">工程下载地址</span></h2>
+                <p><a href="https://makeling.github.io/ArcGIS/ebcd2d71.html" target="_blank" rel="noopener">安装好ArcGIS Monitor10.6的全部组件</a>后，接下来我们需要通过ArcGIS Monitor Administrator 桌面工具进一步完成监控所需的各种配置。这个管理工具非常强大，集成了从连接ArcGIS Monitor Server, 注册collections, 添加monitor services, 添加各个维度的计数器，配置用户权限，使用的端口，到配置 email 通知等各项管理任务。在开始监控前需要首先创建到Monitor Server 的连接，一旦连接被建立，就可以继续创建monitor services和counters用来收集数据和配置实时告警通知。</p>
+<h2><span id="1添加到monitor-server的连接">1，添加到Monitor Server的连接</span></h2>
+<ul>
+<li>在开始菜单中启动ArcGIS Monitor Administrator, 点击Add Connection按钮，添加一个新的连接。</li>
+</ul>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Add_Connection.png" width="400px">
+<ul>
+<li>输入连接名，起任何名字都可以；</li>
+<li>hostname:port是要输入安装中Monitor Server的主机名和端口；</li>
+<li>User, Password 是指Monitor Server访问mongo db库的用户名和密码。要注意用户名和密码是大小写敏感的。</li>
+<li>连接创建成功后，会看到下面的结果：</li>
+</ul>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Connection_Result.png" width="400px">
+<h2><span id="2注册collection">2，注册Collection</span></h2>
+<p>Collection 可以理解为收集器的集合。</p>
+<ul>
+<li>点击Connection中的Open按钮，进入Collection管理窗口，这时候应该会看到一个空的窗口；</li>
+<li>点击File &gt; Register，会弹出Register Collection窗口，输入Collection名称和Email， 点击Add按钮完成添加。</li>
+</ul>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Register_Collection.png" width="400px">
+<h2><span id="3添加monitor-service">3，添加Monitor service</span></h2>
+<p>每个Collection都可以添加一个或多个monitor service， 每个monitor service对应于一个Windows服务。monitor正是通过这些工作进程来采集数据的。</p>
+<ul>
+<li>在窗口列表中选择新注册的Collection:conn1, 右键弹出菜单中选择Add Monitor Service选项，进入New Collector配置窗口，给新添加的Collector起个名字，端口默认从8000开始分配，不需要修改，但是要确保这些端口没有被占用。</li>
+</ul>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Add_Collector.png" width="400px">
+<ul>
+<li>单击Add, 完成添加，管理器窗口会是下图的样子：</li>
+</ul>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_ms_finished.png" width="800px">
+<ul>
+<li>我们再到服务管理器中查看下相应的服务是否创建出来了：</li>
+</ul>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Services.png" width="800px">
+<h2><span id="4-为monitor-service-设置用户权限">4,   为Monitor service 设置用户权限</span></h2>
+<p>Monitor service是收集各种监控数据的工作进程。 既然要收集各种CPU 、内存、硬盘等等操作系统的性能数据，这要求服务的执行用户必须拥有Windows 管理员权限，并且这个用户密码需要设置为“密码永不过期”。</p>
+<ul>
+<li>在服务管理窗口中，找到对应的monitor service服务，我以ArcGIS Monitor Service conn1_ms0为例。</li>
+<li>右键选择“属性”，切换到“登陆”选项卡，选择“此账户”选项，点击“浏览”按钮，设置“Administrator”账户为服务运行账户，并输入正确的密码。</li>
+</ul>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_set_permissions.png" width="800px">
+<ul>
+<li>一路点击确定，关闭所有窗口。</li>
+<li>为了让设置生效，服务需要重启。</li>
+</ul>
+<p>通常我们是要监控远程服务器的各种性能指标的，为了让monitor service进程拥有访问远程服务器的权限，需要在远程服务器上存在相同的用户，并具备管理员权限。如果你的环境像我一样，所有服务器的管理员用户密码都相同，那就可以直接使用Administrator用户。如果不是，那建议在所有服务器上新建monitor用户，设置密码永久不过期，并将其加入到管理员组。</p>
+<blockquote>
+<p>另外还有一个windows针对Administrator用户的陷阱需要注意，否则后面的环节你可能遭遇无法连接远程服务器的错误。微软系统默认开启了一个非常小众的安全策略叫做“UAC 远程限制”，它会为本地用户账户或Windows账户过滤访问token. 这将限制局域网内用户以管理员用户通过“盘符$”的方式访问共享目录，为了关闭UAC远程限制，可以参考我之前写过的一篇技术文章：《<a href="https://makeling.github.io/OS/5577a97e.html" target="_blank" rel="noopener">如何为windows文件共享开启“盘符$”访问权限</a>》。</p>
+</blockquote>
+<h2><span id="5添加counters">5，添加counters</span></h2>
+<p>计数器定义了我们要收集哪些维度的数据，比如包括系统状态、可用性、使用率以及Enterprise GIS的资源使用情况。ArcGIS Monitor 中为我们提供了很多种类型的计数器，包括：</p>
+<ul>
+<li>System计数器: 用来定义系统性能和资源的使用情况的矩阵；</li>
+<li>Process计数器：用于聚合命名进程矩阵；</li>
+<li>ArcGIS计数器：定义针对ArcGIS Server和服务的监控矩阵；</li>
+<li>Http计数器：定义针对指定URL的响应时间和请求字节数的监控矩阵；</li>
+<li>Portal计数器：定义portal中桌面，web和所有项目总数的监控矩阵；</li>
+<li>DB计数器：定义最近一次数据样本被采集的矩阵；</li>
+<li>RDP计数器：定义对非活动和活动状态的所有远程桌面会话的监控矩阵；</li>
+<li>Amazon计数器：定义最近一次数据样本被采集的矩阵；</li>
+<li>Ext计数器： 为自定义监控扩展提供的保留计数器。</li>
+</ul>
+<p>再回到我们之前添加好monitor service的Administrator 配置窗口中，展开一个monitor service节点，就可以看到上述的这些counters。这时候我们还没添加任何counter，所以每个counters数组中都是0，为了避免文章过长，接下来我就以添加System counter为例演示下添加计数器的过程。</p>
+<h3><span id="权限要求">权限要求：</span></h3>
+<p>对于系统和进程各种指标的监控，要求monitor service进程具备访问被监控服务器的管理员权限：</p>
+<ul>
+<li>对于Windows ， 用户必须具备管理员组权限或者WMI访问权限。关于<a href="http://enterprise.arcgis.com/en/monitor/latest/administration/configure-wmi-access-for-nonadministrator-accounts.htm" target="_blank" rel="noopener">WMI</a>的配置可以直接点击链接了解更多内容。</li>
+<li>对于Linux， 用户需要具备访问cat, awk, ls 和grep 命令的权限，并且对于/proc文件夹有read权限。</li>
+</ul>
+<h3><span id="添加过程">添加过程：</span></h3>
 <ul>
 <li>
-<p>For ObjC:<br>
-<a href="https://github.com/makeling/CustomTianDiTuLayerV100.0-ObjC.git" target="_blank" rel="noopener">ArcGISRuntimeForIOSV100.0_ObjcDemos</a></p>
+<p>回到monitor service的counters列表中，找到System，可以右键选择“Add”，也可以点击窗口上方的Add按钮添加一个counter,这个过程会自动为我们创建一个New counter；</p>
 </li>
 <li>
-<p>For Swift:<br>
-<a href="https://github.com/makeling/CustomTianDiTuLayerV100.0-Swift.git" target="_blank" rel="noopener">ArcGISRuntimeForIOSV100_SwiftDemos</a></p>
+<p>下移点击New，修改配置项，先添加一个windows远程服务器：</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Add_Windows.png" width="800px">
 </li>
 </ul>
+<blockquote>
+<p>由于是要访问远程服务器，因此确保局域网内，从monitor所在机器可以ping通被监控服务器。如果通过域名无法ping通，可以检测hosts文件中是否添加了IP 到域名的映射，另外检测被监控机器是否开启了防火墙并且阻塞了monitor service端口。</p>
+</blockquote>
+<ul>
+<li>填好配置项后，点击Test按钮，确保可以连通。</li>
+<li>在Alerts选项卡中可以设置针对各个监测指标的告警域值：</li>
+</ul>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_System_Alerts.png" width="800px">
+<p>在这个配置中，设置了三个警戒线：当cpu&gt;85%, 可用内存&lt; 10%， 可用硬盘空间&lt; 2G 就会触发告警。如果有进一步细粒度控制的需要，可以通过上面的配置栏继续添加警戒线。</p>
+<ul>
+<li>做好配置后，就可以点击&quot;Save&quot;按钮保存配置，按照同样的过程我们再添加一个对Linux服务器的监控。</li>
+</ul>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Add_Linux.png" width="800px">
+<p>对Linux服务器的监控，连接用户的权限控制和Windows不同。Windows是使用Monitor Service进程执行账户自动完成远程机器访问授权验证的，对于Linux服务器，当我们把操作系统类型切换为“Linux”时会发现自动增加了认证的设置栏，可以点击Add Credential按钮添加一个全局的认证项，然后配置选择这个认证项就可以了。</p>
+<p>从我的实践过程来看Monitor对远程Linux服务器的监控过程更加透明，更不易出错。</p>
+<h3><span id="6-配置email通知">6,   配置email通知</span></h3>
+<p>配置好Counters , Monitor已经进入监控状态了，会按照我们设置的数据采集间隔来收集数据。一旦监控指标超出警戒值，就会引发告警。我们不能期待管理员打开Monitor控制台，实时的跟踪被监控系统的状态，最理想的方式是一旦出现紧急情况，第一时间通过邮件通知管理员，以便人工介入处理。</p>
+<p>接下来我们就来配置email通知：</p>
+<ul>
+<li>在Administrator收集窗口中，选择之前创建的收集组节点，单击菜单中的&quot;Notifications&quot;按钮，会显示“Site Notifications”配置窗口。</li>
+</ul>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Add_Notification.png" width="800px">
+<p>通知email可以按照不同的监控计数器来配置，也可以笼统的按照全部一致的规则来配置。这里我选择了System Counters， 在Email中添加需要收到通知的业务人员邮件，点击“Add”按钮，就会完成添加。还可以继续添加更多需要收到通知邮件的用户。</p>
+<p>Monitor 发送通知邮件基于以下两个规则：</p>
+<ul>
+<li>当告警情况发生时，会立即自动触发通知邮件发送；</li>
+<li>如果条件一直处于告警或失败状态，Monitor会每4个小时循环发送邮件。</li>
+</ul>
+<p>OK，到这儿ArcGIS Monitor的基本配置流程就已经完成了，这篇文章中记录的测试过程只是为了探索ArcGIS Monitor 管理员配置的基本流程，为了保持简洁、清晰，并未包含对各种计数器的配置过程。有了这些基础，配置其它的计数器，大家就放手实践吧。当然，也可以参考Esri官方配置文档（绝对的极简风）来实践。</p>
+<p>参考资料：</p>
+<p><a href="http://enterprise.arcgis.com/en/monitor/latest/administration/add-a-counter.htm" target="_blank" rel="noopener">ArcGIS Monitor Administrator帮助文档</a></p>
+<h3><span id=""></span></h3>
 
                 
 
@@ -256,12 +335,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/quantum/15f208f9.html" data-toggle="tooltip" data-placement="top" title="认识量子比特世界">&larr; Previous Post</a>
+                            <a href="/ArcGIS/ebcd2d71.html" data-toggle="tooltip" data-placement="top" title="ArcGIS Monitor 10.6 安装入门">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/bigdata/e0a1ad54.html" data-toggle="tooltip" data-placement="top" title="配置Linux集群服务器间ssh免密码登陆">Next Post &rarr;</a>
+                            <a href="/bigdata/39395030.html" data-toggle="tooltip" data-placement="top" title="基于Kerberos认证配置Hadoop集群在安全模式下运行">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -291,7 +370,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概览</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">说明</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">更新</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">系统需求</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">工程下载地址</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1，添加到Monitor Server的连接</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2，注册Collection</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3，添加Monitor service</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4,   为Monitor service 设置用户权限</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5，添加counters</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">权限要求：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">添加过程：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">6,   配置email通知</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text"></span></a></li></ol></li></ol>
         
         </div>
       </aside>
@@ -313,9 +392,7 @@
                        
                           <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                         
-                          <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
-                        
-                          <a class="tag" href="/tags/#Demo" title="Demo">Demo</a>
+                          <a class="tag" href="/tags/#Monitor" title="Monitor">Monitor</a>
                         
                     </div>
                 </section>
@@ -344,8 +421,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite.com/ArcGIS/feab923b.html";
-    var disqus_url = "http://yoursite.com/ArcGIS/feab923b.html";
+    var disqus_identifier = "http://yoursite.com/ArcGIS/efda84b5.html";
+    var disqus_url = "http://yoursite.com/ArcGIS/efda84b5.html";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

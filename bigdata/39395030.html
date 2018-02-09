@@ -157,14 +157,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -235,9 +235,9 @@
 <p>在三台服务器上执行同样的配置命令：</p>
 <figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 ~]<span class="comment"># vim /etc/hosts</span></span><br><span class="line">127.0.0.1       localhost</span><br><span class="line">::1     localhost ip6-localhost ip6-loopback</span><br><span class="line">fe00::0 ip6-localnet</span><br><span class="line">ff00::0 ip6-mcastprefix</span><br><span class="line">ff02::1 ip6-allnodes</span><br><span class="line">ff02::2 ip6-allrouters</span><br><span class="line">172.17.0.2      hadoop01.esrichina.com hadoop01</span><br><span class="line">172.17.0.3      hadoop02.esrichina.com hadoop02</span><br><span class="line">172.17.0.4      hadoop03.esrichina.com hadoop03</span><br><span class="line">172.17.0.5      hadoop04.esrichina.com hadoop04</span><br></pre></td></tr></table></figure>
 <h3><span id="安装ssh配置hadoop-master免密登陆自身和节点服务器">安装ssh,配置hadoop master免密登陆自身和节点服务器</span></h3>
-<p>配置Hadoop Master 免密验证节点服务器是hadoop集群配置中非常重要的步骤。为了缩短文章的长度，将重点放到后面的安全配置部分。关于如何配置ssh免密登陆，可以参考我之前写的技术文章：《<a href="https://makeling.github.io/2018/01/08/%E9%85%8D%E7%BD%AELinux%20%E9%9B%86%E7%BE%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%B4ssh%20%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E9%99%86/" target="_blank" rel="noopener">配置Linux集群服务器间ssh免密码登陆</a>》。</p>
+<p>配置Hadoop Master 免密验证节点服务器是hadoop集群配置中非常重要的步骤。为了缩短文章的长度，将重点放到后面的安全配置部分。关于如何配置ssh免密登陆，可以参考我之前写的技术文章：《<a href="https://makeling.github.io/bigdata/e0a1ad54.html" target="_blank" rel="noopener">配置Linux集群服务器间ssh免密码登陆</a>》。</p>
 <h3><span id="搭建kerberos认证环境">搭建Kerberos认证环境</span></h3>
-<p>Kerberos认证环境搭建本身也是相当复杂的过程，具体的配置过程可以参考我之前写的另一篇文章：《<a href="https://makeling.github.io/2017/12/30/Kerberos%20%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE%E6%94%BB%E7%95%A5/" target="_blank" rel="noopener">Kerberos 简单配置攻略</a>》。</p>
+<p>Kerberos认证环境搭建本身也是相当复杂的过程，具体的配置过程可以参考我之前写的另一篇文章：《<a href="https://makeling.github.io/bigdata/72ac84e3.html" target="_blank" rel="noopener">Kerberos 简单配置攻略</a>》。</p>
 <p>为Hadoop开启基于Kerberos的服务级认证时，终端用户在和hadoop服务交互前必须要认证自己。最简单的方式是使用kerberos kinit 命令交互式实现认证。如果是编程实现认证那可以基于Kerberos keytab文件来验证，因为使用kinit交互式登录就不方便了，因此在后续的配置中hadoop集群中进程间是基于keytab来认证的。</p>
 <h2><span id="hadoop安全配置过程">Hadoop安全配置过程</span></h2>
 <h3><span id="为hadoop-守护进程创建本地用户及分配权限">为Hadoop 守护进程创建本地用户及分配权限</span></h3>
@@ -641,7 +641,7 @@
 <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[hdfs@hadoop02 etc]$ jps</span><br><span class="line"><span class="number">20377</span> NodeManager</span><br><span class="line"><span class="number">20491</span> Jps</span><br><span class="line"><span class="number">20237</span> DataNode</span><br><span class="line"></span><br><span class="line">[hdfs@hadoop03 etc]$ jps</span><br><span class="line"><span class="number">18633</span> NodeManager</span><br><span class="line"><span class="number">18763</span> Jps</span><br><span class="line"><span class="number">18493</span> DataNode</span><br></pre></td></tr></table></figure>
 <p>如果配置后，在各节点进程的检测中，未看到上述进程，那可以通过hadoop日志来排查错误，日志中会包含报错信息，这些信息可以作为进一步排查问题的线索。</p>
 <h2><span id="棘手的问题">棘手的问题</span></h2>
-<p>在整个配置过程中，我碰到最棘手的问题就是hadoop集群启用安全后Node Manager无法启动。经历了九九八十一难后，终于搞定，为了纪念这个深坑，我将解决方案单独总结到另外一篇文章中《<a href="https://makeling.github.io/2018/01/29/%E7%90%86%E8%A7%A3ContainerExector/" target="_blank" rel="noopener">理解和配置LinuxContainerExecutor</a>》。如果你使用的hadoop版本偏早期，那可能要经历更多的波折，了解下面这个关于containerExecutor的bug可能对你有帮助。</p>
+<p>在整个配置过程中，我碰到最棘手的问题就是hadoop集群启用安全后Node Manager无法启动。经历了九九八十一难后，终于搞定，为了纪念这个深坑，我将解决方案单独总结到另外一篇文章中《<a href="https://makeling.github.io/bigdata/dcb921f7.html" target="_blank" rel="noopener">理解和配置LinuxContainerExecutor</a>》。如果你使用的hadoop版本偏早期，那可能要经历更多的波折，了解下面这个关于containerExecutor的bug可能对你有帮助。</p>
 <p><a href="https://issues.apache.org/jira/browse/MAPREDUCE-4219" target="_blank" rel="noopener">make default container-executor.conf.dir be a path relative to the container-executor binary</a></p>
 <p>参考资料：</p>
 <p>1 <a href="http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/SecureMode.html" target="_blank" rel="noopener">Hadoop in Secure Mode</a><br>
@@ -656,7 +656,7 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/ArcGIS/ebcd2d71.html" data-toggle="tooltip" data-placement="top" title="ArcGIS Monitor 10.6 安装入门">&larr; Previous Post</a>
+                            <a href="/ArcGIS/efda84b5.html" data-toggle="tooltip" data-placement="top" title="ArcGIS Monitor 10.6管理员基本配置实践">&larr; Previous Post</a>
                         </li>
                     
                     
