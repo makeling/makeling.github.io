@@ -310,7 +310,7 @@
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Add_Linux.png" width="800px">
 <p>对Linux服务器的监控，连接用户的权限控制和Windows不同。Windows是使用Monitor Service进程执行账户自动完成远程机器访问授权验证的，对于Linux服务器，当我们把操作系统类型切换为“Linux”时会发现自动增加了认证的设置栏，可以点击Add Credential按钮添加一个全局的认证项，然后配置选择这个认证项就可以了。</p>
 <p>从我的实践过程来看Monitor对远程Linux服务器的监控过程更加透明，更不易出错。</p>
-<h3><span id="6-配置email通知">6,   配置email通知</span></h3>
+<h2><span id="6-配置email通知">6,   配置email通知</span></h2>
 <p>配置好Counters , Monitor已经进入监控状态了，会按照我们设置的数据采集间隔来收集数据。一旦监控指标超出警戒值，就会引发告警。我们不能期待管理员打开Monitor控制台，实时的跟踪被监控系统的状态，最理想的方式是一旦出现紧急情况，第一时间通过邮件通知管理员，以便人工介入处理。</p>
 <p>接下来我们就来配置email通知：</p>
 <ul>
@@ -326,7 +326,6 @@
 <p>OK，到这儿ArcGIS Monitor的基本配置流程就已经完成了，这篇文章中记录的测试过程只是为了探索ArcGIS Monitor 管理员配置的基本流程，为了保持简洁、清晰，并未包含对各种计数器的配置过程。有了这些基础，配置其它的计数器，大家就放手实践吧。当然，也可以参考Esri官方配置文档（绝对的极简风）来实践。</p>
 <p>参考资料：</p>
 <p><a href="http://enterprise.arcgis.com/en/monitor/latest/administration/add-a-counter.htm" target="_blank" rel="noopener">ArcGIS Monitor Administrator帮助文档</a></p>
-<h3><span id=""></span></h3>
 
                 
 
@@ -366,7 +365,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1，添加到Monitor Server的连接</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2，注册Collection</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3，添加Monitor service</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4,   为Monitor service 设置用户权限</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5，添加counters</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">权限要求：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">添加过程：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">6,   配置email通知</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text"></span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1，添加到Monitor Server的连接</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2，注册Collection</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3，添加Monitor service</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4,   为Monitor service 设置用户权限</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5，添加counters</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">权限要求：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">添加过程：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">6,   配置email通知</span></a></li></ol>
         
         </div>
       </aside>
