@@ -216,65 +216,75 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>数据库作为ArcGIS Enterprise平台中用于存储空间数据的组件，是整个平台非常重要的组成部分，它的稳定性，健康状态是整个平台健壮性的基础。ArcGIS Monitor 作为Enterprise全平台监控软件，也提供了针对数据库的监控能力。<br>
-在Enterprise平台组件中包含Portal，Server，Datastore三个重要软件，其中Datstore中包含了关系型数据库PostgreSql，用来存储hosting feature service的数据。我们可以使用Monitor来监控PostgreSQL库中存储的数据变化来判断它的健康状态。<br>
-另外，在GIS平台建设中，还会涉及大量保存到SDE中的空间数据，最常用的应用场景是将空间数据保存到基于Oracle的SDE数据库。<br>
-针对上面两个应用场景。这篇文章的重点是如何配置ArcGIS Monitor 实现对传统oracle sde 数据库和新型ArcGIS Datastore中PostgreSQL数据库的监控。</p>
+                <p>数据库作为ArcGIS Enterprise平台中用于存储空间数据的组件，是整个平台非常重要的组成部分，它的稳定性，健康状态是整个平台健壮性的基础。ArcGIS Monitor 作为Enterprise全平台监控软件，也提供了针对数据库的监控能力。</p>
+<p>在Enterprise平台组件中包含Portal，Server，Datastore三个重要软件，其中Datstore中包含了关系型数据库PostgreSql，用来存储hosting feature service的数据。我们可以使用Monitor来监控PostgreSQL库中存储的数据变化来判断它的健康状态。</p>
+<p>另外，在GIS平台建设中，还会涉及大量保存到SDE中的空间数据，最常用的应用场景是将空间数据保存到基于Oracle的SDE数据库。</p>
+<p>针对上面两个应用场景。这篇文章的重点是如何配置ArcGIS Monitor 实现对传统oracle sde 数据库和新型ArcGIS Datastore中PostgreSQL数据库的监控。</p>
 <h2><span id="配置过程">配置过程</span></h2>
 <p>配置监控DB计数器，相比其它的计数器要复杂一些，需要我们预配置操作系统ODBC连接。</p>
 <h3><span id="配置并连接odbc">配置并连接ODBC</span></h3>
 <h4><span id="oracle-11g-odbc驱动下载及安装">Oracle 11g ODBC驱动下载及安装</span></h4>
 <ul>
-<li>下载驱动<br>
-下载地址：<a href="http://www.oracle.com/technetwork/topics/winx64soft-089540.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/topics/winx64soft-089540.html</a><br>
-在下载列表中，可以根据oracle服务器端选择相应的下载包，为了和我的oracle服务器端版本匹配，我下载了oracle11.2.0.4.0 版本下的：<br>
-<a href="http://download.oracle.com/otn/nt/instantclient/11204/instantclient-basic-windows.x64-11.2.0.4.0.zip" target="_blank" rel="noopener">instantclient-basic-windows.x64-11.2.0.4.0.zip</a> (54,956,947 bytes)<br>
-<a href="http://download.oracle.com/otn/nt/instantclient/11204/instantclient-odbc-windows.x64-11.2.0.4.0.zip" target="_blank" rel="noopener">instantclient-odbc-windows.x64-11.2.0.4.0.zip</a> (1,358,385 bytes)</li>
-<li>安装驱动<br>
-— 首先解压缩instantclient-basic-windows.x64-11.2.0.4.0.zip包到E:\instantclient_11_2目录；<br>
+<li>
+<p>下载驱动</p>
+<p>下载地址：<a href="http://www.oracle.com/technetwork/topics/winx64soft-089540.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/topics/winx64soft-089540.html</a></p>
+<p>在下载列表中，可以根据oracle服务器端选择相应的下载包，为了和我的oracle服务器端版本匹配，我下载了oracle11.2.0.4.0 版本下的：</p>
+<p><a href="http://download.oracle.com/otn/nt/instantclient/11204/instantclient-basic-windows.x64-11.2.0.4.0.zip" target="_blank" rel="noopener">instantclient-basic-windows.x64-11.2.0.4.0.zip</a> (54,956,947 bytes)</p>
+<p><a href="http://download.oracle.com/otn/nt/instantclient/11204/instantclient-odbc-windows.x64-11.2.0.4.0.zip" target="_blank" rel="noopener">instantclient-odbc-windows.x64-11.2.0.4.0.zip</a> (1,358,385 bytes)</p>
+</li>
+<li>
+<p>安装驱动</p>
+<p>— 首先解压缩instantclient-basic-windows.x64-11.2.0.4.0.zip包到E:\instantclient_11_2目录；<br>
 — 继续解压缩instantclient-odbc-windows.x64-11.2.0.4.0.zip包，并将解压缩后的所有文件，合并到E:\instantclient_11_2目录；<br>
-— 创建新目录及文件E:\instantclient_11_2\Network\Admin\tnsnames.ora, 用记事本打开这个空文件添加连接信息，host 中的IP对应oracle服务器地址。<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_tna.png" width="400px"><br>
-— 在系统环境变量中为path追加值E:\instantclient_11_2;<br>
-— 运行E:\instantclient_11_2\odbc_install.exe</li>
+— 创建新目录及文件E:\instantclient_11_2\Network\Admin\tnsnames.ora, 用记事本打开这个空文件添加连接信息，host 中的IP对应oracle服务器地址。</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_tna.png" width="400px">
+<p>— 在系统环境变量中为path追加值E:\instantclient_11_2;<br>
+— 运行E:\instantclient_11_2\odbc_install.exe</p>
+</li>
 </ul>
 <h4><span id="postgresql-odbc驱动下载及安装">PostgreSQL ODBC驱动下载及安装</span></h4>
 <ul>
-<li>驱动下载<br>
-下载地址：<a href="https://www.postgresql.org/ftp/odbc/versions/msi/" target="_blank" rel="noopener">https://www.postgresql.org/ftp/odbc/versions/msi/</a><br>
-下载版本：psqlodbc_10_01_0000-x64.zip</li>
-<li>驱动安装<br>
-将下载的zip包解压缩，直接运行压缩包中的psqlodbc_x64.msi安装文件即可。</li>
+<li>驱动下载</li>
 </ul>
+<p>下载地址：<a href="https://www.postgresql.org/ftp/odbc/versions/msi/" target="_blank" rel="noopener">https://www.postgresql.org/ftp/odbc/versions/msi/</a><br>
+下载版本：psqlodbc_10_01_0000-x64.zip</p>
+<ul>
+<li>驱动安装</li>
+</ul>
+<p>将下载的zip包解压缩，直接运行压缩包中的psqlodbc_x64.msi安装文件即可。</p>
 <h4><span id="配置windows-dsn连接">配置Windows DSN连接</span></h4>
 <ul>
 <li>打开: 开始-&gt;所有程序-&gt; 管理工具-&gt; 数据源(ODBC)工具；</li>
-<li>切换到驱动程序选项卡，查看驱动是否安装成功，如果看到下图中的项目，就说明驱动安装成功了；<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_ODBC_oradrivers.png" width="400px"></li>
-<li>切换到系统DSN选项卡，添加oracle数据源连接<br>
-在创建数据源窗口中，选择&quot;Oracle in instant client_11_2“驱动，点击完成按钮。在Oracle ODBC Driver Configuration窗口中，参照下图配置：<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DSN_ora.png" width="400px"><br>
-​	— Data Source Name中为这个连接起一个名字，这里我用orcl作为标识。TNS Service Name 正常会显示在下拉列表中，选择即可。User ID输入数据库用户名。<br>
-​	— 配置后点击TestConnection按钮，测试连接，输入密码，然后点击OK。如果你看到连接成功的提示窗口，就OK啦。</li>
+<li>切换到驱动程序选项卡，查看驱动是否安装成功，如果看到下图中的项目，就说明驱动安装成功了；</li>
+</ul>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_ODBC_oradrivers.png" width="400px">
+<ul>
+<li>切换到系统DSN选项卡，添加oracle数据源连接</li>
+</ul>
+<p>在创建数据源窗口中，选择&quot;Oracle in instant client_11_2“驱动，点击完成按钮。在Oracle ODBC Driver Configuration窗口中，参照下图配置：</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DSN_ora.png" width="400px">
+<p>​	— Data Source Name中为这个连接起一个名字，这里我用orcl作为标识。TNS Service Name 正常会显示在下拉列表中，选择即可。User ID输入数据库用户名。<br>
+​	— 配置后点击TestConnection按钮，测试连接，输入密码，然后点击OK。如果你看到连接成功的提示窗口，就OK啦。</p>
+<ul>
 <li>继续添加arcgis datastore 关系型postgresql 库的DSN连接</li>
 </ul>
-<p>在创建连接之前，需要登陆<strong>ArcGIS Datastore  所在的服务器</strong>，通过datastore  的内置命令工具，预先查出要连接的datastore 数据库、连接用户和密码。<br>
-— 以管理员身份打开命令行窗口，参照如下窗口中执行的命令查询：<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_query_sdedb.png" width="600px"><br>
-— 修改pg的pg_hba.conf文件，允许monitor服务器连接。通过记事本打开位于datastore配置库目录下的pg_hba.conf文件，我的测试环境中，完整路径是“D:\arcgisdatastore\pgdata\pg_hba.conf”。在最后一行添加一条新规则，IP地址替换为monitor所在服务器的IP。<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_setting_pghba.png" width="600px"><br>
-— 再<strong>回到monitor所在服务器</strong>的ODBC数据源管理器窗口中，切换到系统DSN选项卡，点击“添加“按钮，在创建新数据源窗口中，选择&quot;PostgreSQL Unicode(x64)“驱动程序，点击完成按钮。在PostgreSQL Unicode ODBC Driver Setup窗口中，参照下图配置：<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DSN_pg.png" width="400px"><br>
-ArcGIS Datastore默认的连接端口是9876，添加好后，单击Test按钮测试连接，连接成功后点击Save按钮保存配置。<br>
-上述步骤完成后，在ODBC 数据源管理器中，我们会看到两个数据源连接，这两个数据源的名称将被用于拼接DSN连接串：<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DSN.png" width="400px"></p>
+<p>在创建连接之前，需要登陆<strong>ArcGIS Datastore  所在的服务器</strong>，通过datastore  的内置命令工具，预先查出要连接的datastore 数据库、连接用户和密码。</p>
+<p>— 以管理员身份打开命令行窗口，参照如下窗口中执行的命令查询：</p>
+  <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_query_sdedb.png" width="600px">
+<p>— 修改pg的pg_hba.conf文件，允许monitor服务器连接。通过记事本打开位于datastore配置库目录下的pg_hba.conf文件，我的测试环境中，完整路径是“D:\arcgisdatastore\pgdata\pg_hba.conf”。在最后一行添加一条新规则，IP地址替换为monitor所在服务器的IP。</p>
+  <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_setting_pghba.png" width="600px">
+<p>— 再<strong>回到monitor所在服务器</strong>的ODBC数据源管理器窗口中，切换到系统DSN选项卡，点击“添加“按钮，在创建新数据源窗口中，选择&quot;PostgreSQL Unicode(x64)“驱动程序，点击完成按钮。在PostgreSQL Unicode ODBC Driver Setup窗口中，参照下图配置：</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DSN_pg.png" width="400px">
+<p>ArcGIS Datastore默认的连接端口是9876，添加好后，单击Test按钮测试连接，连接成功后点击Save按钮保存配置。</p>
+<p>上述步骤完成后，在ODBC 数据源管理器中，我们会看到两个数据源连接，这两个数据源的名称将被用于拼接DSN连接串：<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DSN.png" width="400px"></p>
 <h3><span id="创建数据库连接">创建数据库连接</span></h3>
-<p>创建数据库连接是在ArcGIS Monitor Administrator中来配置的，具体操作过程如下：<br>
-1） 打开开始-&gt; 所有程序-&gt; ArcGIS Monitor -&gt; ArcGIS Monitor Administrator<br>
-2）在连接窗口中，点击Open，进入收集器管理窗口，找到之前配置好的Collector，定位到DB, 右键选择Add，展开节点，选中新增的数据库计数器节点。在Database窗口中可以看到绿色的大按钮&quot;Add Credential&quot;，点击进入创建数据库连接的弹出窗口：<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Add_DC.png" width="800px"><br>
-在help说明中可以看到monitor支持两种方式的数据库连接。一种是通过DSN，另外一种是通过连接串的方式。为了保密，当我们在Connection中填入连接信息时会自动转换为加密点，所以最好的做法是在记事本中先将连接串拼好，然后拷贝创建，以免输入错误。名称只是一个标识，起一个自己觉得最好记的名字即可。<br>
-3）拼接数据库连接串<br>
-这个环节，可以打开一个空记事本来编辑连接字符串。</p>
+<p>创建数据库连接是在ArcGIS Monitor Administrator中来配置的，具体操作过程如下：</p>
+<p>1） 打开开始-&gt; 所有程序-&gt; ArcGIS Monitor -&gt; ArcGIS Monitor Administrator</p>
+<p>2）在连接窗口中，点击Open，进入收集器管理窗口，找到之前配置好的Collector，定位到DB, 右键选择Add，展开节点，选中新增的数据库计数器节点。在Database窗口中可以看到绿色的大按钮&quot;Add Credential&quot;，点击进入创建数据库连接的弹出窗口：</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Add_DC.png" width="800px">
+<p>在help说明中可以看到monitor支持两种方式的数据库连接。一种是通过DSN，另外一种是通过连接串的方式。为了保密，当我们在Connection中填入连接信息时会自动转换为加密点，所以最好的做法是在记事本中先将连接串拼好，然后拷贝创建，以免输入错误。名称只是一个标识，起一个自己觉得最好记的名字即可。</p>
+<p>3）拼接数据库连接串</p>
+<p>这个环节，可以打开一个空记事本来编辑连接字符串</p>
 <ul>
 <li>DSN连接串</li>
 </ul>
@@ -289,14 +299,14 @@ ArcGIS Datastore默认的连接端口是9876，添加好后，单击Test按钮�
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">DRIVER</span>=&#123;Oracle in instantclient_11_2&#125;;<span class="attribute">D</span><span class="attribute">b</span><span class="attribute">q</span>=orcl;<span class="attribute">U</span><span class="attribute">I</span><span class="attribute">D</span>=sde;<span class="attribute">P</span><span class="attribute">W</span><span class="attribute">D</span>=sde</span><br></pre></td></tr></table></figure>
 <p>for postgresql:</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">DRIVER</span>=&#123;PostgreSQL35W&#125;;<span class="attribute">S</span><span class="attribute">e</span><span class="attribute">r</span><span class="attribute">v</span><span class="attribute">e</span><span class="attribute">r</span>=192.168.100.95;<span class="attribute">P</span><span class="attribute">o</span><span class="attribute">r</span><span class="attribute">t</span>=9876;<span class="attribute">D</span><span class="attribute">a</span><span class="attribute">t</span><span class="attribute">a</span><span class="attribute">b</span><span class="attribute">a</span><span class="attribute">s</span><span class="attribute">e</span>=db_lbaul;<span class="attribute">U</span><span class="attribute">i</span><span class="attribute">d</span>=sde;<span class="attribute">P</span><span class="attribute">w</span><span class="attribute">d</span>=sde;</span><br></pre></td></tr></table></figure>
-<p>4）在Monitor中添加数据库连接<br>
-有了之前生成的这些数据库连接串，我们就可以动手在Monitor中配置添加数据库连接认证了。我在这里分别为两种数据库的两种连接方式创建了四个连接：pg_dsn, pg_driver,ora_dsn,ora_driver。<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Create_DC.png" width="800px"><br>
-在实际的监控中，我们在DSN或者长连接中选择一种方式即可。</p>
+<p>4）在Monitor中添加数据库连接</p>
+<p>有了之前生成的这些数据库连接串，我们就可以动手在Monitor中配置添加数据库连接认证了。我在这里分别为两种数据库的两种连接方式创建了四个连接：pg_dsn, pg_driver,ora_dsn,ora_driver。</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Create_DC.png" width="800px">
+<p>在实际的监控中，我们在DSN或者直接连接中选择一种方式即可。</p>
 <h3><span id="删除数据库连接可选">删除数据库连接（可选）</span></h3>
-<p>如果在测试过程中，建了很多并不实际需要的数据库连接，那可以在数据库连接管理器中删除这些连接。<br>
-点击之前建立的monitor service节点-&gt; 选择Database Connections选项卡，点击删除按钮即可删除连接。<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_delete_dc.png" width="800px"></p>
+<p>如果在测试过程中，建了很多并不实际需要的数据库连接，那可以在数据库连接管理器中删除这些连接。</p>
+<p>点击之前建立的monitor service节点-&gt; 选择Database Connections选项卡，点击删除按钮即可删除连接。</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_delete_dc.png" width="800px">
 <h3><span id="添加db-计数器">添加DB 计数器</span></h3>
 <h4><span id="准备测试用的sql">准备测试用的sql</span></h4>
 <p>我只是为了测试ArcGIS Monitor配置DB计数器的过程，因此使用了简单的sql语句，在实际监控中，应该使用有意义的sql,监控某个关键表的连通性，或是查询结果是否符合预期值。</p>
@@ -309,26 +319,26 @@ ArcGIS Datastore默认的连接端口是9876，添加好后，单击Test按钮�
 </ul>
 <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> hsu_5nyxi.permitted_wells_permitted_wells <span class="keyword">where</span> objectid&gt;<span class="number">10</span>;</span><br></pre></td></tr></table></figure>
 <h4><span id="修改db计数器配置">修改DB计数器配置</span></h4>
-<p>在创建好数据库连接认证后，我们就可以回到数据库配置页面：<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DB_Counter.png" width="800px"><br>
-— 为监控数据库起个名字；<br>
-— 在认证下拉列表中选择对应的数据库连接项；<br>
-— 采样间隔可以采用推荐设置的5分钟，Monitor会按照这个时间间隔向数据库发送sql请求，间隔过小会给数据库带来压力；<br>
-— 另外还要设置查询的Query, 给查询串起个名字，输入查询sql，点击添加按钮，加入查询列表。<br>
-配置后，一定要点击Test测试，如果配置成功，那会看到下面的结果：<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_config_result.png" width="800px"><br>
-按照同样的过程，再为ArcGIS DataStore内置的pg库创建一个DB counter。</p>
+<p>在创建好数据库连接认证后，我们就可以回到数据库配置页面：</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DB_Counter.png" width="800px">
+<p>— 为监控数据库起个名字；</p>
+<p>— 在认证下拉列表中选择对应的数据库连接项；</p>
+<p>— 采样间隔可以采用推荐设置的5分钟，Monitor会按照这个时间间隔向数据库发送sql请求，间隔过小会给数据库带来压力；</p>
+<p>— 另外还要设置查询的Query, 给查询串起个名字，输入查询sql，点击添加按钮，加入查询列表。</p>
+<p>配置后，一定要点击Test测试，如果配置成功，那会看到下面的结果：</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_config_result.png" width="800px">
+<p>按照同样的过程，再为ArcGIS DataStore内置的pg库创建一个DB counter。</p>
 <h3><span id="配置告警">配置告警</span></h3>
-<p>针对DB的监控，Monitor并没有配置好的默认告警项。但是可以自己创建。<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DB_Alert.png" width="800px"></p>
+<p>针对DB的监控，Monitor并没有配置好的默认告警项。但是可以自己创建。</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DB_Alert.png" width="800px">
 <p>告警项创建需要针对之前配置DB时创建的Sql, 可以通过比较结果的阈值来触发告警。具体需要在什么条件下告警需要结合业务场景来设置。我在这儿给出的只是添加Alert的演示，并无实际意义。</p>
 <h2><span id="查看监控报告">查看监控报告</span></h2>
 <p>配置好监控后，我们就可以到Monitor Server的监控台查看Monitor收集的数据，是否存在告警等等信息。</p>
 <ul>
 <li>通过在浏览器中输入https://localhost:9443, 9443是安装Monitor时为Monitor Server配置的端口。</li>
-<li>展开Categories下拉列表 -&gt; 选择Database -&gt; 展开左侧的目录树，一直到sql层级，选中某一个sql，我们就可以看到Monitor按照采样间隔收集的数据。<br>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DB_Report.png" width="800px"></li>
+<li>展开Categories下拉列表 -&gt; 选择Database -&gt; 展开左侧的目录树，一直到sql层级，选中某一个sql，我们就可以看到Monitor按照采样间隔收集的数据。</li>
 </ul>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DB_Report.png" width="800px">
 
                 
 
