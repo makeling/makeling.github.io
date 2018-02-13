@@ -283,30 +283,30 @@
 <p>2）在连接窗口中，点击Open，进入收集器管理窗口，找到之前配置好的Collector，定位到DB, 右键选择Add，展开节点，选中新增的数据库计数器节点。在Database窗口中可以看到绿色的大按钮&quot;Add Credential&quot;，点击进入创建数据库连接的弹出窗口：</p>
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Add_DC.png" width="800px">
 <p>在help说明中可以看到monitor支持两种方式的数据库连接。一种是通过DSN，另外一种是通过连接串的方式。为了保密，当我们在Connection中填入连接信息时会自动转换为加密点，所以最好的做法是在记事本中先将连接串拼好，然后拷贝创建，以免输入错误。名称只是一个标识，起一个自己觉得最好记的名字即可。</p>
-<p>3）拼接数据库连接串</p>
-<p>这个环节，可以打开一个空记事本来编辑连接字符串</p>
+<p>3）拼接数据库连接串<br>
+这个环节，可以打开一个空记事本来编辑连接字符串。</p>
 <ul>
-<li>DSN连接串</li>
+<li>DSN连接串<br>
+for Oracle:</li>
 </ul>
-<p>for Oracle:</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">DSN</span>=orcl;<span class="attribute">U</span><span class="attribute">I</span><span class="attribute">D</span>=sde;<span class="attribute">P</span><span class="attribute">W</span><span class="attribute">D</span>=sde</span><br></pre></td></tr></table></figure>
 <p>for postgresql:</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">DSN</span>=PostgreSQL35W;<span class="attribute">U</span><span class="attribute">I</span><span class="attribute">D</span>=sde;<span class="attribute">P</span><span class="attribute">W</span><span class="attribute">D</span>=sde</span><br></pre></td></tr></table></figure>
 <ul>
-<li>长连接字符串</li>
+<li>长连接字符串<br>
+for Oracle 连接串:</li>
 </ul>
-<p>for Oracle 连接串:</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">DRIVER</span>=&#123;Oracle in instantclient_11_2&#125;;<span class="attribute">D</span><span class="attribute">b</span><span class="attribute">q</span>=orcl;<span class="attribute">U</span><span class="attribute">I</span><span class="attribute">D</span>=sde;<span class="attribute">P</span><span class="attribute">W</span><span class="attribute">D</span>=sde</span><br></pre></td></tr></table></figure>
 <p>for postgresql:</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">DRIVER</span>=&#123;PostgreSQL35W&#125;;<span class="attribute">S</span><span class="attribute">e</span><span class="attribute">r</span><span class="attribute">v</span><span class="attribute">e</span><span class="attribute">r</span>=192.168.100.95;<span class="attribute">P</span><span class="attribute">o</span><span class="attribute">r</span><span class="attribute">t</span>=9876;<span class="attribute">D</span><span class="attribute">a</span><span class="attribute">t</span><span class="attribute">a</span><span class="attribute">b</span><span class="attribute">a</span><span class="attribute">s</span><span class="attribute">e</span>=db_lbaul;<span class="attribute">U</span><span class="attribute">i</span><span class="attribute">d</span>=sde;<span class="attribute">P</span><span class="attribute">w</span><span class="attribute">d</span>=sde;</span><br></pre></td></tr></table></figure>
 <p>4）在Monitor中添加数据库连接</p>
-<p>有了之前生成的这些数据库连接串，我们就可以动手在Monitor中配置添加数据库连接认证了。我在这里分别为两种数据库的两种连接方式创建了四个连接：pg_dsn, pg_driver,ora_dsn,ora_driver。</p>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Create_DC.png" width="800px">
-<p>在实际的监控中，我们在DSN或者直接连接中选择一种方式即可。</p>
+<p>有了之前生成的这些数据库连接串，我们就可以动手在Monitor中配置添加数据库连接认证了。我在这里分别为两种数据库的两种连接方式创建了四个连接：pg_dsn, pg_driver,ora_dsn,ora_driver。<br>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_Create_DC.png" width="800px"></p>
+<p>在实际的监控中，我们在DSN或者长连接中选择一种方式即可。</p>
 <h3><span id="删除数据库连接可选">删除数据库连接（可选）</span></h3>
-<p>如果在测试过程中，建了很多并不实际需要的数据库连接，那可以在数据库连接管理器中删除这些连接。</p>
-<p>点击之前建立的monitor service节点-&gt; 选择Database Connections选项卡，点击删除按钮即可删除连接。</p>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_delete_dc.png" width="800px">
+<p>如果在测试过程中，建了很多并不实际需要的数据库连接，那可以在数据库连接管理器中删除这些连接。<br>
+点击之前建立的monitor service节点-&gt; 选择Database Connections选项卡，点击删除按钮即可删除连接。<br>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_delete_dc.png" width="800px"></p>
 <h3><span id="添加db-计数器">添加DB 计数器</span></h3>
 <h4><span id="准备测试用的sql">准备测试用的sql</span></h4>
 <p>我只是为了测试ArcGIS Monitor配置DB计数器的过程，因此使用了简单的sql语句，在实际监控中，应该使用有意义的sql,监控某个关键表的连通性，或是查询结果是否符合预期值。</p>
@@ -321,10 +321,10 @@
 <h4><span id="修改db计数器配置">修改DB计数器配置</span></h4>
 <p>在创建好数据库连接认证后，我们就可以回到数据库配置页面：</p>
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DB_Counter.png" width="800px">
-<p>— 为监控数据库起个名字；</p>
-<p>— 在认证下拉列表中选择对应的数据库连接项；</p>
-<p>— 采样间隔可以采用推荐设置的5分钟，Monitor会按照这个时间间隔向数据库发送sql请求，间隔过小会给数据库带来压力；</p>
-<p>— 另外还要设置查询的Query, 给查询串起个名字，输入查询sql，点击添加按钮，加入查询列表。</p>
+<p>— 为监控数据库起个名字；<br>
+— 在认证下拉列表中选择对应的数据库连接项；<br>
+— 采样间隔可以采用推荐设置的5分钟，Monitor会按照这个时间间隔向数据库发送sql请求，间隔过小会给数据库带来压力；<br>
+— 另外还要设置查询的Query, 给查询串起个名字，输入查询sql，点击添加按钮，加入查询列表。</p>
 <p>配置后，一定要点击Test测试，如果配置成功，那会看到下面的结果：</p>
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_config_result.png" width="800px">
 <p>按照同样的过程，再为ArcGIS DataStore内置的pg库创建一个DB counter。</p>
@@ -336,9 +336,9 @@
 <p>配置好监控后，我们就可以到Monitor Server的监控台查看Monitor收集的数据，是否存在告警等等信息。</p>
 <ul>
 <li>通过在浏览器中输入https://localhost:9443, 9443是安装Monitor时为Monitor Server配置的端口。</li>
-<li>展开Categories下拉列表 -&gt; 选择Database -&gt; 展开左侧的目录树，一直到sql层级，选中某一个sql，我们就可以看到Monitor按照采样间隔收集的数据。</li>
+<li>展开Categories下拉列表 -&gt; 选择Database -&gt; 展开左侧的目录树，一直到sql层级，选中某一个sql，我们就可以看到Monitor按照采样间隔收集的数据。<br>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DB_Report.png" width="800px"></li>
 </ul>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ArcGIS_Monitor_DB_Report.png" width="800px">
 
                 
 
