@@ -101,7 +101,14 @@
 
     <url>
         <loc>http://yoursite.com/tags/ArcGIS/</loc>
-        <lastmod>2018-04-16T03:37:20.289Z</lastmod>
+        <lastmod>2018-04-16T03:41:28.614Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/Tool/</loc>
+        <lastmod>2018-04-16T03:41:28.614Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

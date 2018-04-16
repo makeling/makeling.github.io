@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          自动化部署ArcGIS WebAdaptor for Linux 工具使用说明 - UbuntuSpace | 分享空间
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/automation/ab79e547.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('Demo.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/MaklSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                            
+                              <a class="tag" href="/tags/#Tool" title="Tool">Tool</a>
+                            
+                        </div>
+                        <h1>自动化部署ArcGIS WebAdaptor for Linux 工具使用说明</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Keling Ma on
+                            2018-04-16
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">UBUNTU SPACE</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>在Linux上部署ArcGIS WebAdaptor，是一个不太难但是相当繁琐的工作。由于Linux环境的复杂性，在Esri官方推出的ArcGIS_Enterprise_Builder_Linux_106 中也并未涵盖Web Adaptor的部署部分，仍然需要用户自行安装。为了提高效率，同时也降低linux上部署Enterprise的技术门槛，这个工具实现了针对java jdk + tomcat + web adaptor的全自动部署，满足更多测试或生成环境的用户需求。</p>
+<h2><span id="系统需求">系统需求</span></h2>
+<h3><span id="修改主机名为全域名">修改主机名为全域名</span></h3>
+<p>For RedHad 7.x 或CentOS 7.x版本</p>
+<p>1， 通过hostnamectl 命令设置主机全域名，例如：</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">hostnamectl </span><span class="built_in">set-hostname</span> <span class="string">beserver.</span><span class="string">esrichina.</span><span class="string">com</span></span><br></pre></td></tr></table></figure>
+<p>2， 修改/etc/hosts文件，添加ip 和域名映射，例如：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br><span class="line"></span><br><span class="line"><span class="number">192.168</span><span class="number">.100</span><span class="number">.66</span> beserver.esrichina.com beserver</span><br></pre></td></tr></table></figure>
+<h3><span id="需要root用户的权限来执行脚本">需要root用户的权限，来执行脚本</span></h3>
+<h2><span id="功能说明">功能说明</span></h2>
+<ul>
+<li>解压缩安装包</li>
+<li>部署java jdk和tomcat 到/home/webServer文件夹下</li>
+<li>修改/etc/profile文件，添加java环境变量</li>
+<li>安装web adaptor到 /home/webadaptor目录下</li>
+<li>根据-i 传递的实例名，按次序部署web adaptor到tomcat</li>
+<li>自动生成证书,部署目录为：&lt;tomcat根目录&gt;/certs/tomcat.keystore</li>
+<li>自动修改配置文件server.xml，修改端口为80，443， 并开启SSL</li>
+<li>启动tomcat</li>
+<li>删除临时工作空间</li>
+</ul>
+<h2><span id="使用入门">使用入门</span></h2>
+<ul>
+<li>下载工具到目标linux服务器</li>
+<li>打开终端，切换到root用户</li>
+<li>通过系统自带的python环境直接运行<br>
+例如：</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python automated_deploy_arcgis_webadaptor_tool<span class="selector-class">.py</span> -j /home/software/jdk-<span class="number">8</span>u151-linux-x64<span class="selector-class">.tar</span><span class="selector-class">.gz</span> -t /home/software/apache-tomcat-<span class="number">8.0</span>.<span class="number">47</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> -w /home/software/Web_Adaptor_Java_Linux_106_161911<span class="selector-class">.tar</span><span class="selector-class">.gz</span> -<span class="selector-tag">i</span> <span class="string">'portal'</span>,<span class="string">'server'</span></span><br></pre></td></tr></table></figure>
+<p>工具包含了4个参数：<br>
+[required] -j 用于指定java jdk的安装tar包<br>
+[required] -t 用于指定tomcat的安装tar包<br>
+[required] -w 用于指定arcgis web adaptor 的安装tar包<br>
+[optional] -i 用于指定需要部署的web adaptor的实例名队列<br>
+	- 如果-i 不指定，默认自动使用arcgis为实例名;<br>
+	- 如果指定为’portal’, 那会自动部署为portal 实例名;<br>
+	- 如果需要在同一个tomcat下部署多个webadapor，那可以在-i参数后面，通过”,”分隔多个实例名，程序会依次部署，例如 -i ‘portal’,’server’。</p>
+<p><em>注意： 在指定多个实例名时， “逗号”后面不要有多余空格，需要连着写入多个实例名。</em></p>
+<h2><span id="检测成果">检测成果</span></h2>
+<p>部署好后，可以通过curl命令，在shell中直接检测tomcat配置是否成功。例如：<br>
+-检测tomcat http 响应是否正常</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">curl</span> <span class="string">'http://beserver.esrichina.com'</span></span><br></pre></td></tr></table></figure>
+<p>-检测tomcat https响应是否正常</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">curl</span> <span class="string">'https://beserver.esrichina.com'</span> -k</span><br></pre></td></tr></table></figure>
+<p>-检测web adaptor 实例部署是否正常, 以实例名为arcgis为例</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">curl</span> <span class="string">'https://hostname/arcgis/webadaptor'</span> -k</span><br></pre></td></tr></table></figure>
+<h2><span id="工具运行样例">工具运行样例</span></h2>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">[root@beserver home]# python automated_deploy_arcgis_webadaptor_tool.py -j /home/software/jdk<span class="number">-8</span>u151-linux-x64.tar.gz -t /home/software/apache-tomcat<span class="number">-8.0</span><span class="number">.47</span>.tar.gz -w /home/software/Web_Adaptor_Java_Linux_106_161911.tar.gz -i <span class="string">'portal'</span>,<span class="string">'server'</span></span><br><span class="line"></span><br><span class="line">====================Start unzip tar package====================</span><br><span class="line"></span><br><span class="line">(<span class="string">'Web adaptor install package path: '</span>, <span class="string">'/home/temp_unzip/WebAdaptor'</span>)</span><br><span class="line">(<span class="string">'Java jdk deploy path: '</span>, <span class="string">'/home/webServer/jdk1.8.0_151'</span>)</span><br><span class="line">(<span class="string">'Tomcat deploy path: '</span>, <span class="string">'/home/webServer/apache-tomcat-8.0.47'</span>)</span><br><span class="line"></span><br><span class="line">====================Write java environment <span class="keyword">variable</span> to <span class="comment">profile====================</span></span><br><span class="line"></span><br><span class="line">JAVA_HOME= /home/webServer/jdk1<span class="number">.8</span><span class="number">.0</span>_151</span><br><span class="line">CLASSPATH= .:/home/webServer/jdk1.8.0_151/lib/tools.jar:/home/webServer/jdk1<span class="number">.8</span><span class="number">.0</span>_151/lib/tools.jar </span><br><span class="line">PATH= /home/webServer/jdk1.8.0_151/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin;/home/webServer/jdk1.8.0_151/bin</span><br><span class="line"></span><br><span class="line">====================Start install web adaptor====================</span><br><span class="line"></span><br><span class="line">/home/temp_unzip/WebAdaptor/Setup -m silent -l <span class="keyword">yes</span> -d /home/webadaptor</span><br><span class="line"></span><br><span class="line">====================Deploy war package to tomcat====================</span><br><span class="line"></span><br><span class="line">Deploying instance portal.war</span><br><span class="line"></span><br><span class="line">cp -rf /home/webadaptor/arcgis/webadaptor10<span class="number">.6</span>/java/arcgis.war /home/webServer/apache-tomcat-8.0.47/webapps/portal.war</span><br><span class="line">Deploying <span class="comment">instance server.war</span></span><br><span class="line"></span><br><span class="line">cp <span class="comment">-rf</span> /home/<span class="comment">webadaptor</span>/arcgis/<span class="comment">webadaptor10.6</span>/java/<span class="comment">arcgis.war</span> /home/<span class="comment">webServer</span>/apache-tomcat<span class="number">-8.0</span><span class="number">.47</span>/<span class="comment">webapps</span>/server.war</span><br><span class="line">deploy war package successfully!</span><br><span class="line"></span><br><span class="line">====================Generate certificat <span class="keyword">for</span> enable SSL request====================</span><br><span class="line"></span><br><span class="line">keytool -genkey -<span class="keyword">alias</span> tomcat -keyalg RSA -keysize <span class="number">1024</span> -keystore /<span class="comment">home</span>/webServer/<span class="comment">apache-tomcat-8.0.47</span>/certs/<span class="comment">tomcat.keystore -validity 36500 -dname</span> <span class="comment">"CN=beserver.esrichina.com, OU=esrichina, O=esrichina, L=beijing, ST=beijing, C=CN"</span><span class="comment"> -storepass</span> <span class="comment">'123456'</span><span class="comment"> -keypass</span> <span class="comment">'123456'</span></span><br><span class="line"></span><br><span class="line">(<span class="string">'keystore path: '</span>, <span class="string">'/home/webServer/apache-tomcat-8.0.47/certs/tomcat.keystore'</span>)</span><br><span class="line"></span><br><span class="line">====================Repair <span class="comment">server.xml file====================</span></span><br><span class="line"></span><br><span class="line">repair <span class="comment">server.xml successfully!</span></span><br><span class="line"></span><br><span class="line">====================Start <span class="comment">tomcat====================</span></span><br><span class="line"></span><br><span class="line">/home/webServer/apache-tomcat<span class="number">-8.0</span><span class="number">.47</span>/bin/startup.sh</span><br><span class="line">start tomcat successfully!</span><br><span class="line"></span><br><span class="line">deploy finished!</span><br></pre></td></tr></table></figure>
+<h2><span id="下载链接">下载链接</span></h2>
+<p>git:  <a href="https://github.com/makeling/arcgis_enterprise_automated_tools.git" target="_blank" rel="noopener">https://github.com/makeling/arcgis_enterprise_automated_tools.git</a></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/ArcGIS/1b6f1cbb.html" data-toggle="tooltip" data-placement="top" title="ArcGIS Monitor配置监控数据库">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">系统需求</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">修改主机名为全域名</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">需要root用户的权限，来执行脚本</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">功能说明</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">使用入门</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">检测成果</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">工具运行样例</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">下载链接</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                        
+                          <a class="tag" href="/tags/#Tool" title="Tool">Tool</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.newnaw.com" target="_blank">菩提老王的葡萄架</a></li>
+                    
+                        <li><a href="http://www.giser.net" target="_blank">barry的后院</a></li>
+                    
+                        <li><a href="http://oopsliu.com" target="_blank">OOPSLIU</a></li>
+                    
+                        <li><a href="http://kikitamap.com/" target="_blank">kikita &amp; Maps</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite.com/automation/ab79e547.html";
+    var disqus_url = "http://yoursite.com/automation/ab79e547.html";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: '💡'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/makeling">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/keling ma">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Keling Ma 2018 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Customized by <a href="https://makeling.github.io">UbuntuSpace</a>
+                    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_uv">
+                         | Total Visits:<span id="busuanzi_value_site_uv"></span>
+                    </span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript  -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'null';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
