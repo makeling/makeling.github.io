@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yoursite.com/ArcGIS/ab79e547.html</loc>
+        <lastmod>2018-04-16T03:14:12.416Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite.com/ArcGIS/1b6f1cbb.html</loc>
         <lastmod>2018-02-13T06:46:54.218Z</lastmod>
         <changefreq>weekly</changefreq>
