@@ -239,12 +239,12 @@
 <ul>
 <li>下载工具到目标linux服务器</li>
 <li>打开终端，切换到root用户</li>
-<li>通过系统自带的python环境直接运行</li>
+<li>通过系统自带的python环境直接运行<br>
+例如：</li>
 </ul>
-<p>例如：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python automated_deploy_arcgis_webadaptor_tool<span class="selector-class">.py</span> -j /home/software/jdk-<span class="number">8</span>u151-linux-x64<span class="selector-class">.tar</span><span class="selector-class">.gz</span> -t /home/software/apache-tomcat-<span class="number">8.0</span>.<span class="number">47</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> -w /home/software/Web_Adaptor_Java_Linux_106_161911<span class="selector-class">.tar</span><span class="selector-class">.gz</span> -<span class="selector-tag">i</span> <span class="string">'portal'</span>,<span class="string">'server'</span></span><br></pre></td></tr></table></figure>
-<p>工具包含了4个参数：</p>
-<p>[required] -j 用于指定java jdk的安装tar包<br>
+<p>工具包含了4个参数：<br>
+[required] -j 用于指定java jdk的安装tar包<br>
 [required] -t 用于指定tomcat的安装tar包<br>
 [required] -w 用于指定arcgis web adaptor 的安装tar包<br>
 [optional] -i 用于指定需要部署的web adaptor的实例名队列<br>
@@ -253,8 +253,7 @@
 	- 如果需要在同一个tomcat下部署多个webadapor，那可以在-i参数后面，通过”,”分隔多个实例名，程序会依次部署，例如 -i ‘portal’,’server’。</p>
 <p><em>注意： 在指定多个实例名时， “逗号”后面不要有多余空格，需要连着写入多个实例名。</em></p>
 <h2><span id="检测成果">检测成果</span></h2>
-<p>部署好后，可以通过curl命令，在shell中直接检测tomcat配置是否成功。<br>
-例如：<br>
+<p>部署好后，可以通过curl命令，在shell中直接检测tomcat配置是否成功。例如：<br>
 -检测tomcat http 响应是否正常</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">curl</span> <span class="string">'http://beserver.esrichina.com'</span></span><br></pre></td></tr></table></figure>
 <p>-检测tomcat https响应是否正常</p>
