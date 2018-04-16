@@ -144,14 +144,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -238,38 +238,30 @@
 <h2><span id="使用入门">使用入门</span></h2>
 <ul>
 <li>下载工具到目标linux服务器</li>
-</ul>
-<ul>
 <li>打开终端，切换到root用户</li>
 <li>通过系统自带的python环境直接运行</li>
 </ul>
 <p>例如：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python automated_deploy_arcgis_webadaptor_tool<span class="selector-class">.py</span> -j /home/software/jdk-<span class="number">8</span>u151-linux-x64<span class="selector-class">.tar</span><span class="selector-class">.gz</span> -t /home/software/apache-tomcat-<span class="number">8.0</span>.<span class="number">47</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> -w /home/software/Web_Adaptor_Java_Linux_106_161911<span class="selector-class">.tar</span><span class="selector-class">.gz</span> -<span class="selector-tag">i</span> <span class="string">'portal'</span>,<span class="string">'server'</span></span><br></pre></td></tr></table></figure>
 <p>工具包含了4个参数：</p>
-<p>[required] -j 用于指定java jdk的安装tar包</p>
-<p>[required] -t 用于指定tomcat的安装tar包</p>
-<p>[required] -w 用于指定arcgis web adaptor 的安装tar包</p>
-<p>[optional] -i 用于指定需要部署的web adaptor的实例名队列</p>
-<ul>
-<li>
-<ul>
-<li>如果-i 不指定，默认自动使用arcgis为实例名;</li>
-<li>如果指定为’portal’, 那会自动部署为portal 实例名;</li>
-<li>如果需要在同一个tomcat下部署多个webadapor，那可以在-i参数后面，通过”,”分隔多个实例名，程序会依次部署，例如 -i ‘portal’,’server’。</li>
-</ul>
-</li>
-</ul>
+<p>[required] -j 用于指定java jdk的安装tar包<br>
+[required] -t 用于指定tomcat的安装tar包<br>
+[required] -w 用于指定arcgis web adaptor 的安装tar包<br>
+[optional] -i 用于指定需要部署的web adaptor的实例名队列<br>
+	- 如果-i 不指定，默认自动使用arcgis为实例名;<br>
+	- 如果指定为’portal’, 那会自动部署为portal 实例名;<br>
+	- 如果需要在同一个tomcat下部署多个webadapor，那可以在-i参数后面，通过”,”分隔多个实例名，程序会依次部署，例如 -i ‘portal’,’server’。</p>
 <p><em>注意： 在指定多个实例名时， “逗号”后面不要有多余空格，需要连着写入多个实例名。</em></p>
 <h2><span id="检测成果">检测成果</span></h2>
-<p>部署好后，可以通过curl命令，在shell中直接检测tomcat配置是否成功。</p>
-<p>例如：</p>
-<p>-检测tomcat http 响应是否正常</p>
+<p>部署好后，可以通过curl命令，在shell中直接检测tomcat配置是否成功。<br>
+例如：<br>
+-检测tomcat http 响应是否正常</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">curl</span> <span class="string">'http://beserver.esrichina.com'</span></span><br></pre></td></tr></table></figure>
 <p>-检测tomcat https响应是否正常</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">curl</span> <span class="string">'https://beserver.esrichina.com'</span> -k</span><br></pre></td></tr></table></figure>
 <p>-检测web adaptor 实例部署是否正常, 以实例名为arcgis为例</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">curl</span> <span class="string">'https://hostname/arcgis/webadaptor'</span> -k</span><br></pre></td></tr></table></figure>
-<h2><span id="运行样例">运行样例</span></h2>
+<h2><span id="工具运行样例">工具运行样例</span></h2>
 <figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">[root@beserver home]# python automated_deploy_arcgis_webadaptor_tool.py -j /home/software/jdk<span class="number">-8</span>u151-linux-x64.tar.gz -t /home/software/apache-tomcat<span class="number">-8.0</span><span class="number">.47</span>.tar.gz -w /home/software/Web_Adaptor_Java_Linux_106_161911.tar.gz -i <span class="string">'portal'</span>,<span class="string">'server'</span></span><br><span class="line"></span><br><span class="line">====================Start unzip tar package====================</span><br><span class="line"></span><br><span class="line">(<span class="string">'Web adaptor install package path: '</span>, <span class="string">'/home/temp_unzip/WebAdaptor'</span>)</span><br><span class="line">(<span class="string">'Java jdk deploy path: '</span>, <span class="string">'/home/webServer/jdk1.8.0_151'</span>)</span><br><span class="line">(<span class="string">'Tomcat deploy path: '</span>, <span class="string">'/home/webServer/apache-tomcat-8.0.47'</span>)</span><br><span class="line"></span><br><span class="line">====================Write java environment <span class="keyword">variable</span> to <span class="comment">profile====================</span></span><br><span class="line"></span><br><span class="line">JAVA_HOME= /home/webServer/jdk1<span class="number">.8</span><span class="number">.0</span>_151</span><br><span class="line">CLASSPATH= .:/home/webServer/jdk1.8.0_151/lib/tools.jar:/home/webServer/jdk1<span class="number">.8</span><span class="number">.0</span>_151/lib/tools.jar </span><br><span class="line">PATH= /home/webServer/jdk1.8.0_151/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin;/home/webServer/jdk1.8.0_151/bin</span><br><span class="line"></span><br><span class="line">====================Start install web adaptor====================</span><br><span class="line"></span><br><span class="line">/home/temp_unzip/WebAdaptor/Setup -m silent -l <span class="keyword">yes</span> -d /home/webadaptor</span><br><span class="line"></span><br><span class="line">====================Deploy war package to tomcat====================</span><br><span class="line"></span><br><span class="line">Deploying instance portal.war</span><br><span class="line"></span><br><span class="line">cp -rf /home/webadaptor/arcgis/webadaptor10<span class="number">.6</span>/java/arcgis.war /home/webServer/apache-tomcat-8.0.47/webapps/portal.war</span><br><span class="line">Deploying <span class="comment">instance server.war</span></span><br><span class="line"></span><br><span class="line">cp <span class="comment">-rf</span> /home/<span class="comment">webadaptor</span>/arcgis/<span class="comment">webadaptor10.6</span>/java/<span class="comment">arcgis.war</span> /home/<span class="comment">webServer</span>/apache-tomcat<span class="number">-8.0</span><span class="number">.47</span>/<span class="comment">webapps</span>/server.war</span><br><span class="line">deploy war package successfully!</span><br><span class="line"></span><br><span class="line">====================Generate certificat <span class="keyword">for</span> enable SSL request====================</span><br><span class="line"></span><br><span class="line">keytool -genkey -<span class="keyword">alias</span> tomcat -keyalg RSA -keysize <span class="number">1024</span> -keystore /<span class="comment">home</span>/webServer/<span class="comment">apache-tomcat-8.0.47</span>/certs/<span class="comment">tomcat.keystore -validity 36500 -dname</span> <span class="comment">"CN=beserver.esrichina.com, OU=esrichina, O=esrichina, L=beijing, ST=beijing, C=CN"</span><span class="comment"> -storepass</span> <span class="comment">'123456'</span><span class="comment"> -keypass</span> <span class="comment">'123456'</span></span><br><span class="line"></span><br><span class="line">(<span class="string">'keystore path: '</span>, <span class="string">'/home/webServer/apache-tomcat-8.0.47/certs/tomcat.keystore'</span>)</span><br><span class="line"></span><br><span class="line">====================Repair <span class="comment">server.xml file====================</span></span><br><span class="line"></span><br><span class="line">repair <span class="comment">server.xml successfully!</span></span><br><span class="line"></span><br><span class="line">====================Start <span class="comment">tomcat====================</span></span><br><span class="line"></span><br><span class="line">/home/webServer/apache-tomcat<span class="number">-8.0</span><span class="number">.47</span>/bin/startup.sh</span><br><span class="line">start tomcat successfully!</span><br><span class="line"></span><br><span class="line">deploy finished!</span><br></pre></td></tr></table></figure>
 <h2><span id="下载链接">下载链接</span></h2>
 <p>git:  <a href="https://github.com/makeling/arcgis_enterprise_automated_tools.git" target="_blank" rel="noopener">https://github.com/makeling/arcgis_enterprise_automated_tools.git</a></p>
@@ -312,7 +304,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">系统需求</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">修改主机名为全域名</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">需要root用户的权限，来执行脚本</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">功能说明</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">使用入门</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">检测成果</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">运行样例</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">下载链接</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">系统需求</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">修改主机名为全域名</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">需要root用户的权限，来执行脚本</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">功能说明</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">使用入门</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">检测成果</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">工具运行样例</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">下载链接</span></a></li></ol>
         
         </div>
       </aside>
