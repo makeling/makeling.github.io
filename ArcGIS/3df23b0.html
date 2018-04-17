@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          ArcGIS Enterprise 10.6 用户体验改进测评 - UbuntuSpace | 分享空间
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/ArcGIS/3df23b0.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('Demo.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/MaklSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                            
+                        </div>
+                        <h1>ArcGIS Enterprise 10.6 用户体验改进测评</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Keling Ma on
+                            2018-04-17
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">UBUNTU SPACE</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>随着ArcGIS Enterprise 10.6的发布，Esri的地理平台又成熟不少，新版本中除了增加很多新功能，在用户体验上也下功夫不少。这篇文章跟大家分享下Enterprise 10.6 各改进点和实测过程。</p>
+<p>1， Groups 页面现在允许搜索和过滤组成员和内容。新增了选项卡“我的群组”、“专题群组”、“我所在组织的群组”等三个维度来过滤群组。</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/group_page_106.png" width="800px">
+<p>2，在群组设置中新增了删除保护，可以有效防止群组被吃瓜群众意外删除。另外从10.6版本开始，在成员加入群组的方式上也新增了一种，管理员有权开放群组被任何人加入，无需邀请、申请和确认。</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/group_priviliege.png" width="800px">
+<p>3，10.6对portal的内容页面(Content)也进行了重新设计和改进，更便于查找Item。</p>
+<ul>
+<li>在登陆portal后，内容页面提供了对登陆用户所有项目的访问，</li>
+<li>另外还提供了&quot;我的收藏夹&quot;、“我的群组”、&quot;我的组织&quot;等其它三个维度所属Item的过滤。</li>
+<li>在上述四个维度的基础上，又增加了针对项目类型、修改日期、创建日期和共享类型的过滤器，提供了针对Item的更精细的过滤。</li>
+<li>内容页的搜索也更加有针对性，可以和指定选项卡配合来进行搜索，比如我们可以搜索“我的内容”，“我的群组”。搜索结果的布局页面也有所改进，支持更精细的过滤。</li>
+</ul>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/content_106.png" width="800px">
+<p>4，桌面相关内容现在被默认包含在搜索结果和群组页面（之前版本中需要勾选ArcGIS Desktop Content选项才能搜索桌面相关内容），显示ArcGIS Desktop Content 选项已经被移除。</p>
+<p>5，item页面的缩略图和group页面的缩略图也进行了重新设计，现在支持自动伸缩功能，更大尺寸的图片，可以通过拖拽和缩放调整大小。</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/thumbnails.png" width="800px">
+<p>6，hosted feature layer项目的数据选项卡，现在允许图层所有者添加，计算和删除字段。这个增强会让项目页的表能力和Map Viewer属性表功能保持一致。</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/fs_edit_column.png" width="800px">
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/fs_column_compute.png" width="800px">
+<p>7， 管理员通过“组织”-&gt; “编辑设置”-&gt;&quot;地图&quot;来配置底图库，在选择将Esri默认底图共享到该群组时，现在支持仅将矢量底图或栅格底图共享到该群组，而不是像原有版本中，直接分享全部。</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/basemap_share.png" width="800px">
+<p>8，“我的组织”页面重命名为“组织”。</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/organization.png" width="800px">
+<p>9,  10.6版本中在“组织”-&gt;“编辑设置”-&gt;“常规”页面新增了应用程序启动器配置，支持将web apps添加到此，应用程序启动器是一个管理apps的便利窗口，组织成员可以直接打开对其可用的apps。添加到此的应用在访问时，不会再通过“请求许可”对话框提示成员。</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/apps_launcher_start.png" width="800px">
+<blockquote>
+<p>注意：添加应用程序时，有一点容易出错的地方提醒下：在选择通过App Item URL方式添加Web 应用时，这里需要填入的是<strong>Item详细信息的URL地址</strong>，而不是应用实际访问的URL地址。也就意味着任何应用都需要首先作为Item添加到portal内容中，才能进一步添加到应用程序启动器，供组织内用户使用</p>
+</blockquote>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/apps_item_url.png" width="800px">
+<p>10，由于微软在某些操作系统上停止对老版本IE的支持，ArcGIS Enterprise 10.6版本<strong>不再支持IE9 和IE10</strong>。</p>
+<p>上述十个用户体验相关的更新点，有大有小，从个人使用上的确感觉10.6版本较之前版本有进步，人性化很多。群组和内容页面的重新设计是亮点，应用程序启动器的设计也方便很多，还没来得及体验的小伙伴，抓紧时间吧。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/automation/ab79e547.html" data-toggle="tooltip" data-placement="top" title="自动化部署ArcGIS WebAdaptor for Linux 工具使用说明">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="nav">none</ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.newnaw.com" target="_blank">菩提老王的葡萄架</a></li>
+                    
+                        <li><a href="http://www.giser.net" target="_blank">barry的后院</a></li>
+                    
+                        <li><a href="http://oopsliu.com" target="_blank">OOPSLIU</a></li>
+                    
+                        <li><a href="http://kikitamap.com/" target="_blank">kikita &amp; Maps</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite.com/ArcGIS/3df23b0.html";
+    var disqus_url = "http://yoursite.com/ArcGIS/3df23b0.html";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: '💡'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/makeling">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/keling ma">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Keling Ma 2018 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Customized by <a href="https://makeling.github.io">UbuntuSpace</a>
+                    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_uv">
+                         | Total Visits:<span id="busuanzi_value_site_uv"></span>
+                    </span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript  -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'null';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
