@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          ArcGIS Enterprise 10.6 用户体验改进测评 - UbuntuSpace | 分享空间
+          空间分析的数学基础 - UbuntuSpace | 分享空间
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/ArcGIS/3df23b0.html">
+    <link rel="canonical" href="http://yoursite.com/Mathematics/dfc0f5d4.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -90,14 +90,16 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                              <a class="tag" href="/tags/#Mathematics" title="Mathematics">Mathematics</a>
+                            
+                              <a class="tag" href="/tags/#Statistics" title="Statistics">Statistics</a>
                             
                         </div>
-                        <h1>ArcGIS Enterprise 10.6 用户体验改进测评</h1>
+                        <h1>空间分析的数学基础</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Keling Ma on
-                            2018-04-17
+                            2018-04-24
                         </span>
                     </div>
                 
@@ -214,37 +216,89 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>随着ArcGIS Enterprise 10.6的发布，Esri的地理平台又成熟不少，新版本中除了增加很多新功能，在用户体验上也下功夫不少。这篇文章跟大家分享下Enterprise 10.6 各改进点和实测过程。</p>
-<p>1， Groups 页面现在允许搜索和过滤组成员和内容。新增了选项卡“我的群组”、“专题群组”、“我所在组织的群组”等三个维度来过滤群组。</p>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/group_page_106.png" width="800px">
-<p>2，在群组设置中新增了删除保护，可以有效防止群组被吃瓜群众意外删除。另外从10.6版本开始，在成员加入群组的方式上也新增了一种，管理员有权开放群组被任何人加入，无需邀请、申请和确认。</p>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/group_priviliege.png" width="800px">
-<p>3，10.6对portal的内容页面(Content)也进行了重新设计和改进，更便于查找Item。</p>
-<ul>
-<li>在登陆portal后，内容页面提供了对登陆用户所有项目的访问，</li>
-<li>另外还提供了&quot;我的收藏夹&quot;、“我的群组”、&quot;我的组织&quot;等其它三个维度所属Item的过滤。</li>
-<li>在上述四个维度的基础上，又增加了针对项目类型、修改日期、创建日期和共享类型的过滤器，提供了针对Item的更精细的过滤。</li>
-<li>内容页的搜索也更加有针对性，可以和指定选项卡配合来进行搜索，比如我们可以搜索“我的内容”，“我的群组”。搜索结果的布局页面也有所改进，支持更精细的过滤。</li>
-</ul>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/content_106.png" width="800px">
-<p>4，桌面相关内容现在被默认包含在搜索结果和群组页面（之前版本中需要勾选ArcGIS Desktop Content选项才能搜索桌面相关内容），显示ArcGIS Desktop Content 选项已经被移除。</p>
-<p>5，item页面的缩略图和group页面的缩略图也进行了重新设计，现在支持自动伸缩功能，更大尺寸的图片，可以通过拖拽和缩放调整大小。</p>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/thumbnails.png" width="800px">
-<p>6，hosted feature layer项目的数据选项卡，现在允许图层所有者添加，计算和删除字段。这个增强会让项目页的表能力和Map Viewer属性表功能保持一致。</p>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/fs_edit_column.png" width="800px">
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/fs_column_compute.png" width="800px">
-<p>7， 管理员通过“组织”-&gt; “编辑设置”-&gt;&quot;地图&quot;来配置底图库，在选择将Esri默认底图共享到该群组时，现在支持仅将矢量底图或栅格底图共享到该群组，而不是像原有版本中，直接分享全部。</p>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/basemap_share.png" width="800px">
-<p>8，“我的组织”页面重命名为“组织”。</p>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/organization.png" width="800px">
-<p>9，10.6版本中在“组织”-&gt;“编辑设置”-&gt;“常规”页面新增了应用程序启动器配置，支持将web apps添加到此，应用程序启动器是一个管理apps的便利窗口，组织成员可以直接打开对其可用的apps。添加到此的应用在访问时，不会再通过“请求许可”对话框提示成员。</p>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/apps_launcher_start.png" width="800px">
-<blockquote>
-<p>注意：添加应用程序时，有一点容易出错的地方提醒下：在选择通过App Item URL方式添加Web 应用时，这里需要填入的是<strong>Item详细信息的URL地址</strong>，而不是应用实际访问的URL地址。也就意味着任何应用都需要首先作为Item添加到portal内容中，才能进一步添加到应用程序启动器，供组织内用户使用</p>
-</blockquote>
-<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/apps_item_url.png" width="800px">
-<p>10，由于微软在某些操作系统上停止对老版本IE的支持，ArcGIS Enterprise 10.6版本<strong>不再支持IE9 和IE10</strong>。</p>
-<p>上述十个用户体验相关的更新点，有大有小，从个人使用上的确感觉10.6版本较之前版本有进步，人性化很多。群组和内容页面的重新设计是亮点，应用程序启动器的设计也方便很多，还没来得及体验的小伙伴，抓紧时间吧。</p>
+                <p>GIS的价值除了在一张图上为我们浓缩下整个世界，还提供了大量的空间分析和统计的方法，可以针对地理数据进行空间分析，挖掘隐藏在数据背后的信息，帮助我们更深刻的洞察世界。</p>
+<p>在大数据和人工智能时代，人人皆知数据的重要性，数据是驱动智能的燃料，而统计学为之提供了燃炉。在震惊统计学为今天人工智能在自然语言处理，翻译，图片识别等诸多领域爆发的惊人威力后，低头看看脚下，原来GIS也一直都在用统计学来分析和解决地理问题。</p>
+<p>为了更好的理解ArcGIS提供的空间分析工具，特别是GA提供的专用于矢量大数据分析的工具，我们十分有必要认真的学习一下统计学中常用的各种统计指标。</p>
+<h2><span id="统计指标">统计指标</span></h2>
+<p>常用的统计学指标包含样本总数（Count），总值（Sum），中值（median）,  最小值（Minimum），最大值（Maximum），极差（Range），均值（Mean），方差（Variance）和标准差（Standard Deviation）。这些指标在空间分析和统计中将被反复用到，在这里通过一个简单的例子来说明他们的含义。</p>
+<p>一个数字序列：[20, 18, 24, 9, 15, 33, 2, 10 ], 分别计算样本总数，总值，中值，最小值，最大值，极差，均值，方差和标准差。</p>
+<table>
+<thead>
+<tr>
+<th>统计指标</th>
+<th>描述</th>
+<th>公式</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Count</td>
+<td>样本个数。</td>
+<td>=N</td>
+<td>[20, 18, 24, 9, 15, 33, 2, 10] = 8</td>
+</tr>
+<tr>
+<td>Sum</td>
+<td>所有样本值的总和。</td>
+<td><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/sum.png" width="60px"></td>
+<td>（20+18+24+9+15+33+2+10）= 131</td>
+</tr>
+<tr>
+<td>Median</td>
+<td>中值就是样本的中间值，计算中值需要先排序。奇数列，中值=数列中间值；偶数列，中值=数列两个中间值的平均值。</td>
+<td></td>
+<td>[2, 9, 10, 15, 18,10, 24, 33] = (15 + 18) /2 = 16.5</td>
+</tr>
+<tr>
+<td>Minimum</td>
+<td>样本中的的最小值。</td>
+<td></td>
+<td>[2, 9, 10, 15, 18,10, 24, 33] = 2</td>
+</tr>
+<tr>
+<td>Maximum</td>
+<td>样本中的最大值。</td>
+<td></td>
+<td>[2, 9, 10, 15, 18,10, 24, 33] = 2</td>
+</tr>
+<tr>
+<td>Range</td>
+<td>极差通常用来分析样本数据的分散度。</td>
+<td><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/range.png" width="100px"></td>
+<td>[2, 9, 10, 15, 18,10, 24, 33] = 33 - 2 = 31</td>
+</tr>
+<tr>
+<td>Mean</td>
+<td>样本的平均值=样本总值/样本个数。</td>
+<td><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/mean.png" width="100px"></td>
+<td>131/8 = 16.375</td>
+</tr>
+<tr>
+<td>Variance</td>
+<td>方差用来表达样本空间的距离，即样本的分布趋势。</td>
+<td><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/variance.png" width=" 300px"></td>
+<td><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/variance_value.png" width="300px"></td>
+</tr>
+<tr>
+<td>Standard Deviation</td>
+<td>标准差是方差的开方，标准差的意义是将方差获得的结果回归样本本来的真实单位。</td>
+<td><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/sd.png" width="60px"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2><span id="进一步理解方差">进一步理解方差</span></h2>
+<p>在统计学中，方差用来度量样本和总体的分散趋势，实质计算的是样本空间的距离。方差越大，代表数据越偏离均值，也就是数据越分散，方差越小，代表样本都围绕在均值周围，越集聚。</p>
+<p>我个人认为最直观，最能清楚表达方差含义的就是上面表格中的公式。</p>
+<p>方差公式一：</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/variance.png" width="400px">
+<p>有一点存疑: 为何分母是除以（n-1）, 而不是n? 这个n-1可以理解为是根据经验得出的解决方案。在统计学中，实际要统计的总体数据可能非常大，是海量的，没办法逐个计算统计出均值和方差。更具实践意义的解决办法是抽样，既然是抽样就相当于通过样本来估计总体，由于抽样的样本分布可能存在偏差，用样本方差模拟总体方差往往低估，所以按经验除以（n-1），样本方差会更接近总体方差。</p>
+<p>方差公式一虽然直观，含义明确，但是对于计算机运算来说，效率却可能不高。事实上公式一通过推导，还可以变身为：</p>
+<p>方差公式二：</p>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/variance2.png" width="300px">
+<p>这个方差公式正是Esri采纳的公式，虽然理解起来晦涩，但是计算起来方便，如果不经过推导，按照直觉，无论如何你可能也不会相信这两个公式得出的结果相等。两个公式的变换推导过程相当复杂，这里有个偷懒的验证办法，可以直接用上面我提供的示例数值队列，分别代入到两个公式，验证结果是否相等。</p>
+<p>动手试试吧，可能你会怀疑自己的眼睛，但是真的会体验到数学之美！</p>
 
                 
 
@@ -252,13 +306,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/Mathematics/dfc0f5d4.html" data-toggle="tooltip" data-placement="top" title="空间分析的数学基础">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/automation/ab79e547.html" data-toggle="tooltip" data-placement="top" title="自动化部署ArcGIS WebAdaptor for Linux 工具使用说明">Next Post &rarr;</a>
+                            <a href="/ArcGIS/3df23b0.html" data-toggle="tooltip" data-placement="top" title="ArcGIS Enterprise 10.6 用户体验改进测评">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -288,7 +338,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">统计指标</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">进一步理解方差</span></a></li></ol>
         
         </div>
       </aside>
@@ -308,7 +358,9 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                          <a class="tag" href="/tags/#Mathematics" title="Mathematics">Mathematics</a>
+                        
+                          <a class="tag" href="/tags/#Statistics" title="Statistics">Statistics</a>
                         
                     </div>
                 </section>
@@ -343,8 +395,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite.com/ArcGIS/3df23b0.html";
-    var disqus_url = "http://yoursite.com/ArcGIS/3df23b0.html";
+    var disqus_identifier = "http://yoursite.com/Mathematics/dfc0f5d4.html";
+    var disqus_url = "http://yoursite.com/Mathematics/dfc0f5d4.html";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
