@@ -150,14 +150,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -289,9 +289,9 @@ p-value &gt; 0.01 , Gi-bin的值为3。</p>
 <h2><span id="扩展阅读">扩展阅读</span></h2>
 <h3><span id="getis-ord-gi模型公式推导">Getis-Ord Gi*模型公式推导</span></h3>
 <p>Esri官方公布的Gi*计算公式：</p>
-<p>![Gi](<a href="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/hot" target="_blank" rel="noopener">https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/hot</a> spots/Gi.png)</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/Gi.png" alt="Gi"></p>
 <p>公式里面i代表中心要素，j是邻域内的所有要素，Xj代表邻域内第j个要素的属性值，wi,j代表了要素i和j之间的空间距离，n是邻域内的要素总数（相当于样本容量）。</p>
-<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/x_mean.png" alt="x_mean"> <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/Sx.png" alt="Sx"></p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/x_mean.png" alt="x_mean">   <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/Sx.png" alt="Sx"></p>
 <p>我们来推导化简下看看，Gi*究竟在计算什么,先来看看分母的一大推公式，S显然是要素值的标准差，右边的一大堆变身下：</p>
 <p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/Sw.png" alt="Sw"></p>
 <p>变换下形式，提出一个n,原来它在计算邻域内，所有距离权重的标准差，我用Sw表达,继续化简：</p>
