@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          ArcGIS地理大数据模式识别之热点分析 - UbuntuSpace | 分享空间
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/ArcGIS/b2758ce4.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('Demo.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/MaklSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                            
+                              <a class="tag" href="/tags/#Probability" title="Probability">Probability</a>
+                            
+                              <a class="tag" href="/tags/#Big data" title="Big data">Big data</a>
+                            
+                              <a class="tag" href="/tags/#Spatial analysis" title="Spatial analysis">Spatial analysis</a>
+                            
+                        </div>
+                        <h1>ArcGIS地理大数据模式识别之热点分析</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Keling Ma on
+                            2018-05-23
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">UBUNTU SPACE</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>这个世界是概率的？还是因果的？从直觉上我们可能脱口而出是因果的，因为我们都知道种瓜得瓜，种豆得豆，今天的努力决定了明天的成就，这些似乎都证明着世界的因果性。但是随着概率统计学和量子力学在今天发挥的巨大作用，科学家在用事实告诉我们也许世界的本色是概率的。到亚原子粒子级别，测量会决定量子的状态，数万次掷骰子，得到的结果会呈现出概率分布规律，他们似乎遵从了某种神秘的自然法则一样让人心生敬畏，概率统计的科学方法论为我们从数据中洞察规律，预测未来提供了可能。</p>
+<p>ArcGIS 作为对GIS研究成果的最佳实践，为我们提供了大量强大、易用的工具，这篇文章就跟大家分享一个构建在统计推断之上的大数据空间模式分析工具——查找热点（Find Hot Spots）。</p>
+<h2><span id="功能定义">功能定义</span></h2>
+<p>何谓热点？是不是点越密越热？当我们把代表事件的点绘制到地图上，以人类上亿像素的高分辨率双眼和超强大脑，似乎不用工具我们也能看出哪儿密哪儿疏，那为啥还需要分析热点？不会只是为了告诉我们“你看的对”吧？</p>
+<p>当然不是，事实上正是因为我们几乎在任何时候都在不自觉的发掘事物的规律和模式，很多时候我们把随机事件解读成了强关联关系，从而导致了决策的失误。对于随机事件呈现的自然规律，不是我们研究的重点，但是如果事件在空间上表现出了强空间关联性，就说明某些空间过程因子正在影响这些事件的发生（此处必有猫腻），这就很重要了，通过获得这些信息：一是我们可以将有限的资源投放到更需要的地方，做到更合理的资源分配，二是通过锁定问题区域，可以进一步发掘背后的关联因子，指导管理。</p>
+<p>查找热点工具就是帮助我们实现上述数据挖掘的工具，这里真正关心的是统计意义上的热点和冷点。简单下个定义：“查找热点”是用来发掘数据特征在空间模式上是否存在任何统计显著性聚类的工具。</p>
+<h2><span id="使用工具">使用工具</span></h2>
+<p>热点工具背后的原理稍复杂，但是使用上非常简单，特别是对大数据分析工具中的查找热点工具，相比桌面中对等的工具要更简单清爽些：<br>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/hotspot_workflow.png" alt="hotspot_workflow"><br>
+基本工作流，依然遵从三段式：输入-执行分析-输出</p>
+<h3><span id="输入参数">输入参数</span></h3>
+<p>1， 输入点数据：大数据工具中的查找热点工具目前只支持对点图层的分析，这个点数据应该是代表了某一要素特征的，比如犯罪事件，交通事故等等；<br>
+2，设置聚合条柱：聚合条柱用来汇聚输入的点数据到每一个格网，相当于以条柱格网为目标图层，join输入的点数据，实际参与分析计算的是聚合条柱，从这个角度来看，这个工具实质是在针对条柱面图层进行热点分析；<br>
+3，设置热点分析的邻域大小：邻域就是分析区，邻域设置的大小要大于聚合条柱，也就是必须要确保一定的统计样本量，过小分析会失败；<br>
+4，设置时间步长：这步是可选的，一旦设置了时间步长，分析就会基于每个时间步长内的要素进行分析，如果时间步长过小，那参与的要素数可能低于分析工具要求的最小要素数导致分析失败；<br>
+5，设置输出图层名。<br>
+6，设置空间参考：既然要用到聚合条柱，聚合条柱是基于投影坐标由程序动态计算的，所以在工具环境变量的设置中，需要设置投影坐标系统，比如我们常用的web_mercator投影3857。<br>
+7，最后，还可以选择是否按照当前地图范围分析。</p>
+<h3><span id="分析过程">分析过程</span></h3>
+<p>从输入的参数和对热点分析工具计算公式了解的基础上，能大致分析出工具背后执行的分析过程；</p>
+<p>1，先将点数据按照条柱格网重新聚合为新的待分析图层，每个条柱的count值代表落入的点数，这代表了事件数；<br>
+2，以每个条柱格网为中心，按照邻域半径重新划分本地计算分区；<br>
+3，按照每个计算分区计算ZScore, PValue和Gi_bin，并将结果以属性的形式附加到聚合条柱图层；</p>
+<h3><span id="输出结果">输出结果</span></h3>
+<p>查找热点工具的结果以属性字段的形式添加到聚合条柱图层上，添加GiZScore, GiPValue, Gi_Bin三个字段，结果图层渲染默认是以Gi_Bin字段进行唯一值渲染，高值采用偏暖色的红色，低值采用偏冷色的蓝色。<br>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/dc_crime_hs_low_zscore.png" alt="dc_crime_hs_low_zscore"></p>
+<p>这三个字段都和统计推断的假设检验相关，这三个字段的含义需要在了解计算原理之后才能解释清楚，在此先跳过。但是大家需要清楚热点分析工具的分析目标：是要找出要素特征在空间分布上明显存在统计显著性聚类的区域，也就是ZScore的高值区和低值区。</p>
+<p>什么是ZScore, PValue和Gi-bin？接下来我们就来看看工具背后运行的原理。</p>
+<h2><span id="原理分析">原理分析</span></h2>
+<p>热点分析工具的统计模型是基于 Getis-Ord Gi*统计（读音是G-i-star）,先来解释下这个模型名称的由来：</p>
+<ul>
+<li>Getis-Ord：这个模型是构建在前人研究的基础上进一步改进的结果，作者为了表达对前人工作的感谢，将他们的名字作为模型名称的一部分。Arthur Getis is professor of geography at Sun Diego State University.J.K. Ord is the David H. McKinley Professor of Business Administration in the department of management science and information systems at The Pennsylvania State University.</li>
+<li>Gi: 这个模型是构建在经典的G统计和莫兰的I统计之上的，将G统计和I统计联合起来，会发挥更大的威力揭示局部要素空间分布相对于总体的模式特征。</li>
+<li>*：结尾的这个“*”号实际上应该和Gi*连在一起来看，和它对等的是Gi，Gi代表统计的时候不包含中心要素， Gi*代表统计的时候包含中心要素。</li>
+</ul>
+<p>热点分析是构建在统计推断中常用的零假设检验的思想之上的。由于我们的眼睛和大脑无时无刻不在分析数据背后的模式，即使是随机分布的事件在空间上也可能表现出某种程度的集聚，热点分析工具的目标就是识别出具有统计显著性聚类的区域，因为这说明这些事件正在受某些空间过程因子的影响，存在空间上的关联性。接下来我们就从假设检验，ZScore, PValue入手来了解Getis-Ord Gi*统计模型的工作原理。</p>
+<h3><span id="假设检验">假设检验</span></h3>
+<p>假设检验，它的思想是在总体的分布函数完全未知或只知其形式，但不知参数的情况下，为了推断总体的某些未知特性，提出某些关于总体的假设，然后为假设成立设置一个可以接受的条件（置信度），然后我们就可以通过计算样本均值距离总体均值的偏差程度的概率来拒绝或接受假设。这个解释可能太绕了，举个例子：<br>
+“你抬头看看天，然后说”一会儿可能要下雨“，但是心里明白也有可能不下，根据以往的经验大概有90%的把握吧”， 这个过程就体现了上面的思想，在这里：</p>
+<p>1，假设条件是：一会儿要下雨；<br>
+2，90%把握就是置信度， 是指我们做出假设的信心，这个值越高，代表我们做出假设的把握就越大，推翻假设越难；<br>
+3，根据以往的经验，就是历史上导致下雨的条件数据（样本），通过计算样本均值对应总体均值的偏差，我们就可以知道下雨的概率有多高，假设是否成立。</p>
+<p>假设检验之所以奏效，其实还有个重要的概念要理解就是中心极限定理。</p>
+<h3><span id="中心极限定理">中心极限定理</span></h3>
+<p>中心极限定理的核心思想是，无论当前分布如何，只要有定义良好的均值和标准差，当按照一定的样本空间（每次抽取多少个样本）抽样试验时，随着试验次数的增多，这些均值的频率（均值出现的概率）分布会非常接近正态分布，试验均值和原分布的均值会趋向一致，重采样后的均值方差=原分布方差/样本容量。按照中心极限定理，通过无数次抽样试验后，我们会得到下面的曲线：<br>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/zcode_pvalue.png" alt="zcode_pvalue"></p>
+<p>横坐标是每次抽样试验的均值。通过比较样本均值相对总体均值偏移了多少个标准差（z-score），就能知道这个均值出现的概率。这里面涉及了两个重要的指标z-score和p-value:<br>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/zscore.png" alt="zscore"></p>
+<p>Z-score是在计算样本均值相对于总体均值偏离了多少个标准差。<br>
+p-value 对应的是显著度水平,可以理解为假设明显不成立的概率水平。所以p-value并不是置信区间对应的概率，而是它的补集。Z-Score越大，代表样本偏离假设的程度越大，假设成立的概率越小，当p-value超过置信度临界值,就推翻H0假设。<br>
+由于假设试验时，我们并不具备总体样本的真实均值和标准差，是通过样本均值和标准差根据中心极限定理来估计这些值的，所以必定会有误差，置信度反应了我们有多大信心来支撑这样的假设。如果置信度为90%，意味着只要zscore对应的概率&lt;90%，那假设就成立，反之就推翻假设。对应到图上，显著度为0.1， 0.05 ，0.01 对应的置信度换算过来分别为90%, 95%, 99%，置信度越高，代表越确信假设成立，推翻假设越难，从另外一个角度看，一旦推翻，说明确信越高。<br>
+有了上面的这些统计推断基础，再回到我们的重点，来探讨Getis-Ord Gi*统计模型。</p>
+<h3><span id="getis-ord-gi统计模型">Getis-Ord Gi*统计模型</span></h3>
+<p>Getis-Ord Gi*统计模型正如前面反复强调的，是构建在统计推断试验之上的。对于GIS空间分析来说，我们关心某一要素特征在空间上是否存在随机过程创造的统计显著性空间集聚（热点）或分散（冷点）现象。</p>
+<p>基本的逻辑是，按照一定邻域，重新抽样数据，根据本地数据均值相对于总体均值的偏离度，来判断空间分布的随机性是否成立。假设条件就是要素在空间分布上是随机独立分布的，那按照空间加权计算后的结果势必呈现出正态分布。通过计算Zcore来看研究区均值偏离整体均值多远，当超过置信度（比如：90%），就推翻假设，说明要素特征在空间分布上存在统计显著性的聚类或分散，随机分布的假设不成立。</p>
+<p>这里，</p>
+<p>H0 = 要素特征在空间上是完全随机分布的（CSR），不存在任何空间模式;<br>
+p-value是显著度水平，临界值为：0.1, 0.05, 0.01，对应到H0成立的置信度就是90%，95%， 99%。<br>
+Gi-bin采用1，2，3对应到置信度90%，95%， 99%，如果：<br>
+0.05&lt;p-value &lt;0.1, Gi-bin的值为1；<br>
+0.01&lt;p-value&lt;0.05, Gi-bin的值为2；<br>
+p-value &gt; 0.01 , Gi-bin的值为3。</p>
+<h3><span id="看图理解">看图理解</span></h3>
+<p>无论是GA还是ArcMap中的热点分析工具，都遵从了同样的算法原理，下面这张图是针对中国人口分布在ArcMap中做的热点分析结果。<br>
+<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/hotspot_understanding.png" alt="hotspot_understanding"><br>
+分析结果属性表中包含GiZScore, GiPValue, Gi_Bin三个字段，1403779是邻域区间的大小，单位是米。这个结果是在邻域（半径）为1403779的情况下，以每个输入要素为中心，计算得出的热点分布结果。 默认结果渲染采用Gi_Bin字段，从渲染信息中能看出1，2，3对应了置信度为90%，95%， 99%的高值集聚区，-1，-2，-3对应了90%，95%， 99%的低值分散区。</p>
+<h2><span id="扩展阅读">扩展阅读</span></h2>
+<h3><span id="getis-ord-gi模型公式推导">Getis-Ord Gi*模型公式推导</span></h3>
+<p>Esri官方公布的Gi*计算公式：</p>
+<p>![Gi](<a href="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/hot" target="_blank" rel="noopener">https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/hot</a> spots/Gi.png)</p>
+<p>公式里面i代表中心要素，j是邻域内的所有要素，Xj代表邻域内第j个要素的属性值，wi,j代表了要素i和j之间的空间距离，n是邻域内的要素总数（相当于样本容量）。</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/x_mean.png" alt="x_mean"> <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/Sx.png" alt="Sx"></p>
+<p>我们来推导化简下看看，Gi*究竟在计算什么,先来看看分母的一大推公式，S显然是要素值的标准差，右边的一大堆变身下：</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/Sw.png" alt="Sw"></p>
+<p>变换下形式，提出一个n,原来它在计算邻域内，所有距离权重的标准差，我用Sw表达,继续化简：</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/Gi*.png" alt="Gi*"></p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/Gi_1.png" alt="Gi_1"></p>
+<p>对于正态分布的双变量，双变量的相关系数可以通过如下公式进一步计算：</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/correlation.png" alt="correlation"></p>
+<p>当两个变量完全独立，相关性为0时：</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/correlation0.png" alt="correlation0"></p>
+<p>这个形式是否清晰多了？当我们假设H0为要素分布和空间完全无关时，就可以利用上面的公式，根据中心极限定理，用<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/total_mean.png" alt="Screen Shot 2018-05-28 at 11.12.19 AM">   模拟总体均值，<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/s_mean.png" alt="Screen Shot 2018-05-28 at 11.12.56 AM">  模拟均值分布的标准差，到这里已经可以很清晰的看到</p>
+<p>Gi*其实就是ZScore，ZScore越趋向两端，代表距离假设成立的概率越小，当超过显著度，就推翻假设。</p>
+<h2><span id="参考资料">参考资料</span></h2>
+<p>ArcGIS 官方帮助：<br>
+1，Find Hot Spots：<a href="http://enterprise.arcgis.com/en/portal/latest/use/geoanalytics-find-hot-spots.htm" target="_blank" rel="noopener">http://enterprise.arcgis.com/en/portal/latest/use/geoanalytics-find-hot-spots.htm</a><br>
+2，How Hot Spot Analysis works: <a href="http://desktop.arcgis.com/en/arcmap/latest/tools/spatial-statistics-toolbox/h-how-hot-spot-analysis-getis-ord-gi-spatial-stati.htm" target="_blank" rel="noopener">http://desktop.arcgis.com/en/arcmap/latest/tools/spatial-statistics-toolbox/h-how-hot-spot-analysis-getis-ord-gi-spatial-stati.htm</a><br>
+3, What is a z-score? What is a p-value?: <a href="http://desktop.arcgis.com/en/arcmap/latest/tools/spatial-statistics-toolbox/what-is-a-z-score-what-is-a-p-value.htm" target="_blank" rel="noopener">http://desktop.arcgis.com/en/arcmap/latest/tools/spatial-statistics-toolbox/what-is-a-z-score-what-is-a-p-value.htm</a></p>
+<p>论文：<br>
+4，The Analysis of Spatial Association by Use of Distance Statistics: <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1538-4632.1992.tb00261.x" target="_blank" rel="noopener">https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1538-4632.1992.tb00261.x</a></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/ArcGIS/8c3d7b25.html" data-toggle="tooltip" data-placement="top" title="ArcGIS地理大数据模式识别之密度分析">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">功能定义</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">使用工具</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">输入参数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">分析过程</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">输出结果</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">原理分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">假设检验</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">中心极限定理</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">Getis-Ord Gi*统计模型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.4.</span> <span class="toc-nav-text">看图理解</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">扩展阅读</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">Getis-Ord Gi*模型公式推导</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">参考资料</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                        
+                          <a class="tag" href="/tags/#Probability" title="Probability">Probability</a>
+                        
+                          <a class="tag" href="/tags/#Big data" title="Big data">Big data</a>
+                        
+                          <a class="tag" href="/tags/#Spatial analysis" title="Spatial analysis">Spatial analysis</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.newnaw.com" target="_blank">菩提老王的葡萄架</a></li>
+                    
+                        <li><a href="http://www.giser.net" target="_blank">barry的后院</a></li>
+                    
+                        <li><a href="http://oopsliu.com" target="_blank">OOPSLIU</a></li>
+                    
+                        <li><a href="http://kikitamap.com/" target="_blank">kikita &amp; Maps</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite.com/ArcGIS/b2758ce4.html";
+    var disqus_url = "http://yoursite.com/ArcGIS/b2758ce4.html";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: '💡'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/makeling">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/keling ma">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Keling Ma 2018 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Customized by <a href="https://makeling.github.io">UbuntuSpace</a>
+                    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_uv">
+                         | Total Visits:<span id="busuanzi_value_site_uv"></span>
+                    </span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript  -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'null';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
