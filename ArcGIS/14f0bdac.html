@@ -249,7 +249,7 @@
 <p>输出结果图层和输入点层的记录数完全一致</p>
 </li>
 <li>
-<p>输出结果图层会增加CLUSTER_ID, COLOR_ID两个新字段，一个代表分类，一个代表渲染ID。为何不直接使用CLUSTER_ID作为渲染字段？因为如果输出的聚类过多，使用过多的颜色渲染，反而会降低辨识度，因此默认最大选择8种颜色来循环渲染聚类，噪点使用灰色的小点来单独表达。如果聚类数小于8，那聚类ID 和渲染ID会完全一致。</p>
+<p>输出结果图层会增加CLUSTER_ID, COLOR_ID两个新字段，一个代表分类，一个代表渲染ID。为何不直接使用CLUSTER_ID作为渲染字段？因为如果输出的聚类过多，使用过多的颜色渲染，反而会降低辨识度，因此默认最大选择8种颜色来循环渲染聚类，噪点使用灰色的小点来单独表达。</p>
 <p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/GAFindPointCluster_demo.png" alt="GAFindPointCluster_demo"></p>
 </li>
 </ol>
@@ -260,7 +260,7 @@
 <li><strong>HDBSCAN</strong>(Hierarchy DBSCAN)： 使用一系列距离将不同密度的聚类与稀疏噪点分离。HDBSCAN 算法是最以数据为驱动的聚类方法，因此需要的用户输入最少。</li>
 <li><strong>OPTICS</strong>(Ordering points to identify the clustering structure)： 使用相邻要素之间的距离创建可达图，随后使用此可达图将不同密度的聚类与噪点分离。OPTICS 算法在优化检测到的聚类方面最为灵活，但其属于计算密集型，尤其是当搜索距离较大时。</li>
 </ul>
-<p>对于大数据分析来说，速度显然是非常重要的指标，通过将GA中点密度生成结果和Pro中基于三种算法生成的结果一一对比，确认GA中使用了速度最快的DBSCAN的算法，这篇文章我只针对DBSCAN算法原理进行详细的分析，如果对其它算法感兴趣，可以移步直接学习Esri的<a href="http://pro.arcgis.com/zh-cn/pro-app/tool-reference/spatial-statistics/how-density-based-clustering-works.htm" target="_blank" rel="noopener">官方帮助文档</a>，里面讲解的也非常生动详细。</p>
+<p>对于大数据分析来说，速度显然是非常重要的指标，通过将GA中点密度生成结果和Pro中基于三种算法生成的结果一一对比，确认GA中使用了速度最快的DBSCAN的算法，因此这篇文章我只针对DBSCAN算法原理进行详细的分析，如果对其它算法感兴趣，可以移步直接学习Esri的<a href="http://pro.arcgis.com/zh-cn/pro-app/tool-reference/spatial-statistics/how-density-based-clustering-works.htm" target="_blank" rel="noopener">官方帮助文档</a>，里面讲解的也非常生动详细。</p>
 <h3><span id="算法原理">算法原理</span></h3>
 <p>DBSCAN 于1996年由Martin Ester, Hans-Peter Kriegel, Jörg Sander and Xiaowei Xu四个人最早提出， 核心的思想是通过计算邻域内点的密度，将距离近的点组成类，密度稀疏的点标注为噪点。DBSCAN可以说是最常用高效的聚类算法。</p>
 <p>这个算法的核心输入是两个约束：</p>
@@ -280,7 +280,7 @@
 <p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/GAFindPointCluster_DBSCAN.png" alt="GAFindPointCluster_DBSCAN"></p>
 <p>在这个例子中，最小点数为4，圆环代表邻域：</p>
 <ul>
-<li>假设A点是我们选取的随机起算点，那么以A点为中心，邻域距离为半径绘制的缓冲区中，包含了4个点，这个区域的密度超过最小临界密度，可以构成一个聚类。然后依次判断邻域内的其它三个点，以每个点为中心，绘制缓冲区，再判断每个区域的密度，上面的图中A点到它邻域内的其它三个点均相互可达，他们属于同一个聚类。按照这样的规则，想像不断生长的密度气泡，就可以把空间距离较近的点链接起来，形成密度区，图中红色点代表相互可达的核心点，属于同一个聚类。</li>
+<li>假设A点是我们选取的随机起算点，那么以A点为中心，邻域距离为半径绘制的缓冲区中，包含了4个点，这个区域的密度超过最小临界密度，可以构成一个聚类。然后依次判断邻域内的其它三个点，以每个点为中心，绘制缓冲区，再判断每个区域的密度，上图中A点到它邻域内的其它三个点均相互可达，他们属于同一个聚类。按照这样的规则，想像不断生长的密度气泡，就可以把空间距离较近的点链接起来，形成密度区，图中红色点代表相互可达的核心点，属于同一个聚类。</li>
 <li>B和C点为黄色， 它们是边界点，聚类中的E点到C点可达，说明C点离该聚类不远，归属该聚类，但是以C点为核心，邻域内的点数仅为1，已经低于临界密度，所以C点又是个边界点，意味着C之外的点需要开启新的聚类或者因为过于稀疏，成为噪点。</li>
 <li>再来看蓝色N点，以N点为中心，邻域内没有其它的点到N点可达，从N点也无法到达任何点，说明N点所在区域密度过于稀疏，该点标识为噪点。</li>
 </ul>
@@ -293,9 +293,9 @@
 <h4><span id="优势">优势</span></h4>
 <ul>
 <li>DBSCAN 不需要像k-means一样预先指定数据分多少类；</li>
-<li>DBSCAN可以发现任何形状的聚类，甚至会发现完全被其它聚类围绕的聚类。由于MinPts参数的作用，称为单链效应的情况被减少了；</li>
+<li>DBSCAN可以发现任何形状的聚类，甚至会发现完全被其它聚类围绕的聚类。由于MinPts参数的作用，单链效应的情况极大的减少了；</li>
 <li>DBSCAN只需要两个参数，对于数据集中点的顺序不敏感；</li>
-<li>DBSCAN可以使用数据库的空间索引，以加速查询，因此非常高效；</li>
+<li>DBSCAN可以使用数据库的空间索引加速查询，因此非常高效；</li>
 </ul>
 <h4><span id="劣势">劣势</span></h4>
 <ul>
