@@ -121,13 +121,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/ArcGIS/</loc>
-        <lastmod>2018-05-28T07:55:54.305Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite.com/tags/Probability/</loc>
         <lastmod>2018-05-28T07:55:54.305Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -142,8 +135,22 @@
     </url>
 
     <url>
+        <loc>http://yoursite.com/tags/ArcGIS/</loc>
+        <lastmod>2018-06-14T06:59:44.855Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://yoursite.com/tags/Spatial-analysis/</loc>
-        <lastmod>2018-05-28T07:55:54.305Z</lastmod>
+        <lastmod>2018-06-14T06:59:44.855Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/Big-Data/</loc>
+        <lastmod>2018-06-14T06:59:44.855Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

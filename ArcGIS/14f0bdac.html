@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          ArcGIS地理大数据模式识别之基于密度的点聚类分析 - UbuntuSpace | 分享空间
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/ArcGIS/14f0bdac.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('Demo.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/MaklSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                            
+                              <a class="tag" href="/tags/#Spatial analysis" title="Spatial analysis">Spatial analysis</a>
+                            
+                              <a class="tag" href="/tags/#Big Data" title="Big Data">Big Data</a>
+                            
+                        </div>
+                        <h1>ArcGIS地理大数据模式识别之基于密度的点聚类分析</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Keling Ma on
+                            2018-06-14
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">UBUNTU SPACE</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>聚类，分组和分类技术一直是机器学习中使用最广泛的一些方法。在机器学习、人工智能技术铺天盖地涌入的今天，除了AI专家，普通人可能也对这些算法名称略有了解，比如K-mean分类算法。今天要跟大家分享的这个工具就跟聚类有关，它是ArcGIS 10.6.1版本中GA新增加的一个空间模式识别工具——基于密度的点聚类分析，事实上在当前时间节点10.6.1尚未正式发布，这篇文章算是提前剧透了：）</p>
+<p>聚类是帮助我们发现事件或对象空间分布规律的非常有用的方法，比如通过分析管道破裂或爆裂的集中区域可以指明隐藏在地下的城市供水网络潜在的问题，找到这些聚类的位置，就可以对高危区域抢先采取行动。再比如假设我们想优化篮球队的战略战术，那可以采集队员投篮成功和失败的所有位置数据，基于密度聚类，可以获得每位球员成功和失败投篮位置的不同模式，这个信息就可以进一步的用来优化比赛战术。这些分析都可以使用今天要介绍的基于空间密度的点聚类工具。</p>
+<h2><span id="功能定义">功能定义</span></h2>
+<p>这个工具的核心功能是检测点数据集中集聚区域和被空的或稀疏区域所分隔的区域。这个工具使用了非监督的机器学习聚类算法，这个算法并不需要预先针对聚类进行训练，仅根据空间位置和到指定邻域的距离通过最小聚类点数作为约束自动检测模式。详细的算法原理请参阅后面的原理分析部分。</p>
+<h2><span id="使用工具">使用工具</span></h2>
+<p>可能大家一听到“非监督机器学习”，瞬间就会觉得这是个很难使用的工具，事实上这个工具恰恰非常简单易用，输入，输出都很明确，也非常易于理解。</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/GAFindPointCluster_DBSCAN_functions.png" alt="GAFindPointCluster_DBSCAN_functions"></p>
+<h3><span id="输入参数">输入参数</span></h3>
+<ol>
+<li>点图层，在大数据分析工具中，这个点图层的空间参考要求是投影坐标系的，如果数据本身不是，那可以通过设置环境变量中的工具处理空间参考为投影坐标系，比如3857来实现动态投影；</li>
+<li>设置最小点数，这个值可以理解为最少多少个点可以被考虑为一个聚类，分析区内如果点数低于这个值，说明密度低于临界值，过于稀疏，反之，这些点可以组成一个聚类；</li>
+<li>设置搜索半径，这个值可以理解为分析邻域，以分析点为中心，这个值为半径，就可以缓冲一个圆。这个圆就可以用来判断中心点属于哪个聚类；</li>
+<li>设置输出图层名；</li>
+<li>选择是否仅分析当前地图范围的要素。</li>
+</ol>
+<h3><span id="分析过程">分析过程</span></h3>
+<p>从输入参数和输出结果来判断，GA工具中的点聚类工具，后面对应的算法应该是DBSCAN, 后面我还会细说这个算法，在这儿先大概描述下工具背后执行的逻辑：</p>
+<ol>
+<li>针对待分析点先按照搜索半径生成缓冲区；</li>
+<li>查询缓冲区范围内覆盖的点；</li>
+<li>如果点数&gt; 最小点数，就创建新聚类，标识中心点聚类ID，然后再针对上面搜索到的点执行buffer创建，根据判断条件标识聚类ID；</li>
+<li>如果点数&lt; 最小点数，就标识为噪点，重新跳回起点，分析下一个点；</li>
+</ol>
+<p>按照上面的循环迭代下来，每个点都会被判断为属于某个聚类，或者是噪点。</p>
+<h3><span id="输出结果">输出结果</span></h3>
+<p>这个工具的执行，输出结果非常明确，所有点要素会被区分为噪点或者某一聚类，至于结果输出多少类，完全取决于算法对数据的探索，当然约束条件就是搜索半径和最小点数。</p>
+<ol>
+<li>
+<p>输出结果图层和输入点层的记录数完全一致</p>
+</li>
+<li>
+<p>输出结果图层会增加CLUSTER_ID, COLOR_ID两个新字段，一个代表分类，一个代表渲染ID。为何不直接使用CLUSTER_ID作为渲染字段？因为如果输出的聚类过多，使用过多的颜色渲染，反而会降低辨识度，因此默认最大选择8种颜色来循环渲染聚类，噪点使用灰色的小点来单独表达。如果聚类数小于8，那聚类ID 和渲染ID会完全一致。</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/GAFindPointCluster_demo.png" alt="GAFindPointCluster_demo"></p>
+</li>
+</ol>
+<h2><span id="原理分析">原理分析</span></h2>
+<p>基于密度的点聚类分析，在ArcGIS Pro中也有对等的工具，并且支持三种算法：</p>
+<ul>
+<li><strong>DBSCAN</strong>(Density-based spatial clustering of applications with noise)： 使用指定距离将密集聚类与稀疏噪点分离。DBSCAN 算法是最快的聚类方法，但仅适用于要使用的搜索距离非常明确，并且非常适用于所有潜在聚类的情况。这要求所有有意义的聚类密度相似。</li>
+<li><strong>HDBSCAN</strong>(Hierarchy DBSCAN)： 使用一系列距离将不同密度的聚类与稀疏噪点分离。HDBSCAN 算法是最以数据为驱动的聚类方法，因此需要的用户输入最少。</li>
+<li><strong>OPTICS</strong>(Ordering points to identify the clustering structure)： 使用相邻要素之间的距离创建可达图，随后使用此可达图将不同密度的聚类与噪点分离。OPTICS 算法在优化检测到的聚类方面最为灵活，但其属于计算密集型，尤其是当搜索距离较大时。</li>
+</ul>
+<p>对于大数据分析来说，速度显然是非常重要的指标，通过将GA中点密度生成结果和Pro中基于三种算法生成的结果一一对比，确认GA中使用了速度最快的DBSCAN的算法，这篇文章我只针对DBSCAN算法原理进行详细的分析，如果对其它算法感兴趣，可以移步直接学习Esri的<a href="http://pro.arcgis.com/zh-cn/pro-app/tool-reference/spatial-statistics/how-density-based-clustering-works.htm" target="_blank" rel="noopener">官方帮助文档</a>，里面讲解的也非常生动详细。</p>
+<h3><span id="算法原理">算法原理</span></h3>
+<p>DBSCAN 于1996年由Martin Ester, Hans-Peter Kriegel, Jörg Sander and Xiaowei Xu四个人最早提出， 核心的思想是通过计算邻域内点的密度，将距离近的点组成类，密度稀疏的点标注为噪点。DBSCAN可以说是最常用高效的聚类算法。</p>
+<p>这个算法的核心输入是两个约束：</p>
+<ul>
+<li>最小聚类点数</li>
+<li>搜索距离</li>
+</ul>
+<p>DBSCAN会针对要素点集合中的每个点（判断目标点或核心点），根据搜索距离创建一个邻域，对于GISer来说可以想象针对一个点按照搜索距离创建一个buffer, 通过这个buffer可以搜索出落入的所有点要素.，进一步就可以计算出这个邻域密度：</p>
+<p>coreP_density = 邻域内点数（包含中心点）/ 邻域面积</p>
+<p>如何判断这个密度是稠密还是稀疏？显然还需要一个判断标准，这个标准就取决于最小点数密度：</p>
+<p>minP_density = 最小点数 / 邻域面积</p>
+<blockquote>
+<p>注意： 这个minP_density实际是个常数，因为对于DBSCAN算法来说，邻域面积都是相同的，最小点数也是固定的。</p>
+</blockquote>
+<p>DBSCAN的核心思想就是比较这两个密度，如果核心点所在邻域的密度&gt;临界密度，就创建聚类，或分配到某个已经存在的聚类，反之就标注为稀疏点。对于算法程序来说，有个取巧的办法，既然邻域面积相同，事实上直接比较点数就可以了，这样计算更快。</p>
+<p>再通过下面的图，直观的来理解下DBSCAN聚类的方法：</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/GAFindPointCluster_DBSCAN.png" alt="GAFindPointCluster_DBSCAN"></p>
+<p>在这个例子中，最小点数为4，圆环代表邻域：</p>
+<ul>
+<li>假设A点是我们选取的随机起算点，那么以A点为中心，邻域距离为半径绘制的缓冲区中，包含了4个点，这个区域的密度超过最小临界密度，可以构成一个聚类。然后依次判断邻域内的其它三个点，以每个点为中心，绘制缓冲区，再判断每个区域的密度，上面的图中A点到它邻域内的其它三个点均相互可达，他们属于同一个聚类。按照这样的规则，想像不断生长的密度气泡，就可以把空间距离较近的点链接起来，形成密度区，图中红色点代表相互可达的核心点，属于同一个聚类。</li>
+<li>B和C点为黄色， 它们是边界点，聚类中的E点到C点可达，说明C点离该聚类不远，归属该聚类，但是以C点为核心，邻域内的点数仅为1，已经低于临界密度，所以C点又是个边界点，意味着C之外的点需要开启新的聚类或者因为过于稀疏，成为噪点。</li>
+<li>再来看蓝色N点，以N点为中心，邻域内没有其它的点到N点可达，从N点也无法到达任何点，说明N点所在区域密度过于稀疏，该点标识为噪点。</li>
+</ul>
+<p>以上就是DBSCAN的算法原理，对于程序猿来说可能还是直接看实现代码更畅快些，下面的伪代码来自维基，非常非常清晰的表达出DBSCAN的整个算法实现过程。</p>
+<figure class="highlight golo"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">DBSCAN(DB, distFunc, eps, minPts) &#123;</span><br><span class="line">	C = <span class="number">0</span>                                                        <span class="comment">#聚类计数器                                                       </span></span><br><span class="line">	<span class="keyword">for</span> <span class="keyword">each</span> point P <span class="keyword">in</span> database DB &#123;</span><br><span class="line">		<span class="keyword">if</span> label(P) ≠ undefined <span class="keyword">then</span> <span class="keyword">continue</span>                    <span class="comment">#如果是已经分析过的点，跳过返回			Neighbors N = RangeQuery(DB, distFunc, P, eps)           #查找邻域</span></span><br><span class="line">		<span class="keyword">if</span> |N| &lt; minPts <span class="keyword">then</span> &#123;                                   <span class="comment">#密度检测</span></span><br><span class="line">			label(P) = Noise                                     <span class="comment">#标注为噪点</span></span><br><span class="line">			<span class="keyword">continue</span> </span><br><span class="line">		&#125;</span><br><span class="line">		C = C + <span class="number">1</span>                                                <span class="comment">#创建新聚类                           </span></span><br><span class="line">		label(P) = C                                             <span class="comment">#标注核心点聚类</span></span><br><span class="line">		Seed <span class="keyword">set</span> S = N \ &#123;P&#125;                                     <span class="comment">#获取邻域内点集合</span></span><br><span class="line">		<span class="keyword">for</span> <span class="keyword">each</span> point Q <span class="keyword">in</span> S &#123;                                  <span class="comment">#处理集合内的每一个点</span></span><br><span class="line">			<span class="keyword">if</span> label(Q) = Noise <span class="keyword">then</span> label(Q) = C                <span class="comment">#更改噪点为边界点聚类</span></span><br><span class="line">			<span class="keyword">if</span> label(Q) ≠ undefined <span class="keyword">then</span> <span class="keyword">continue</span>                <span class="comment">#如果是已经分析过的点，跳过返回</span></span><br><span class="line">			label(Q) = C                                         <span class="comment">#标注点聚类</span></span><br><span class="line">			Neighbors N = RangeQuery(DB, distFunc, Q, eps)       <span class="comment">#继续拓展查找邻域 </span></span><br><span class="line">			<span class="keyword">if</span> |N| ≥ minPts <span class="keyword">then</span> &#123;                               <span class="comment">#检查密度 </span></span><br><span class="line">				S = S U N                                        <span class="comment">#将新邻域的点集合合并到之前的集合</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">RangeQuery(DB, distFunc, Q, eps) &#123; </span><br><span class="line">	Neighbors = empty <span class="keyword">list</span></span><br><span class="line">	<span class="keyword">for</span> <span class="keyword">each</span> point P <span class="keyword">in</span> database DB &#123;                            <span class="comment">#扫描数据库中的所有点</span></span><br><span class="line">		<span class="keyword">if</span> distFunc(Q, P) ≤ eps <span class="keyword">then</span> &#123;                           <span class="comment">#计算距离并检测邻域</span></span><br><span class="line">			Neighbors = Neighbors ∪ &#123;P&#125;                         <span class="comment">#添加到结果集</span></span><br><span class="line">		&#125; </span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">return</span> Neighbors </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>声明：上述代码和GA中工具实现的逻辑完全无关。</p>
+</blockquote>
+<h3><span id="优劣分析">优劣分析</span></h3>
+<h4><span id="优势">优势</span></h4>
+<ul>
+<li>DBSCAN 不需要像k-means一样预先指定数据分多少类；</li>
+<li>DBSCAN可以发现任何形状的聚类，甚至会发现完全被其它聚类围绕的聚类。由于MinPts参数的作用，称为单链效应的情况被减少了；</li>
+<li>DBSCAN只需要两个参数，对于数据集中点的顺序不敏感；</li>
+<li>DBSCAN可以使用数据库的空间索引，以加速查询，因此非常高效；</li>
+</ul>
+<h4><span id="劣势">劣势</span></h4>
+<ul>
+<li>参数minPts和邻域距离，需要由对数据理解良好的领域专家来设置；</li>
+<li>采用统一的密度标准来衡量，这就要求所有有意义的聚类密度相似。</li>
+</ul>
+<p>了解了这个工具的算法，大家是否会觉得原来机器学习没那么高深？竟然如此简单？分分钟就完成个大数据聚类运算？其实真正的难点并不是理解工具运算原理和如何使用工具，关键点在于对待分析数据和要解决问题的理解，然后才能给出合适的最小聚类点数和邻域距离，而这些参数直接决定了分类结果。说到这儿，想起之前看到过的一个笑话：</p>
+<p>​	<em>一次，福特公司里一台大型电机发生了故障，工程师们会诊3个月没有结果，只得请来权威斯坦门茨。这位权威及时挽救了电机，而有人却嫉妒地说斯坦门茨向公司要1万美元，这1万美元是不是勒索呢？斯坦门茨写在付款单上的说明就是最好的回答：“画一条线=1美元，知道在什么地方画线=9999美元。</em></p>
+<h2><span id="参考资料">参考资料</span></h2>
+<p>ArcGIS help: <a href="http://pro.arcgis.com/zh-cn/pro-app/tool-reference/spatial-statistics/how-density-based-clustering-works.htm" target="_blank" rel="noopener">“基于密度的聚类” 工作原理 </a></p>
+<p>Wiki:<a href="https://en.wikipedia.org/wiki/DBSCAN" target="_blank" rel="noopener">DBSCAN</a></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/ArcGIS/b2758ce4.html" data-toggle="tooltip" data-placement="top" title="ArcGIS地理大数据模式识别之热点分析">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">功能定义</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">使用工具</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">输入参数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">分析过程</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">输出结果</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">原理分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">算法原理</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">优劣分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">优势</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">劣势</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">参考资料</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                        
+                          <a class="tag" href="/tags/#Spatial analysis" title="Spatial analysis">Spatial analysis</a>
+                        
+                          <a class="tag" href="/tags/#Big Data" title="Big Data">Big Data</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.newnaw.com" target="_blank">菩提老王的葡萄架</a></li>
+                    
+                        <li><a href="http://www.giser.net" target="_blank">barry的后院</a></li>
+                    
+                        <li><a href="http://oopsliu.com" target="_blank">OOPSLIU</a></li>
+                    
+                        <li><a href="http://kikitamap.com/" target="_blank">kikita &amp; Maps</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite.com/ArcGIS/14f0bdac.html";
+    var disqus_url = "http://yoursite.com/ArcGIS/14f0bdac.html";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: '💡'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/makeling">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/keling ma">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Keling Ma 2018 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Customized by <a href="https://makeling.github.io">UbuntuSpace</a>
+                    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_uv">
+                         | Total Visits:<span id="busuanzi_value_site_uv"></span>
+                    </span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript  -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'null';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
