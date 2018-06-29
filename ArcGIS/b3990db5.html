@@ -92,11 +92,11 @@
                             
                               <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                             
+                              <a class="tag" href="/tags/#Statistics" title="Statistics">Statistics</a>
+                            
                               <a class="tag" href="/tags/#Spatial analysis" title="Spatial analysis">Spatial analysis</a>
                             
                               <a class="tag" href="/tags/#Big Data" title="Big Data">Big Data</a>
-                            
-                              <a class="tag" href="/tags/#Statistics" title="Statistics">Statistics</a>
                             
                         </div>
                         <h1>ArcGIS地理大数据之点聚合分析</h1>
@@ -150,14 +150,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -224,59 +224,61 @@
 <p>对于GIS我们关心任何人、事、物在地理空间上所呈现的规律性。对海量离散空间点数据，我们很容易想到，按照一定区域将它们聚合起来，这可以有效缩减数据量，让它们重新回归到可分析的尺度。相信ArcGIS的地理科学家们也是沿着这条思路设计了ArcGIS地理大数据解决方案，这篇文章就跟大家分享，可以实现海量点数据在空间区域聚合的工具——聚合点工具。</p>
 <h2><span id="功能定义">功能定义</span></h2>
 <p>聚合点工具在功能设计上非常简单，就是汇总落入区域面内的点，并计算点的个数、属性字段值的总和、最小值、最大值、均值、方差、和标准差等统计数据。你可能会问，统计这些有什么用呢？事实上是非常有用，通过统计数据让我们关注的层次从个体提升到了区域整体，可以洞察到更深刻的规律，而免去渲染海量数据的苦恼。在这里落入每个区的：</p>
-<p>-点个数：可以直观地通过地图看出样本点在每个区域分布的规律；</p>
-<p>-总和：反映了每个区域特征总值，通过地图仍然可以直观看出特征值在每个区域上的分布情况；</p>
-<p>-最小值，最大值：反映了区域内特征值的分布域值；</p>
-<p>-均值：反应每个区域的样本特征期望，更多情况下均值相对总和更能反应问题；</p>
-<p>-方差，标准差：反映了样本的松散度，松散度可以理解为特征值偏离均值的程度。</p>
+<p>-点个数：可以直观地通过地图看出样本点在每个区域分布的规律；<br>
+-总和：反映了每个区域特征总值，通过地图仍然可以直观看出特征值在每个区域上的分布情况；<br>
+-最小值，最大值：反映了区域内特征值的分布域值；<br>
+-均值：反应每个区域的样本特征期望，更多情况下均值相对总和更能反应问题；<br>
+-方差，标准差：反映了样本的松散度，松散度可以理解为特征值偏离均值的程度。</p>
 <p>关于这些统计值的计算方法，可以参阅我之前写的文章：<a href="https://makeling.github.io/Mathematics/dfc0f5d4.html" target="_blank" rel="noopener">《空间分析的数学基础》</a></p>
 <h2><span id="使用工具">使用工具</span></h2>
 <p>聚合点工具虽然很简单，但却是我们进行大数据分析必备的工具。正如这个工具名所代表的含义，它是设计用来聚合点的工具（GISer往往有这种偏执，为何它不支持聚合线和面？），所以输入限定只支持汇聚点图层。</p>
 <p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ap_demographic.png" alt="ap_demographic"></p>
-<p>接下来我们看看这个工具如何使用</p>
+<p>接下来我们看看这个工具如何使用。</p>
 <h3><span id="输入参数">输入参数</span></h3>
 <p>聚合点工具是用来计算落入区域内的点要素的各种统计指标，很容易想到最核心的收入参数就是一个面图层和一个点图层。这个面我在这里称为“区域图层”，因为它实际代表了汇聚统计结果的小区图层。以下详细介绍下各输入参数：</p>
 <ol>
 <li>
-<p>大数据点图层</p>
-<p>这个图层中的点代表了包含特征值的事件点。</p>
+<p>输入大数据点图层<br>
+这个图层中的点代表了包含特征值的事件点。</p>
 </li>
 <li>
-<p>区域图层</p>
+<p>设置区域图层<br>
+区域图层有两种选择：</p>
 </li>
 </ol>
-<p>区域图层有两种选择：</p>
 <ul>
 <li>
 <p>输入一个行政区划或人为规划的面图层（比如网格管理中的格网）</p>
 </li>
 <li>
 <p>选择由工具自动生成格网，这里支持六边形和四边形，这种方式我们只要指定格网高度d就可以了，格网生成规则遵循：</p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ap_grid.png" alt="ap_grid"></p>
 </li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/ap_grid.png" alt="ap_grid"></p>
 <ol start="3">
-<li>（可选）设置时间步长</li>
+<li>(可选)设置时间步长</li>
 </ol>
 <p>如果输入的点图层开启了时态，并且时间是instant（时刻）类型，这个工具就支持使用时间步长来分析。时间参数可以通过：时间步长间隔、时间步长重复频率和起算时刻三个参数来控制。</p>
 <p>为了更好的理解设置时间步长的意义，想象输入的点图层中包含了一年收集的数据，如果我们想以周为单位分析，就可以设置时间步长间隔为1周。如果我们事实上只关心一年中每个月的第一周的统计数据，那可以进一步设置时间步长重复率为1个月。那从什么时刻开始统计呢？还需要设置最后一个参数起算时刻，如果这个参数省略，默认会从1970年1月1日开始。</p>
-<p>4.（可选）设置统计字段和统计项</p>
-<p>这是个可选项，我们可以有目标的指定某个属性字段参与统计，也可以不选，默认模式是全字段统计。</p>
-<p>统计项针对数值型和字符串型有所不同：</p>
+<ol start="4">
+<li>(可选)设置统计字段和统计项</li>
+</ol>
+<p>这是个可选项，我们可以有目标的指定某个属性字段参与统计，也可以不选，默认模式是全字段统计。<br>
+统计项针对数值型和字符串型有所不同：</p>
 <ul>
+<li>数值型：支持统计计数、总和、最小值、最大值、范围、平均值、标准差、方差统计项；</li>
+<li>字符串型：支持计数（count）和任意（any）两个统计项，其中count会返回非空值的计数，any返回落入区域中任意点的统计字段属性值，实践证明这个值确实是随机选的。</li>
+</ul>
+<ol start="5">
 <li>
-<p>数值型：支持统计计数、总和、最小值、最大值、范围、平均值、标准差、方差统计项；</p>
-</li>
-<li>
-<p>字符串型：支持计数（count）和任意（any）两个统计项，其中count会返回非空值的计数，any返回落入区域中任意点的统计字段属性值，实践证明这个值确实是随机选的。</p>
 <p>设置结果图层名</p>
 </li>
 <li>
 <p>如果区域图层使用自动生成四边形或六边形格网的方式，还需要设置空间参考为投影坐标系.</p>
 </li>
-</ul>
-<ol start="7">
-<li>选择是否使用当前图层范围。</li>
+<li>
+<p>选择是否使用当前图层范围。</p>
+</li>
 </ol>
 <h3><span id="输出结果">输出结果</span></h3>
 <p>聚合点工具执行的结果会生成全新的feature service, geometry会复制区域面中的要素，属性字段为各统计项。以下是分别采用自动生成格网和输入面多边形聚合的结果：</p>
@@ -353,11 +355,11 @@
                        
                           <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                         
+                          <a class="tag" href="/tags/#Statistics" title="Statistics">Statistics</a>
+                        
                           <a class="tag" href="/tags/#Spatial analysis" title="Spatial analysis">Spatial analysis</a>
                         
                           <a class="tag" href="/tags/#Big Data" title="Big Data">Big Data</a>
-                        
-                          <a class="tag" href="/tags/#Statistics" title="Statistics">Statistics</a>
                         
                     </div>
                 </section>
