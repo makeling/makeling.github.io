@@ -50,7 +50,14 @@
 
     <url>
         <loc>http://yoursite.com/categories/ArcGIS/</loc>
-        <lastmod>2018-10-25T03:36:53.370Z</lastmod>
+        <lastmod>2018-10-25T03:45:16.414Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/categories/BigData/</loc>
+        <lastmod>2018-10-25T04:00:48.703Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

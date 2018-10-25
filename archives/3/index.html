@@ -143,14 +143,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -210,6 +210,73 @@
             
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/OS/5577a97e.html">
+        <h2 class="post-title">
+            如何为Windows 文件共享开启”盘符$”访问权限
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            [问题描述]
+通过samba远程更新服务器资源，如果需要使用c$, d$类似这种盘符的共享接口，可能会遇到“拒绝访问”的错误。
+
+￼
+[问题分析]
+导致问题出现的原因是微软系统默认开启了一个非常小众的安全策略叫做“UAC 远程限制”，它会为本地用户账户或Windows账户过滤访问token. 这将限制局域网内用户以管理员用户通过“盘符$”的方式访问共享目录。
+[解决办法]
+在运行中，输入re......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Keling Ma on
+            2017-12-18
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#OS" title="OS">OS</a>
+            
+              <a href="/tags/#Windows" title="Windows">Windows</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/ArcGIS/35dd3225.html">
+        <h2 class="post-title">
+            解除Hosting Server和Data Store的注册关系
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            在ArcGIS Enterprise的部署中，每一个ArcGIS Data Store安装后都需要注册ArcGIS Server，建立和站点的联系，这个过程中DataStore完成了建库（可能是关系型数据库，可能是切片缓存库，也可能是时空大数据库），Server从普通的ArcGIS Server升级为hosting Server。建立关系的过程很美好，但是总有那么一个理由，需要我们解除关系来......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Keling Ma on
+            2017-08-04
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+            
+              <a href="/tags/#Enterprise" title="Enterprise">Enterprise</a>
+            
+        </div>
+    
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -517,7 +584,7 @@ Esri关键产品发布时间:
     <div class="tags">
         
             
-            <a href="/tags/#ArcGIS" title="ArcGIS" rel="20">ArcGIS</a>
+            <a href="/tags/#ArcGIS" title="ArcGIS" rel="21">ArcGIS</a>
             
         
             
@@ -529,6 +596,14 @@ Esri关键产品发布时间:
             
         
             
+            <a href="/tags/#Big Data" title="Big Data" rel="4">Big Data</a>
+            
+        
+            
+            <a href="/tags/#Spatial analysis" title="Spatial analysis" rel="4">Spatial analysis</a>
+            
+        
+            
             <a href="/tags/#Probability" title="Probability" rel="2">Probability</a>
             
         
@@ -537,15 +612,11 @@ Esri关键产品发布时间:
             
         
             
-            <a href="/tags/#Spatial analysis" title="Spatial analysis" rel="4">Spatial analysis</a>
+            <a href="/tags/#Apache" title="Apache" rel="2">Apache</a>
             
         
             
-            <a href="/tags/#Big Data" title="Big Data" rel="3">Big Data</a>
-            
-        
-            
-        
+            <a href="/tags/#Deployment" title="Deployment" rel="2">Deployment</a>
             
         
             
@@ -655,6 +726,14 @@ Esri关键产品发布时间:
     <ul>
       
         <li>
+          <a href="/uncategorized/undefined.html">Deployment</a>
+        </li>
+      
+        <li>
+          <a href="/BigData/3752b673.html">为ArcGIS GeoAnalytics Server注册Hive数据源超清版</a>
+        </li>
+      
+        <li>
           <a href="/ArcGIS/undefined.html">为ArcGIS GeoAnalytics Server注册Hive数据源超清版</a>
         </li>
       
@@ -664,14 +743,6 @@ Esri关键产品发布时间:
       
         <li>
           <a href="/ArcGIS/14f0bdac.html">ArcGIS地理大数据模式识别之基于密度的点聚类分析</a>
-        </li>
-      
-        <li>
-          <a href="/ArcGIS/b2758ce4.html">ArcGIS地理大数据模式识别之热点分析</a>
-        </li>
-      
-        <li>
-          <a href="/ArcGIS/8c3d7b25.html">ArcGIS地理大数据模式识别之密度分析</a>
         </li>
       
     </ul>
@@ -700,7 +771,7 @@ Esri关键产品发布时间:
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li></ul>
     </div>
 
         <hr>
