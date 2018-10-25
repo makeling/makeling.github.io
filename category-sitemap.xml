@@ -21,13 +21,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/categories/quantum/</loc>
-        <lastmod>2018-02-08T08:42:01.986Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite.com/categories/automation/</loc>
         <lastmod>2018-04-16T03:41:28.614Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -42,15 +35,22 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/categories/ArcGIS/</loc>
-        <lastmod>2018-06-29T06:41:47.553Z</lastmod>
+        <loc>http://yoursite.com/categories/bigdata/</loc>
+        <lastmod>2018-10-25T04:21:02.797Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite.com/categories/bigdata/</loc>
-        <lastmod>2018-10-25T04:21:02.797Z</lastmod>
+        <loc>http://yoursite.com/categories/ArcGIS/</loc>
+        <lastmod>2018-10-25T06:24:31.222Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/categories/quantum/</loc>
+        <lastmod>2018-10-25T06:25:36.840Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
