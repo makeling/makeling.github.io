@@ -42,15 +42,15 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/categories/bigdata/</loc>
-        <lastmod>2018-10-25T04:21:02.797Z</lastmod>
+        <loc>http://yoursite.com/categories/quantum/</loc>
+        <lastmod>2018-10-25T06:25:36.840Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite.com/categories/quantum/</loc>
-        <lastmod>2018-10-25T06:25:36.840Z</lastmod>
+        <loc>http://yoursite.com/categories/bigdata/</loc>
+        <lastmod>2018-10-25T07:53:26.378Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
