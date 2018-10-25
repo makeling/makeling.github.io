@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/BigData/3752b673.html">
+    <link rel="canonical" href="http://yoursite.com/bigdata/3752b673.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -254,7 +254,7 @@
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@gis040 jdk1.8.0_65]# cd ~</span><br><span class="line">[root@gis040 ~]# adduser hadoop</span><br><span class="line">[root@gis040 ~]# passwd hadoop</span><br><span class="line">Changing password <span class="keyword">for</span><span class="built_in"> user </span>hadoop.</span><br><span class="line">New password:</span><br></pre></td></tr></table></figure>
 <p>这里密码我设置了hadoop@123</p>
 <h3><span id="配置集群间ssh免密">配置集群间ssh免密</span></h3>
-<p>这步是必须操作, 集群间ssh免密是通过自动化shell脚本<a href="https://raw.githubusercontent.com/makeling/makeling.github.io/master/ArcGIS/3752b673/auto_ssh.sh" target="_blank" rel="noopener">auto_ssh.sh</a>完成的,需要的同学自行下载。</p>
+<p>这步是必须操作, 集群间ssh免密是通过自动化shell脚本<a href="https://raw.githubusercontent.com/makeling/makeling.github.io/master/bigdata/3752b673/auto_ssh.sh" target="_blank" rel="noopener">auto_ssh.sh</a>完成的,需要的同学自行下载。</p>
 <p>使用前需要修改:</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[root@gis040 ~]</span><span class="comment"># cd /home/soft/scripts</span></span><br><span class="line"><span class="section">[root@gis040 scripts]</span><span class="comment"># vim auto_ssh.sh</span></span><br><span class="line"><span class="attr">IP_1</span>=<span class="number">10.10</span>.<span class="number">20.39</span>,<span class="number">10.10</span>.<span class="number">20.38</span>,<span class="number">10.10</span>.<span class="number">20.40</span></span><br><span class="line"><span class="attr">PWD_1</span>=hadoop@<span class="number">123</span></span><br><span class="line"><span class="attr">USER_1</span>=hadoop</span><br></pre></td></tr></table></figure>
 <p>替换IP_1, PWD_1, USER_1为你部署环境真实hadoop 集群的IP地址，Hadoop用户名密码，和Hadoop用户名</p>
@@ -400,18 +400,18 @@
 <h2><span id="为arcgis-geoanalytics注册hive数据源">为ArcGIS GeoAnalytics注册hive数据源</span></h2>
 <h3><span id="获取注册为ga-的server地址">获取注册为GA 的Server地址</span></h3>
 <p>在ArcGIS Enterpris的Organization - Edit settings - Server中查看注册为GA的ArcGIS Server地址。</p>
-<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/ArcGIS/3752b673/find_GA_Server.png" alt="find_GA_Server"></p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/bigdata/3752b673/find_GA_Server.png" alt="find_GA_Server"></p>
 <h3><span id="导航至注册窗口">导航至注册窗口</span></h3>
 <p>进入作为GA Server 的ArcGIS Server Manager，导航至站点-&gt; 数据存储， 在注册数据库的下拉列表中选择“大数据文件共享”。</p>
-<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/ArcGIS/3752b673/navigate_bigdata_register.png" alt="navigate_bigdata_register"></p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/bigdata/3752b673/navigate_bigdata_register.png" alt="navigate_bigdata_register"></p>
 <h3><span id="配置注册参数">配置注册参数</span></h3>
 <p>在弹出的配置窗口中，输入以下参数值：</p>
-<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/ArcGIS/3752b673/hive_registering.png" alt="hive_registering"></p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/bigdata/3752b673/hive_registering.png" alt="hive_registering"></p>
 <p>注册参数：</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">name:</span> hive_db1</span><br><span class="line"><span class="string">type:</span> Hive</span><br><span class="line">metastore <span class="string">URI:</span> <span class="string">thrift:</span><span class="comment">//10.10.20.40:9083</span></span><br><span class="line"><span class="string">datastore:</span> <span class="keyword">default</span></span><br></pre></td></tr></table></figure>
 <h3><span id="验证成果">验证成果</span></h3>
 <p>成功注册后，可以通过编辑按钮查看注册的大数据信息。</p>
-<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/ArcGIS/3752b673/checking_details.png" alt="checking_details"></p>
+<p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/bigdata/3752b673/checking_details.png" alt="checking_details"></p>
 
                 
 
@@ -512,8 +512,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite.com/BigData/3752b673.html";
-    var disqus_url = "http://yoursite.com/BigData/3752b673.html";
+    var disqus_identifier = "http://yoursite.com/bigdata/3752b673.html";
+    var disqus_url = "http://yoursite.com/bigdata/3752b673.html";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
