@@ -150,14 +150,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -220,10 +220,10 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1><span id="arcgis地理大数据模式识别之密度分析">ArcGIS地理大数据模式识别之密度分析</span></h1>
+                <h1 id="arcgis地理大数据模式识别之密度分析">ArcGIS地理大数据模式识别之密度分析</h1>
 <p>在基于空间数据的模式分析中，可以通过输入的点要素或某一属性的统计值来计算分布密度，比如通过多年的野外普查，我们已经获得了某一濒危野生动物的统计数据，仅有这些数值，我们无法直观的获得野生动物的分布趋势，通过物种数量来计算物种密度，而后将密度分布再和陆地覆盖数据做对比，就可以用来研究该物种的习性。再比如飞机飞行路径的GPS数据也可以用来做密度分析从而发现哪些飞行区域是高吞吐量的，从而辅助后续航线设计。这一类的分析，都是从数据统计结果进一步获得数据的空间密度分布，因此也叫密度分析。</p>
 <p>在ArcGIS 地理大数据分析工具中有一个专门用于上述密度分析的工具——Calculate Density。这篇文章就跟大家分享Calculate Density工具的工作原理。</p>
-<h2><span id="功能定义">功能定义</span></h2>
+<h2 id="功能定义">功能定义</h2>
 <p>密度计算工具是以要素为核心，计算一定邻域范围内要素的密度。密度分析的结果会以条柱（bin）形式呈现。目前这个输出支持四边形和六边形条柱两种。<br>
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/density_workflow.png" alt="density_workflow"></p>
 <p>从密度计算工具的定义中，我们能梳理出关键的几个要素：</p>
@@ -234,9 +234,9 @@
 <li>结果以栅格格网呈现（bin）。</li>
 </ul>
 <p>直觉上理解密度计算，就是将原来以点呈现的数据（比如人口），拟合为通过面来呈现连续分布趋势，这样更便于我们发现地理要素特征在空间上的分布规律。</p>
-<h2><span id="原理分析">原理分析</span></h2>
+<h2 id="原理分析">原理分析</h2>
 <p>任何一个ArcGIS 地理处理工具，就像是一条生产线，送原料进去，加工处理，输出产品。对于密度计算工具来说也不例外，通过前面从功能定义中总结出的四个关键要素，我们能看出要计算密度，需要输入要素，设置搜索半径，选择算法，并可视化结果。接下来我就按照输入、算法、输出三段式来讲解下密度计算工具的原理。</p>
-<h3><span id="输入">输入</span></h3>
+<h3 id="输入">输入</h3>
 <ul>
 <li>输入图层</li>
 </ul>
@@ -248,7 +248,7 @@
 <p>搜索半径，也就是要在多大范围内计算密度，所有落入半径内的要素点，都将参与密度计算。这个搜索半径大小的设置非常重要，直接影响密度分析的结果。设置多大的范围来计算密度最合适呢？这是个深奥的问题，推荐个取巧的办法，可以参考Esri科学家推荐使用的默认搜索半径公式来计算：<br>
 ​<img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/bandwidth.png" alt="bandwidth"></p>
 <p>公式中SD代表标准差，Dm是距离中值，n是点数， min是求取二者最小值的方法。这个公式是权衡了标准差和中值距离两个参数，二者取最小值参与最终的计算。在这儿先埋个伏笔，日后我可能会写个自动计算搜索半径的python工具，作为大数据密度分析工具的辅助工具，方便大家使用。其实在桌面核密度计算工具中，这个值是自动计算的，10.2.1之后就是使用了上面的公式。</p>
-<h3><span id="算法">算法</span></h3>
+<h3 id="算法">算法</h3>
 <p>有了输入的点要素集，设置了搜索半径，那我们就可以以每个点为中心，按照搜索半径生成圆，然后计算落入圆内的所有点，很容易想到单位面积上的点数就是密度啦。最简单的密度计算公式就是：</p>
 <p>Density = 所有的事件点总数/圆面积</p>
 <p>为何我用事件点呢？是为了区分点要素的point，因为密度计算我们不仅可以针对输入要素点的点数来计算密度，还可以针对点属性表中的统计字段来计算密度，一旦设置了字段，字段值就代表事件点数。当然，如果不指定字段，工具就会按照要素点的点数来计算密度。</p>
@@ -261,7 +261,7 @@
 <li>Uniform(统一): 计算单位面积的量值，相当于事件点在搜索区均匀分布</li>
 <li>Kernel（核）: 应用核函数（权重）将事件点拟合为锥形平面。</li>
 </ul>
-<h3><span id="输出">输出</span></h3>
+<h3 id="输出">输出</h3>
 <p>经过上面的密度计算，每个搜索区事件点的密度已经计算完成了，接下来就需要可视化这些结果，以帮助我们直观的看出空间事件点的分布模式。</p>
 <p>栅格是计算机上展现二维连续分布的常见表达方式。密度分析的结果在ArcGIS Desktop工具中也的确是通过栅格Cell来表达，如果栅格的中心点落入搜索半径内，那栅格中心点所在的密度就赋值给这个栅格像元。如果一个栅格像元被多个分析区覆盖，那这个栅格的值就是所有覆盖它的搜索区密度的叠加。</p>
 <p>对于大数据工具来说，输出并不是以栅格的形式表达，而是以bin的形式表达。bin在中文版中翻译成条柱，我们也可以按格网来理解，bin支持四边形和六边形两种格网。在使用工具时，我们可以设置这个格网的大小。</p>
@@ -271,7 +271,7 @@
 <li>对于六边形： size = 六边形的高</li>
 </ul>
 <p>输出格网的大小，决定了生成结果可视化表达的精度。格网越小，密度图绘制出来会越平滑。格网越大，密度图会更粗糙。</p>
-<h3><span id="高手解读">高手解读</span></h3>
+<h3 id="高手解读">高手解读</h3>
 <p>密度分析算是个比较复杂的工具，为了研究它，我特别请教了ArcGIS空间分析的大牛<a href="http://kikitamap.com/" target="_blank" rel="noopener">木工</a>，她深入浅出的通过桌面分析工具，为我厘清了很多乱麻。下面将她的分析过程通过一张图来跟大家分享。<br>
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/deskop_monitor.jpg" alt="deskop_monitor"></p>
 <p>分析过程：</p>
@@ -284,18 +284,18 @@
 <li>分析区只有一个点的3，4 , 核密度输出呈现同心圆的方式逐渐衰减，到边界处为0，这正是核函数作用的结果。</li>
 <li>1，2 两个点的分析区存在叠加，所以叠加区的栅格像元值会累加，密度最大。</li>
 </ul>
-<h2><span id="扩展阅读">扩展阅读</span></h2>
-<h3><span id="核密度估计">核密度估计</span></h3>
+<h2 id="扩展阅读">扩展阅读</h2>
+<h3 id="核密度估计">核密度估计</h3>
 <p>在统计学中，核密度估计（KDE）是一种无参数估计随机变量的概率密度函数。核密度估计是数据平滑问题的基础，例如基于有限数据样本，推测人口组成。通过一张图直观的体验下核密度：<br>
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/Kernel_density.png" alt="Image"></p>
 <p>上面的分布图是对100个正态分布随机变量，采用不同的搜索半径（带宽）进行的核密度估计。灰线代表原始正态分布，蓝线代表搜索半径为0.3的概率密度分布， 绿线代表带宽为0.1的概率密度分布，红线代表带宽为0.05的概率密度分布。从0.3-0.05的带宽变化，我们能看出来带宽越大，核密度越平滑，带宽越小核密度越锐利。</p>
-<h4><span id="核密度估计公式">核密度估计公式</span></h4>
+<h4 id="核密度估计公式">核密度估计公式</h4>
 <p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/kernel_formula.png" alt="kernel_formula"></p>
 <p>在上述公式中：<br>
 — K代表核（kernel）：是一个非负函数，积分后值为1<br>
 — h 是平滑参数：也叫做bandwidth. 在ArcGIS中，这个术语也叫做搜索半径，在知乎上似乎统计学的学生也叫它“窗宽”，为何bandwidth = 窗宽 我不得而知，但是个人感觉带宽或搜索半径理解起来更容易些。</p>
 <p>从公式中能看出，影响核密度估计的最重要的两个参数是核函数和bandwidth。 核密度估计就是计算bandwidth范围内， 所有要素到中心点的距离加权（核函数K）叠加后取均值（除n），再除以覆盖的搜索区面积。 接下来再跟大家分享下如何理解核函数和带宽。</p>
-<h4><span id="核函数">核函数</span></h4>
+<h4 id="核函数">核函数</h4>
 <p>直觉上简单理解核函数就是权重，通过对每个点到中心距离的加权来重新确定分布。在核密度估计中，针对样本空间随机变量的分布性质，可以采用不同的核函数。常用的有uniform, triangular, triweight, Epanechnikov, Quartic, Gaussion, and others。不同的核函数会产生不同的核密度分布结果。<br>
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/600px-Kernels.svg.png" alt="600px-Kernels.svg"></p>
 <p>看到这张图？大家是否会想到核函数就是概率密度函数？所以它的积分才会是1，因为所有的概率加在一起就是100%。</p>
@@ -306,10 +306,10 @@ x1 = -2.1, x2 = -1.3, x3 = -0.4, x4 = 1.9, x5 = 5.1, x6 = 6.2<br>
 <p>直方图密度函数，横轴按照2个单位划分统计区间，这里可以近似的理解为bandwidth， 样本点落入区间，我们就放置一个1/12的箱子，从直方图的高度表达了区间的样本密度。</p>
 <p>核密度估计，这里核采用了高斯核（正态分布）函数，方差为2.25。红色虚线表达了每个样本点的高斯分布曲线。 蓝线就是对每条高斯分布曲线的加权叠加统计。</p>
 <p>比较上面的两张图，核密度估计相对直方图的离散表达，是一种连续分布的表达，更好的模拟连续随机变量的密度分布。</p>
-<h4><span id="搜索半径bandwidth">搜索半径（bandwidth）</span></h4>
+<h4 id="搜索半径bandwidth">搜索半径（bandwidth）</h4>
 <p>核的搜索半径直接影响估计结果。这一点通过上面核密度估计的曲线图我们已经有直观感受。如何选取搜索半径是统计学上的重要研究课题，在前人研究的基础上，针对不同的核函数，有不同的搜索半径计算公式，下面是基于高斯分布的密度估计，带宽是基于最小化均值方差来计算：<br>
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/gaussian_h.png" alt="gaussian_h"></p>
-<h3><span id="正态分布">正态分布</span></h3>
+<h3 id="正态分布">正态分布</h3>
 <p>正态分布又名<a href="https://baike.baidu.com/item/%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83" target="_blank" rel="noopener">高斯分布</a>（Gaussian distribution），最早由A.棣莫弗在求<a href="https://baike.baidu.com/item/%E4%BA%8C%E9%A1%B9%E5%88%86%E5%B8%83" target="_blank" rel="noopener">二项分布</a>的渐近公式中得到。高斯在研究测量误差时从另一个角度导出了它，因此它也叫高斯分布。正态分布在统计学的许多方面有着重大的影响力, 有大量的随机现象遵循正态分布。我们还是通过正态分布曲线图来直观的感受下它的样子。<br>
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/350px-Normal_Distribution_PDF.svg.png" alt="350px-Normal_Distribution_PDF.svg"></p>
 <p>正态分布曲线在形态上看起来非常像一口钟，因此它也被形象的称为“钟形分布”。<br>
@@ -317,7 +317,7 @@ x1 = -2.1, x2 = -1.3, x3 = -0.4, x4 = 1.9, x5 = 5.1, x6 = 6.2<br>
 σ 是标准差。</p>
 <p>正态分布的概率密度公式：<br>
 <img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/Gaussian_distribution.png" alt="Gaussian_distribution"></p>
-<h2><span id="参考资料">参考资料</span></h2>
+<h2 id="参考资料">参考资料</h2>
 <p>ArcGIS官方帮助：<a href="http://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/how-kernel-density-works.htm" target="_blank" rel="noopener">http://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/how-kernel-density-works.htm</a><br>
 维基百科：<a href="https://en.wikipedia.org/wiki/Kernel_density_estimation" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Kernel_density_estimation</a><br>
 维基百科：<a href="https://en.wikipedia.org/wiki/Normal_distribution#Definition" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Normal_distribution#Definition</a></p>
@@ -364,7 +364,7 @@ x1 = -2.1, x2 = -1.3, x3 = -0.4, x4 = 1.9, x5 = 5.1, x6 = 6.2<br>
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">ArcGIS地理大数据模式识别之密度分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">功能定义</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">原理分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">输入</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">算法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">输出</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.2.4.</span> <span class="toc-nav-text">高手解读</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">扩展阅读</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">核密度估计</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.3.1.1.</span> <span class="toc-nav-text">核密度估计公式</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.3.1.2.</span> <span class="toc-nav-text">核函数</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.3.1.3.</span> <span class="toc-nav-text">搜索半径（bandwidth）</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">正态分布</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">参考资料</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#arcgis地理大数据模式识别之密度分析"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">ArcGIS地理大数据模式识别之密度分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#功能定义"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">功能定义</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#原理分析"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">原理分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#输入"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">输入</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#算法"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">算法</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#输出"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">输出</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#高手解读"><span class="toc-nav-number">1.2.4.</span> <span class="toc-nav-text">高手解读</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#扩展阅读"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">扩展阅读</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#核密度估计"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">核密度估计</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#核密度估计公式"><span class="toc-nav-number">1.3.1.1.</span> <span class="toc-nav-text">核密度估计公式</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#核函数"><span class="toc-nav-number">1.3.1.2.</span> <span class="toc-nav-text">核函数</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#搜索半径bandwidth"><span class="toc-nav-number">1.3.1.3.</span> <span class="toc-nav-text">搜索半径（bandwidth）</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#正态分布"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">正态分布</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#参考资料"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">参考资料</span></a></li></ol></li></ol>
         
         </div>
       </aside>

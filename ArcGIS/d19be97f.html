@@ -148,14 +148,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -220,14 +220,14 @@
 
                 <p>通过Pro2.0生成矢量切片时，我们会发现针对点图层，生成的矢量切片在绘制时会出现标注略微压盖符号的现象。</p>
 <p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E9%80%9A%E8%BF%87python%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BF%AE%E6%AD%A3%E7%9F%A2%E9%87%8F%E5%88%87%E7%89%87%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%A0%87%E6%B3%A8%E5%8E%8B%E7%9B%96%E9%97%AE%E9%A2%9801.png" alt="标注压盖符号样图"></p>
-<h2><span id="问题分析">问题分析</span></h2>
+<h2 id="问题分析">问题分析</h2>
 <p>这个问题可以说是现行版本中矢量切片拾取Pro制图参数之间存在一定的技术缺陷引起的，毕竟矢量切片技术遵从的是Mapbox style 规范来绘制地图和Pro中的制图规则并不完全一致，官方预计在未来版本中会针对这个问题增强修复。</p>
-<h2><span id="规避方案">规避方案</span></h2>
+<h2 id="规避方案">规避方案</h2>
 <p>矢量切片最大的优势之一就是可以基于现有切片自定义符号。当然，一般的自定义符号我们是根据现有的配置参数更改值，来实现地图样式的再定制。那是否可以通过增加参数来解决标注和符号的压盖问题呢？答案是肯定的，在Mapbox规范中包含了&quot;text-offset&quot;参数，可以用来实现标注的偏移：<br>
 <img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E9%80%9A%E8%BF%87python%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BF%AE%E6%AD%A3%E7%9F%A2%E9%87%8F%E5%88%87%E7%89%87%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%A0%87%E6%B3%A8%E5%8E%8B%E7%9B%96%E9%97%AE%E9%A2%9802.png" alt="text_offset参数"></p>
 <p>＊说明：“Ems”单位是被用于网页文件媒介的可缩放的单位（即相对单位）。1em就等于当前字体的大小，举个例子来讲，如果文档中字体的大小为10pt，那么1em = 10pt。</p>
 <p>接下来我们就动手修复这个问题吧！</p>
-<h3><span id="修复过程">修复过程：</span></h3>
+<h3 id="修复过程">修复过程：</h3>
 <p>1）通过Pro2.0生成矢量切片包，具体的生成过程参照官方帮助：<a href="http://pro.arcgis.com/en/pro-app/tool-reference/data-management/create-vector-tile-package.htm" target="_blank" rel="noopener">创建矢量切片包</a>;</p>
 <p>2）将vptk包拷贝到测试目录，并修改扩展名为zip；</p>
 <p>3）解压缩，获取矢量切片样式文件root.json所在目录，默认目录结构参考：&lt;解压缩后目录&gt;\p12\resources\styles\root.json</p>
@@ -247,7 +247,7 @@
 <p>5）修改完成后，将之前解包后的esriinfo,p12文件夹重新压缩为zip包（注意压缩文件夹结构不要含父级目录，压缩类型选择存储格式）；</p>
 <p>6）再次修改包扩展名为vtpk。</p>
 <p>至此，我们的修复工作就完成了，接下来就是鉴证奇迹的时刻…</p>
-<h2><span id="发布vtpk包检验成果">发布vtpk包，检验成果</span></h2>
+<h2 id="发布vtpk包检验成果">发布vtpk包，检验成果</h2>
 <p>检测过程包括两个关键环节：</p>
 <p>1）检测修改后的vtpk有效。这个判断准则就是在上传vtpk包时，我们勾选的同步发布一个Vector Tile Service是否可以成功发布。如果矢量切片服务可以成功发布出来，就说明包的修改已经成功了。如果不能发布，要检测修改后再压缩的zip包是否多打了一级目录，这样的压缩包是不会被portal正确识别的。</p>
 <p>2）验证标注已经正确偏移。下图是我修改后的结果：<br>
@@ -295,7 +295,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">问题分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">规避方案</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">修复过程：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">发布vtpk包，检验成果</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#问题分析"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">问题分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#规避方案"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">规避方案</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#修复过程"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">修复过程：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#发布vtpk包检验成果"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">发布vtpk包，检验成果</span></a></li></ol>
         
         </div>
       </aside>

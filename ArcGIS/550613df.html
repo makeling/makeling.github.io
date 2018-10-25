@@ -146,14 +146,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -216,10 +216,10 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2><span id="概览">概览</span></h2>
+                <h2 id="概览">概览</h2>
 <p>ArcGIS Runtime SDK 100 的许可政策，从大方向上依然延续了之前版本的策略。面向开发者支持ArcGIS Runtime SDK的在线下载，并且支持开发模式下的全功能开放。在开发模式下地图或场景依然会打上Esri的水印，在调试消息中会添加仅用于开发使用的声明。SDK的下载和free级别许可的生成需要注册开发者账户，面对中国区开发者账户暂未开放的情况，我们可以通过注册ArcGIS Online试用账户来替代，效果是一样一样的。</p>
 <p>在开发结束后，应用要以产品的形式对外发布，这时我们就要关心如何激活Runtime许可，去除水印并获得正版授权。在ArcGIS Runtime SDK 100中，许可级别相较于之前的版本有所调整，Esri提供了四种级别的授权：Lite, Base, Standard和Advanced。</p>
-<h2><span id="许可激活模式">许可激活模式</span></h2>
+<h2 id="许可激活模式">许可激活模式</h2>
 <p>针对这四种级别的许可，Esri提供了两种激活许可的方式：license key 和Named User。</p>
 <ul>
 <li>
@@ -229,7 +229,7 @@
 <p>Named User获取授权，熟悉Esri产品的GISer应该知道Portal for ArcGIS 和ArcGIS Online的授权模式是基于Named User的（ArcGIS组织账户）。为Runtime应用授权是Named User的重要特性之一。授权的过程需要在应用中通过代码登录Online或Portal，然后返回与Named User账户相关的许可信息。使用Named User申请的许可有效期是30天，过期后只需要再次连接Online 或Portal重新申请授权即可。这个许可支持保存到本地用于离线使用，但是牢记30天的有效期，别忘了定期更新许可。这种模式的好处是同一个Named User并不限定授权一个应用，而是可以同时授权很多ArcGIS Runtime apps。</p>
 </li>
 </ul>
-<h2><span id="许可级别对比分析">许可级别对比分析</span></h2>
+<h2 id="许可级别对比分析">许可级别对比分析</h2>
 <p>下面的表格对比了四种许可级别、对应的功能以及两种授权模式之间的对应关系。</p>
 <p>![许可级别对比](<a href="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/ArcGIS" target="_blank" rel="noopener">https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/ArcGIS</a> Runtime 100 许可策略解读01.png)</p>
 <p><strong><em>注意</em></strong>：</p>
@@ -237,7 +237,7 @@
 <li>从ArcGIS 10.5开始，ArcGIS Online或者Portal for ArcGIS的成员有两种许可级别供选择。Level1 可以被用来授权Runtime Lite级别的许可，Level2可以被用来授权Lite和Basic级别的许可。对于10.5之前的portal，所有的Named User等效于Level2,可以被用于激活Runime Lite和Basic级别的许可。</li>
 <li>ArcGIS Runtime Local Server仅可以用于面向桌面的ArcGIS Runtime SDKs: Runtime SDK for .NET(WPF), Runtime SDK for Java,Runtime SDK for Qt。</li>
 </ul>
-<h2><span id="扩展">扩展</span></h2>
+<h2 id="扩展">扩展</h2>
 <p>ArcGIS Runtime提供了下列可选扩展，以支持其它的功能，分析工具和数据：</p>
 <p>ArcGIS Runtime Local Server 的 GP Services</p>
 <ul>
@@ -246,9 +246,9 @@
 <li>Spatial Analyst</li>
 <li>3D Analyst</li>
 </ul>
-<h2><span id="激活许可向导">激活许可向导</span></h2>
+<h2 id="激活许可向导">激活许可向导</h2>
 <p>在完成应用开发和测试后，可以通过以下向导完成许可的激活，以消除底图水印并获得正版官方授权。</p>
-<h3><span id="license-key模式激活许可">License key模式激活许可</span></h3>
+<h3 id="license-key模式激活许可">License key模式激活许可</h3>
 <p><code>——通过ArcGIS Online申请免费许可:</code></p>
 <p>1、注册ArcGIS Online试用账号或者Esri开发者账号（中国区暂不支持）</p>
 <p>打开浏览器，访问www.arcgis.com网站，点击Try ArcGIS按钮，按照页面向导，注册用户。</p>
@@ -266,7 +266,7 @@
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// license with a license key</span></span><br><span class="line"><span class="selector-tag">ArcGISRuntimeEnvironment</span><span class="selector-class">.setLicense</span>(<span class="string">"runtimelite,1000,rud#########,day-month-year,####################"</span>);</span><br></pre></td></tr></table></figure>
 <p>For iOS:</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//license the app with the supplied License key</span></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line"> <span class="keyword">let</span> result = <span class="keyword">try</span> <span class="type">AGSArcGISRuntimeEnvironment</span>.setLicenseKey(<span class="string">"runtimelite,1000,rud#########,day-month-year,####################"</span>)</span><br><span class="line"> <span class="built_in">print</span>(<span class="string">"License Result : <span class="subst">\(result.licenseStatus)</span>"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> <span class="keyword">let</span> error <span class="keyword">as</span> <span class="type">NSError</span> &#123;</span><br><span class="line"> <span class="built_in">print</span>(<span class="string">"error: <span class="subst">\(error)</span>"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3><span id="named-user模式激活许可">Named User模式激活许可</span></h3>
+<h3 id="named-user模式激活许可">Named User模式激活许可</h3>
 <p>前面已经讲过，通过Online 或者Portal的Named User也可以授权Runtime 应用,整个过程需要编程实现。详细的授权过程，可以参照以下链接中的示范工程来激活许可：</p>
 <ul>
 <li><a href="https://github.com/crazyxhz/License.NetAppByNamedUser.git" target="_blank" rel="noopener">For .NET</a></li>
@@ -317,7 +317,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概览</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">许可激活模式</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">许可级别对比分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">扩展</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">激活许可向导</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">License key模式激活许可</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">Named User模式激活许可</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#概览"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概览</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#许可激活模式"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">许可激活模式</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#许可级别对比分析"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">许可级别对比分析</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#扩展"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">扩展</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#激活许可向导"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">激活许可向导</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#license-key模式激活许可"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">License key模式激活许可</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#named-user模式激活许可"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">Named User模式激活许可</span></a></li></ol></li></ol>
         
         </div>
       </aside>

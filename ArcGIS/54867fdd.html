@@ -146,14 +146,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -218,8 +218,8 @@
 
                 <p>在ArcGIS Enterprise 产品中最闪亮的特性之一就是支持时空大数据的分析和展示。时空大数据在整个平台中存储在ArcGIS Datastore 的时空大数据库（spatiotemporal datastore）中。这个时空大数据库是否安全？是否能应对各种可能出现的比如数据库崩溃，系统崩溃等等意外？如果因为项目需要，想从一台服务器上迁移时空大数据库到另外一台服务器上，数据该如何迁移？事实上，Esri提供了现成的备份和迁移工具，可以帮助我们实现灾备和平滑迁移数据。这篇文章我们将重点聚焦在时空大数据库的备份和恢复技术实战上。</p>
 <p>备份是为了应对灾难，比如服务器崩溃，发生自然灾害机房损毁等等，如果我们将备份文件存储在同一台服务器上，显然在服务器崩溃，系统失灵的状态下，备份文件也将损毁，备份就失去了它存在的意义。在系统设计时，要根据安全需求妥善设置备份存储位置。对于时空大数据库的备份，DataStore强制要求这个备份位置必须是共享目录，最好存放在远程服务器上。备份时空大数据库之前，最重要的工作就是注册一个安全的，共享的备份位置给ArcGIS Data Store用于存放备份文件。</p>
-<h2><span id="定义备份位置">定义备份位置</span></h2>
-<h3><span id="备份位置要求">备份位置要求</span></h3>
+<h2 id="定义备份位置">定义备份位置</h2>
+<h3 id="备份位置要求">备份位置要求</h3>
 <p>－ 在远程服务器上创建文件夹，并共享，添加Data Store Service运行用户到贡献权限列表；</p>
 <p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/ArcGIS%E6%97%B6%E7%A9%BA%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E6%8A%80%E5%B7%A705.png" alt="分配共享权限"></p>
 <p>－ 确保Data Store Service运行用户对共享文件夹有完全控制权限；</p>
@@ -228,7 +228,7 @@
 <p>－ 确保有足够的存储空间用以保存备份文件，整个时空大数据库集群的数据都会保存到备份目录；</p>
 <p>－到hosting server 的admin管理器中检测大数据集群的健康状态。</p>
 <p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/ArcGIS%E6%97%B6%E7%A9%BA%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E6%8A%80%E5%B7%A707.png" alt="分配访问权限"></p>
-<h3><span id="设置备份位置">设置备份位置</span></h3>
+<h3 id="设置备份位置">设置备份位置</h3>
 <p>设置时空大数据库的备份位置可以通过configurebackuplocation脚本工具来实现，这个工具位于“&lt;ArcGIS Data Store installation directory&gt;\datastore\tools”目录下。</p>
 <p>工具语法：</p>
 <p>changebackuplocation <new directory="" path=""> [–is-shared-folder &lt;true|false&gt;] [–keep-old-backups &lt;true|false&gt;]</new></p>
@@ -241,7 +241,7 @@
 <pre><code>   “你正在尝试改变data store的备份位置。对于关系型数据库，现有的备份文件会自动拷贝到新的位置，这可能需要花费一点儿时间。对于时空大数据库，服务可能会重启。一旦开启请不要中断这个过程。”  
 </code></pre>
 <p>*这个提示非常重要，告诉我们在更改时空大数据库备份位置时，datastore服务可能需要重启，这就意味着在更改备份目录位置时尽量不要有写入数据业务执行，这可能会导致操作失败。最推荐的操作是一旦建好时空大数据库，在执行任何业务之前，首先执行备份目录设置操作。</p>
-<h2><span id="手动创建备份">手动创建备份</span></h2>
+<h2 id="手动创建备份">手动创建备份</h2>
 <p>创建时空大数据库的备份可以通过backupdatastore 工具执行，这个工具位于&lt;ArcGIS Data Store installation directory&gt;\datastore\tools目录下。</p>
 <p>工具语法：</p>
 <p>backupdatastore [&lt;backup_name&gt;] --store {relational | tilecache | spatiotemporal}</p>
@@ -250,12 +250,12 @@
 <p>参照下图执行命令：</p>
 <p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/ArcGIS%E6%97%B6%E7%A9%BA%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E6%8A%80%E5%B7%A702.png" alt="创建备份库"></p>
 <p>对于时空大数据库，备份的机制是在首次备份时，备份全部的数据，也就是“完整备份”。由于时空大数据库本身的数据量可能是海量的，每次备份全部数据就太浪费了，后续执行备份操作时工具会自动备份上次执行备份工具以来的增量数据。</p>
-<h2><span id="恢复时空大数据库">恢复时空大数据库</span></h2>
+<h2 id="恢复时空大数据库">恢复时空大数据库</h2>
 <p>一旦出现任何意外，引发时空大数据库集群崩溃，我们就可以使用之前的备份文件恢复时空大数据库。</p>
-<h3><span id="恢复前的准备工作">恢复前的准备工作</span></h3>
+<h3 id="恢复前的准备工作">恢复前的准备工作</h3>
 <p>恢复前的检查工作就是要检测hosting server中是否仍然保留了原来的大数据库连接：如果有，要反注册掉数据库，详细流程参照：<a href="https://github.com/serverteamCN/TechnicalArticles/blob/master/Product%20Usage/%E8%A7%A3%E9%99%A4hosting%20Server%E5%92%8CData%20Store%E7%9A%84%E6%B3%A8%E5%86%8C%E5%85%B3%E7%B3%BB.md" target="_blank" rel="noopener">反注册DataItem</a></p>
 <p>为了存储更多数据，时空大数据库通常会是一个集群，要注意，备份文件是存储了集群中所有服务器上的时空大数据，在恢复的时候，如果把所有数据恢复到单机上，可能会由于资源不足而导致失败。从10.5.1开始，时空大数据的恢复支持分阶段执行，以避免单机内存和硬盘空间不足的问题。</p>
-<h3><span id="恢复工具">恢复工具</span></h3>
+<h3 id="恢复工具">恢复工具</h3>
 <p>恢复时空大数据库，可以通过restoredatabase 工具来实现，这个工具位于&lt;ArcGIS Data Store installation directory&gt;\datastore\tools目录下 。</p>
 <p>工具语法：</p>
 <p>restoredatastore [operations]</p>
@@ -272,13 +272,13 @@
 	•	[–prompt {yes | no}]：指定是否显示提示。</password></user></arcgis></new></location></name></p>
 <p>参照下图执行命令：</p>
 <p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/ArcGIS%E6%97%B6%E7%A9%BA%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E6%8A%80%E5%B7%A703.png" alt="恢复时空库"></p>
-<h3><span id="恢复流程">恢复流程</span></h3>
-<h4><span id="恢复小数据规模的时空大数据库">恢复小数据规模的时空大数据库</span></h4>
+<h3 id="恢复流程">恢复流程</h3>
+<h4 id="恢复小数据规模的时空大数据库">恢复小数据规模的时空大数据库</h4>
 <p>对于小数据规模的时空大数据库，如果新装的单台Data Store机器可以承载之前集群中的全部数据，参照以下流程恢复：</p>
 <p>1）在新的服务器上安装ArcGIS Data Store，不要执行配置hosting Server的操作；<br>
 2）以管理员身份运行命令行工具，执行上述的恢复工具；<br>
 3）在其它服务器上安装ArcGIS Data Store， 安装后分别按照配置向导执行对hosting Server的配置, 这个过程可以理解为将其它的时空大数据库重新加入集群。</p>
-<h4><span id="恢复超大数据的时空大数据库">恢复超大数据的时空大数据库</span></h4>
+<h4 id="恢复超大数据的时空大数据库">恢复超大数据的时空大数据库</h4>
 <p>前面我提到了10.5.1支持分阶段恢复超大数据的时空大数据库，这个过程是通过参数—loaddata 来控制的,如果为false，表示数据先不加载，具体操作流程：</p>
 <p>1）在新的服务器上安装ArcGIS Data Store，不要执行配置hosting Server的操作；<br>
 2）以管理员身份运行命令行工具，执行上述的恢复工具，指定—loaddata 为false；<br>
@@ -327,7 +327,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">定义备份位置</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">备份位置要求</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">设置备份位置</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">手动创建备份</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">恢复时空大数据库</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">恢复前的准备工作</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">恢复工具</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">恢复流程</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.3.1.</span> <span class="toc-nav-text">恢复小数据规模的时空大数据库</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.3.2.</span> <span class="toc-nav-text">恢复超大数据的时空大数据库</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#定义备份位置"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">定义备份位置</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#备份位置要求"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">备份位置要求</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#设置备份位置"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">设置备份位置</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#手动创建备份"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">手动创建备份</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#恢复时空大数据库"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">恢复时空大数据库</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#恢复前的准备工作"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">恢复前的准备工作</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#恢复工具"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">恢复工具</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#恢复流程"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">恢复流程</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#恢复小数据规模的时空大数据库"><span class="toc-nav-number">3.3.1.</span> <span class="toc-nav-text">恢复小数据规模的时空大数据库</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#恢复超大数据的时空大数据库"><span class="toc-nav-number">3.3.2.</span> <span class="toc-nav-text">恢复超大数据的时空大数据库</span></a></li></ol></li></ol></li></ol>
         
         </div>
       </aside>

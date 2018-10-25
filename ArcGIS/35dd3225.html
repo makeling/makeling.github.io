@@ -146,14 +146,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -218,7 +218,7 @@
 
                 <p>在ArcGIS Enterprise的部署中，每一个ArcGIS Data Store安装后都需要注册ArcGIS Server，建立和站点的联系，这个过程中DataStore完成了建库（可能是关系型数据库，可能是切片缓存库，也可能是时空大数据库），Server从普通的ArcGIS Server升级为hosting Server。建立关系的过程很美好，但是总有那么一个理由，需要我们解除关系来恢复各自独立。</p>
 <p>解除hosting Server和Data Store的注册关系可以从两个方向入手。如果是因为Data Store意外故障，我们就可以从Server端解除对Data Store的注册。如果是因为Server端故障，比如重新安装了Server， 我们就需要从Data Store端解除对原有Server的绑定。</p>
-<h2><span id="从server端解除注册">从Server端解除注册</span></h2>
+<h2 id="从server端解除注册">从Server端解除注册</h2>
 <p>从Server端解除Data Store 的注册可以参照如下流程：</p>
 <p>1） 登录Server admin 管理站点；</p>
 <p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E8%A7%A3%E9%99%A4hostingServer%E5%92%8CDataStore%E7%9A%84%E6%B3%A8%E5%86%8C%E5%85%B3%E7%B3%BB01.png" alt="登录Server admin"></p>
@@ -228,7 +228,7 @@
 <p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E8%A7%A3%E9%99%A4hostingServer%E5%92%8CDataStore%E7%9A%84%E6%B3%A8%E5%86%8C%E5%85%B3%E7%B3%BB03.png" alt="反注册Data Item"></p>
 <p>4）验证结果。</p>
 <p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E8%A7%A3%E9%99%A4hostingServer%E5%92%8CDataStore%E7%9A%84%E6%B3%A8%E5%86%8C%E5%85%B3%E7%B3%BB04.png" alt="验证结果"></p>
-<h2><span id="从data-store端解除注册">从Data Store端解除注册</span></h2>
+<h2 id="从data-store端解除注册">从Data Store端解除注册</h2>
 <p>在Data Store端解除Data Store和Server的绑定可以通过unregisterdatastore脚本工具来实现，这个工具位于“&lt;ArcGIS Data Store installation directory&gt;\datastore\tools”目录下。</p>
 <p>解除流程：</p>
 <p>1）检查DataStore中当前已经注册的库：</p>
@@ -281,7 +281,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">从Server端解除注册</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">从Data Store端解除注册</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#从server端解除注册"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">从Server端解除注册</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#从data-store端解除注册"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">从Data Store端解除注册</span></a></li></ol>
         
         </div>
       </aside>

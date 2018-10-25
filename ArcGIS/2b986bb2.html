@@ -148,14 +148,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -218,18 +218,18 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2><span id="概览">概览</span></h2>
+                <h2 id="概览">概览</h2>
 <p>在使用ArcGIS Runtime SDK for iOS 100.0开发iOS地图应用时，我们经常会碰到iphone定位的位置信息，在底图上显示位置不正确的情况。导致这一结果的原因，可能是由于安全原因，底图进行了算法偏移，也可能是因为底图本身就是自定义坐标系。解决这一问题，可以通过自定义位置数据源来实现，在自定义数据源中通过算法来调整设备获取的位置坐标。这个工程演示了基于ArcGIS Runtime SDK for iOS 100.0实现客户化位置数据源的实现思路。这是一个完整独立的工程，基于Xcode8.2版本开发，支持iOS9以上的系统部署。</p>
-<h2><span id="说明">说明</span></h2>
+<h2 id="说明">说明</h2>
 <p>工程中包含的CustomLocationDataSource类用于实现客户化数据源，继承自AGSCLLocationDataSource。AGSCLLocationDataSource数据源是Esri针对Apple的Core Location service的封装，位置信息通过CLLocationManager对象管理。位置信息的呈现通过AGSLocationDisplay对象实现。从这儿能够看出ArcGIS Runtime SDK for iOS 100.0的位置信息就是取自设备的定位信息。定位点在绘制到底图之前会重新投影到底图的空间参考上。</p>
 <p>如果在项目中，还有对定位信息进行历史轨迹回放的功能需求，可以通过setLocationChangedHandler方法将定位点信息保存到数组中，后续通过AGSSimulatedLocationDataSource进行历史轨迹回放。</p>
-<h2><span id="系统需求">系统需求</span></h2>
+<h2 id="系统需求">系统需求</h2>
 <ol>
 <li>ArcGIS Runtime SDK for iOS 100.0</li>
 <li>Xcode 8(或更高)</li>
 <li>iOS 10 SDK（或更高）</li>
 </ol>
-<h2><span id="工程下载地址">工程下载地址</span></h2>
+<h2 id="工程下载地址">工程下载地址</h2>
 <p><a href="https://github.com/makeling/CustomLocationDataSourceV100.0-ObjC.git" target="_blank" rel="noopener">CustomLocationDataSourceV100.0Demos</a></p>
 
                 
@@ -274,7 +274,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概览</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">说明</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">系统需求</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">工程下载地址</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#概览"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">概览</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#说明"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">说明</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#系统需求"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">系统需求</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#工程下载地址"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">工程下载地址</span></a></li></ol>
         
         </div>
       </aside>

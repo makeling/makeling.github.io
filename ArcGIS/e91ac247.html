@@ -146,14 +146,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -216,17 +216,17 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2><span id="问题场景">问题场景：</span></h2>
+                <h2 id="问题场景">问题场景：</h2>
 <p>最近有多位同事反应，在单位用的好好的ArcGIS平台环境，到了家里就挂了，回到单位，所有产品又会神奇般的恢复正常，这个问题让人非常痛苦，原来计划好好的加班计划全部泡汤，各种折腾后依然无法修复，折腾坏了，最后只能重装全部软件。</p>
-<h3><span id="-病症">- 病症：</span></h3>
+<h3 id="-病症">- 病症：</h3>
 <p>出问题的症状是Portal home主页进去后显示空白。Server admin页面可以成功访问。datastore从日志中可以看到端口无法连接成功。</p>
 <p>Portal 日志中的报错信息：<br>
 The portal has been initialized and configured but is not accessible. The internal portal database does not appear to be running or accepting connections.</p>
-<h2><span id="分析原因">分析原因：</span></h2>
+<h2 id="分析原因">分析原因：</h2>
 <p>datastore默认会使用IP地址来建立连接。当机器从单位到家，IP地址发生变更，如果Portal, Server ,Datastore的服务都设置为自动启动，那启动顺序可能随机，在datastore来不及更新到新IP时，portal可能就已经在启动时检测datastore的连接状态，就会导致启动失败，出现上述描述的症状。</p>
-<h2><span id="解决办法">解决办法：</span></h2>
+<h2 id="解决办法">解决办法：</h2>
 <p>针对这个问题，提供两种场景的解决办法。</p>
-<h3><span id="场景一临时修复故障">场景一：临时修复故障</span></h3>
+<h3 id="场景一临时修复故障">场景一：临时修复故障</h3>
 <p>如果已经在单位装好了全套的Enterprise环境，到家或者到用户现场，发生了上述产品无法使用的场景。那可以参照如下步骤修复：</p>
 <ul>
 <li>在Windows服务中手动停掉DataStore, Server, Portal的服务，停止的顺序无所谓；</li>
@@ -235,15 +235,15 @@ The portal has been initialized and configured but is not accessible. The intern
 <li>继续依次启动Server, Portal服务。</li>
 </ul>
 <p>经过上面的步骤，Enterprise就可以在新环境中重新开始工作啦。</p>
-<h3><span id="场景二永久修复问题">场景二：永久修复问题</span></h3>
+<h3 id="场景二永久修复问题">场景二：永久修复问题</h3>
 <p>通过前面的分析，我们已经知道问题的核心故障点在于datastore通过ip来建立连接，那有没有方法能让datastore通过主机全域名来建立通信，绕开IP呢？ 事实上Esri提供了相应的配置接口，在C:\Program Files\ArcGIS\DataStore\framework\etc\目录下有一个hostidentifier.properties文件，这个配置文件可以配置将主机名作为身份标识。</p>
-<h4><span id="-全新安装的环境">- 全新安装的环境:</span></h4>
+<h4 id="-全新安装的环境">- 全新安装的环境:</h4>
 <p>通过记事本打开C:\Program Files\ArcGIS\DataStore\framework\etc\hostidentifier.properties文件，参照下图方式修改，“<a href="http://120win105.esrichina.com" target="_blank" rel="noopener">120win105.esrichina.com</a>”是我的服务器全域名，你需要替换为自己的主机全域名。</p>
 <p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/repair-portal-change-ip.png" alt="change-portal-ip"></p>
 <blockquote>
 <p>注意：这种方式需要在创建关系库之前配置才有效。针对已经建好关系库的环境，仅修改该参数是无效的，需要参考下面的策略修复问题。</p>
 </blockquote>
-<h4><span id="-已经创建好关系库的环境">- 已经创建好关系库的环境：</span></h4>
+<h4 id="-已经创建好关系库的环境">- 已经创建好关系库的环境：</h4>
 <p>对于已经创建好关系库的环境，需要修改C:\arcgisdatastore\etc\ （替换为你环境下相应的目录）下的hostidentifier.properties配置文件。</p>
 <ul>
 <li>在Windows服务中手动停掉DataStore, Server, Portal的服务；</li>

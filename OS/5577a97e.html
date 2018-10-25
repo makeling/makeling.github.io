@@ -146,14 +146,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -216,13 +216,13 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2><span id="问题描述">[问题描述]</span></h2>
+                <h2 id="问题描述">[问题描述]</h2>
 <p>通过samba远程更新服务器资源，如果需要使用c$, d$类似这种盘符的共享接口，可能会遇到“拒绝访问”的错误。</p>
 <p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E5%A6%82%E4%BD%95%E4%B8%BAwindows%20%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E5%BC%80%E5%90%AF%E2%80%9D%E7%9B%98%E7%AC%A6%24%E2%80%9D%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%9001.png" alt="错误截图"><br>
 ￼</p>
-<h2><span id="问题分析">[问题分析]</span></h2>
+<h2 id="问题分析">[问题分析]</h2>
 <p>导致问题出现的原因是微软系统默认开启了一个非常小众的安全策略叫做“UAC 远程限制”，它会为本地用户账户或Windows账户过滤访问token. 这将限制局域网内用户以管理员用户通过“盘符$”的方式访问共享目录。</p>
-<h2><span id="解决办法">[解决办法]</span></h2>
+<h2 id="解决办法">[解决办法]</h2>
 <p>在运行中，输入regedits，打开注册表，修改HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System<br>
 将FilterAdministratorToken的键值设置为0，即可关闭这一安全策略。</p>
 <p><img src="https://raw.githubusercontent.com/serverteamCN/TechnicalArticles/master/pictures/%E5%A6%82%E4%BD%95%E4%B8%BAwindows%20%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E5%BC%80%E5%90%AF%E2%80%9D%E7%9B%98%E7%AC%A6%24%E2%80%9D%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%9002.png" alt="修改截图"></p>
@@ -270,7 +270,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">[问题描述]</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">[问题分析]</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">[解决办法]</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#问题描述"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">[问题描述]</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#问题分析"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">[问题分析]</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#解决办法"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">[解决办法]</span></a></li></ol>
         
         </div>
       </aside>

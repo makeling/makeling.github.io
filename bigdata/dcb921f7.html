@@ -148,14 +148,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -219,27 +219,27 @@
                 post-container">
 
                 <p>最近在研究如何为Hadoop开启基于Kerberos的安全配置，经过千辛万苦配置好后本以为到了见证奇迹的时刻，但是卡在NodeManger无法启动，折磨的死去活来。经历了各种百度、google后依然无果，最终还是乖乖的回来细读Hadoop官方配置文档，竟然发现关于LinuxContainerExecutor配置的非常详细的讲解。为了不让学习的成果随记忆消散，因此在这儿总结并分享出来。</p>
-<h2><span id="理解containerexector">理解ContainerExector</span></h2>
+<h2 id="理解containerexector">理解ContainerExector</h2>
 <p>Hadoop集群启用安全后，NodeManager无法启动的根本原因是LinuxContainerExecutor没有正确配置。ContainerExecutor 被Yarn框架使用，它定义了容器如何装载和控制。在Hadoop YARN中包含两种ContainerExecutor:</p>
 <ul>
 <li>DefaultContainerExecutor: 这是默认的执行器，由Yarn用来管理容器执行。在该模式下容器进程使用和NodeManager相同的Unix用户运行容器。</li>
 <li>LinuxContainerExecutor： 这个执行器仅在GNU/Linux上支持。在安全状态启用时，这个执行器以提交应用的YARN用户运行容器，在非安全状态时以特定用户执行（默认是nobody）。在安全状态启用时，这个执行器需要所有的用户账户在容器启动的集群节点被创建。它会用到包含在Hadoop部署包中的setuid可执行工具，NodeManager使用这个工具来启动和kill掉容器。为了最大化安全，executor安装限制本地文件和被容器使用目录（如共享对象，jars，中间文件，日志文件等等）的权限和用户/组所属权。特别需要注意的一点，正是因为此，除了应用所有者和NodeManager外，不该有其它用户能访问任何上述本地文件或目录</li>
 </ul>
-<h2><span id="编译可执行文件">编译可执行文件</span></h2>
+<h2 id="编译可执行文件">编译可执行文件</h2>
 <p>如果你的环境中安装了maven，那可以参照官方帮助中的编译方法：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn package -Dcontainer-executor<span class="selector-class">.conf</span><span class="selector-class">.dir</span>=/etc/</span><br></pre></td></tr></table></figure>
 <p>参数-Dcontainer-executor.conf.dir传入的路径应该是集群节点上放置配置文件的路径，保证setuid可执行文件能定位到。可执行文件应该安装在$HADOOP_YARN_HOME/bin目录下。</p>
 <p>为了方便大家使用，我在这里提供编译好的<a href="https://raw.githubusercontent.com/makeling/makeling.github.io/master/attaches/container-executor" target="_blank" rel="noopener">container-executor</a>，配置文件路径指向/etc/container-executor.cfg， container-executor拷贝到Hadoop bin 目录下。</p>
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> bin]<span class="meta"># cp container-executor /home/hadoop/hadoop-2.8/bin/</span></span><br></pre></td></tr></table></figure>
-<h2><span id="分配可执行文件权限">分配可执行文件权限</span></h2>
+<h2 id="分配可执行文件权限">分配可执行文件权限</h2>
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> bin]<span class="meta"># chown root:hadoop /home/hadoop/hadoop-2.8/bin/container-executor </span></span><br><span class="line">[root<span class="symbol">@hadoop01</span> bin]<span class="meta"># chmod 6050 /home/hadoop/hadoop-2.8/bin/container-executor</span></span><br></pre></td></tr></table></figure>
 <p>这里的组hadoop是NodeManager Unix用户（yarn）所属的组，并且组内没有非hadoop相关的用户，以防安全风险。这个组名需要在yarn-site.xml和container-executor.cfg中都配置，</p>
-<h2><span id="配置yarn-sitexml">配置yarn-site.xml</span></h2>
+<h2 id="配置yarn-sitexml">配置yarn-site.xml</h2>
 <figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="params">&lt;property&gt;</span></span><br><span class="line">     <span class="params">&lt;name&gt;</span>yarn.nodemanager.container-executor.class<span class="params">&lt;/name&gt;</span></span><br><span class="line">     <span class="params">&lt;value&gt;</span>org.apache.hadoop.yarn.server.nodemanager.LinuxContainerExecutor<span class="params">&lt;/value&gt;</span></span><br><span class="line"><span class="params">&lt;/property&gt;</span></span><br><span class="line"><span class="params">&lt;property&gt;</span></span><br><span class="line">     <span class="params">&lt;name&gt;</span>yarn.nodemanager.linux-container-executor.path<span class="params">&lt;/name&gt;</span></span><br><span class="line">     <span class="params">&lt;value&gt;</span><span class="meta-keyword">/home/</span>hadoop/hadoop<span class="number">-2.8</span><span class="meta-keyword">/bin/</span>container-executor<span class="params">&lt;/value&gt;</span></span><br><span class="line"><span class="params">&lt;/property&gt;</span></span><br><span class="line"><span class="params">&lt;property&gt;</span></span><br><span class="line">     <span class="params">&lt;name&gt;</span>yarn.nodemanager.linux-container-executor.group<span class="params">&lt;/name&gt;</span></span><br><span class="line">     <span class="params">&lt;value&gt;</span>hadoop<span class="params">&lt;/value&gt;</span></span><br><span class="line"><span class="params">&lt;/property&gt;</span></span><br></pre></td></tr></table></figure>
-<h2><span id="分配本地目录权限">分配本地目录权限</span></h2>
+<h2 id="分配本地目录权限">分配本地目录权限</h2>
 <p>LinuxTaskController还需要在container-executor.cfg中配置的yarn.nodemanager.local-dirs和yarn.nodemanager.log-dirs路径被赋予755权限。设置如下：</p>
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@hadoop01</span> ~]<span class="meta"># mkdir -p /hadoop/yarn/local</span></span><br><span class="line">[root<span class="symbol">@hadoop01</span> ~]<span class="meta"># mkdir -p /hadoop/yarn/log </span></span><br><span class="line">[root<span class="symbol">@hadoop01</span> yarn]<span class="meta"># chown yarn:hadoop /hadoop/yarn/local</span></span><br><span class="line">[root<span class="symbol">@hadoop01</span> yarn]<span class="meta"># chown yarn:hadoop /hadoop/yarn/log  </span></span><br><span class="line">[root<span class="symbol">@hadoop01</span> yarn]<span class="meta"># chmod 755 /hadoop/yarn/local</span></span><br><span class="line">[root<span class="symbol">@hadoop01</span> yarn]<span class="meta"># chmod 755 /hadoop/yarn/log</span></span><br></pre></td></tr></table></figure>
-<h2><span id="配置container-executorcfg文件">配置container-executor.cfg文件</span></h2>
+<h2 id="配置container-executorcfg文件">配置container-executor.cfg文件</h2>
 <ul>
 <li>
 <p>为配置文件添加配置项</p>
@@ -296,7 +296,7 @@
 </tr>
 </tbody>
 </table>
-<h2><span id="配置文件的坑">配置文件的坑</span></h2>
+<h2 id="配置文件的坑">配置文件的坑</h2>
 <p>经过了上述审慎配置后，检查了无数遍，依然无法运行nodeManager,始终报如下错误：</p>
 <p>Caused by: org.apache.hadoop.yarn.server.nodemanager.containermanager.linux.privileged.PrivilegedOperationException: ExitCodeException exitCode=24: Can’t get group information for hadoop  - Success.</p>
 <p>问题的原因是hadoop编码不够严谨，如果.cfg中group组配置中存在空格，就会始终报检测不到组的错误。这个解决方案借鉴了<a href="http://secfree.github.io/blog/2015/06/25/yarn-container-executor-traps.html" target="_blank" rel="noopener">secfree</a>的博客，文章写的非常赞，完美解决这个问题。</p>
@@ -357,7 +357,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">理解ContainerExector</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">编译可执行文件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">分配可执行文件权限</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">配置yarn-site.xml</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">分配本地目录权限</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">配置container-executor.cfg文件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">配置文件的坑</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#理解containerexector"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">理解ContainerExector</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#编译可执行文件"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">编译可执行文件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#分配可执行文件权限"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">分配可执行文件权限</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#配置yarn-sitexml"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">配置yarn-site.xml</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#分配本地目录权限"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">分配本地目录权限</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#配置container-executorcfg文件"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">配置container-executor.cfg文件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#配置文件的坑"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">配置文件的坑</span></a></li></ol>
         
         </div>
       </aside>

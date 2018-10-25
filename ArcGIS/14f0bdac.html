@@ -148,14 +148,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -220,12 +220,12 @@
 
                 <p>聚类，分组和分类技术一直是机器学习中使用最广泛的一些方法。在机器学习、人工智能技术铺天盖地涌入的今天，除了AI专家，普通人可能也对这些算法名称略有了解，比如K-mean分类算法。今天要跟大家分享的这个工具就跟聚类有关，它是ArcGIS 10.6.1版本中GA新增加的一个空间模式识别工具——基于密度的点聚类分析，事实上在当前时间节点10.6.1尚未正式发布，这篇文章算是提前剧透了：）</p>
 <p>聚类是帮助我们发现事件或对象空间分布规律的非常有用的方法，比如通过分析管道破裂或爆裂的集中区域可以指明隐藏在地下的城市供水网络潜在的问题，找到这些聚类的位置，就可以对高危区域抢先采取行动。再比如假设我们想优化篮球队的战略战术，那可以采集队员投篮成功和失败的所有位置数据，基于密度聚类，可以获得每位球员成功和失败投篮位置的不同模式，这个信息就可以进一步的用来优化比赛战术。这些分析都可以使用今天要介绍的基于空间密度的点聚类工具。</p>
-<h2><span id="功能定义">功能定义</span></h2>
+<h2 id="功能定义">功能定义</h2>
 <p>这个工具的核心功能是检测点数据集中集聚区域和被空的或稀疏区域所分隔的区域。这个工具使用了非监督的机器学习聚类算法，这个算法并不需要预先针对聚类进行训练，仅根据空间位置和到指定邻域的距离通过最小聚类点数作为约束自动检测模式。详细的算法原理请参阅后面的原理分析部分。</p>
-<h2><span id="使用工具">使用工具</span></h2>
+<h2 id="使用工具">使用工具</h2>
 <p>可能大家一听到“非监督机器学习”，瞬间就会觉得这是个很难使用的工具，事实上这个工具恰恰非常简单易用，输入，输出都很明确，也非常易于理解。</p>
 <p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/GAFindPointCluster_DBSCAN_functions.png" alt="GAFindPointCluster_DBSCAN_functions"></p>
-<h3><span id="输入参数">输入参数</span></h3>
+<h3 id="输入参数">输入参数</h3>
 <ol>
 <li>设置点图层，在大数据分析工具中，这个点图层的空间参考要求是投影坐标系的，如果数据本身不是，那可以通过设置环境变量中的工具处理空间参考为投影坐标系，比如3857，来实现动态投影；</li>
 <li>设置最小点数，这个值可以理解为最少多少个点可以被考虑为一个聚类，分析区内如果点数低于这个值，说明密度低于临界值，过于稀疏，反之，这些点可以组成一个聚类；</li>
@@ -233,7 +233,7 @@
 <li>设置输出图层名；</li>
 <li>选择是否仅分析当前地图范围的要素。</li>
 </ol>
-<h3><span id="分析过程">分析过程</span></h3>
+<h3 id="分析过程">分析过程</h3>
 <p>从输入参数和输出结果来判断，GA工具中的点聚类工具，后面对应的算法应该是DBSCAN, 后面我还会细说这个算法，在这儿先大概描述下工具背后执行的逻辑：</p>
 <ol>
 <li>针对待分析点先按照搜索半径生成缓冲区；</li>
@@ -242,7 +242,7 @@
 <li>如果点数&lt; 最小点数，就标识为噪点，重新跳回起点，分析下一个点；</li>
 </ol>
 <p>按照上面的循环迭代下来，每个点都会被判断为属于某个聚类，或者是噪点。</p>
-<h3><span id="输出结果">输出结果</span></h3>
+<h3 id="输出结果">输出结果</h3>
 <p>这个工具的执行，输出结果非常明确，所有点要素会被区分为噪点或者某一聚类，至于结果输出多少类，完全取决于算法对数据的探索，当然约束条件就是搜索半径和最小点数。</p>
 <ol>
 <li>
@@ -253,7 +253,7 @@
 <p><img src="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/GAFindPointCluster_demo.png" alt="GAFindPointCluster_demo"></p>
 </li>
 </ol>
-<h2><span id="原理分析">原理分析</span></h2>
+<h2 id="原理分析">原理分析</h2>
 <p>基于密度的点聚类分析，在ArcGIS Pro中也有对等的工具，并且支持三种算法：</p>
 <ul>
 <li><strong>DBSCAN</strong>(Density-based spatial clustering of applications with noise)： 使用指定距离将密集聚类与稀疏噪点分离。DBSCAN 算法是最快的聚类方法，但仅适用于要使用的搜索距离非常明确，并且非常适用于所有潜在聚类的情况。这要求所有有意义的聚类密度相似。</li>
@@ -261,7 +261,7 @@
 <li><strong>OPTICS</strong>(Ordering points to identify the clustering structure)： 使用相邻要素之间的距离创建可达图，随后使用此可达图将不同密度的聚类与噪点分离。OPTICS 算法在优化检测到的聚类方面最为灵活，但其属于计算密集型，尤其是当搜索距离较大时。</li>
 </ul>
 <p>对于大数据分析来说，速度显然是非常重要的指标，通过将GA中点密度生成结果和Pro中基于三种算法生成的结果一一对比，确认GA中使用了速度最快的DBSCAN的算法，因此这篇文章我只针对DBSCAN算法原理进行详细的分析，如果对其它算法感兴趣，可以移步直接学习Esri的<a href="http://pro.arcgis.com/zh-cn/pro-app/tool-reference/spatial-statistics/how-density-based-clustering-works.htm" target="_blank" rel="noopener">官方帮助文档</a>，里面讲解的也非常生动详细。</p>
-<h3><span id="算法原理">算法原理</span></h3>
+<h3 id="算法原理">算法原理</h3>
 <p>DBSCAN 于1996年由Martin Ester, Hans-Peter Kriegel, Jörg Sander and Xiaowei Xu四个人最早提出， 核心的思想是通过计算邻域内点的密度，将距离近的点组成类，密度稀疏的点标注为噪点。DBSCAN可以说是最常用高效的聚类算法。</p>
 <p>这个算法的核心输入是两个约束：</p>
 <ul>
@@ -289,22 +289,22 @@
 <blockquote>
 <p>声明：上述代码和GA中工具实现的逻辑完全无关。</p>
 </blockquote>
-<h3><span id="优劣分析">优劣分析</span></h3>
-<h4><span id="优势">优势</span></h4>
+<h3 id="优劣分析">优劣分析</h3>
+<h4 id="优势">优势</h4>
 <ul>
 <li>DBSCAN 不需要像k-means一样预先指定数据分多少类；</li>
 <li>DBSCAN可以发现任何形状的聚类，甚至会发现完全被其它聚类围绕的聚类。由于MinPts参数的作用，单链效应的情况极大的减少了；</li>
 <li>DBSCAN只需要两个参数，对于数据集中点的顺序不敏感；</li>
 <li>DBSCAN可以使用数据库的空间索引加速查询，因此非常高效；</li>
 </ul>
-<h4><span id="劣势">劣势</span></h4>
+<h4 id="劣势">劣势</h4>
 <ul>
 <li>参数minPts和邻域距离，需要由对数据理解良好的领域专家来设置；</li>
 <li>采用统一的密度标准来衡量，这就要求所有有意义的聚类密度相似。</li>
 </ul>
 <p>了解了这个工具的算法，大家是否会觉得原来机器学习没那么高深？竟然如此简单？分分钟就完成个大数据聚类运算？其实真正的难点并不是理解工具运算原理和如何使用工具，关键点在于对待分析数据和要解决问题的理解，然后才能给出合适的最小聚类点数和邻域距离，而这些参数直接决定了分类结果。说到这儿，想起之前看到过的一个笑话：</p>
 <p>​	<em>一次，福特公司里一台大型电机发生了故障，工程师们会诊3个月没有结果，只得请来权威斯坦门茨。这位权威及时挽救了电机，而有人却嫉妒地说斯坦门茨向公司要1万美元，这1万美元是不是勒索呢？斯坦门茨写在付款单上的说明就是最好的回答：“画一条线=1美元，知道在什么地方画线=9999美元。</em></p>
-<h2><span id="参考资料">参考资料</span></h2>
+<h2 id="参考资料">参考资料</h2>
 <p>ArcGIS help: <a href="http://pro.arcgis.com/zh-cn/pro-app/tool-reference/spatial-statistics/how-density-based-clustering-works.htm" target="_blank" rel="noopener">“基于密度的聚类” 工作原理 </a></p>
 <p>Wiki:<a href="https://en.wikipedia.org/wiki/DBSCAN" target="_blank" rel="noopener">DBSCAN</a></p>
 
@@ -350,7 +350,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">功能定义</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">使用工具</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">输入参数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">分析过程</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">输出结果</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">原理分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">算法原理</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">优劣分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">优势</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">劣势</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">参考资料</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#功能定义"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">功能定义</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#使用工具"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">使用工具</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#输入参数"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">输入参数</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分析过程"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">分析过程</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#输出结果"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">输出结果</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#原理分析"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">原理分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#算法原理"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">算法原理</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#优劣分析"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">优劣分析</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#优势"><span class="toc-nav-number">3.2.1.</span> <span class="toc-nav-text">优势</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#劣势"><span class="toc-nav-number">3.2.2.</span> <span class="toc-nav-text">劣势</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#参考资料"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">参考资料</span></a></li></ol>
         
         </div>
       </aside>
