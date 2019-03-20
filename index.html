@@ -221,10 +221,8 @@
             
         </h3>
         <div class="post-content-preview">
-            配置GA支持读写snappy压缩数据，关键的环节有两部分：一是编译Hadoop Snappy库让Hadoop支持snappy，这个过程有点繁琐，详情参见下述配置向导的前三步；第二个环节就是配置GA依赖的jre包含Hadoop snappy so库。总体思路清晰了，就下来就动手编译所需的库，配置GA支持snappy。
-一 编译snappy-1.1.4
-1,下载snappy-1.1.4安装包
-下......
+            Snappy是google推出的压缩和解压缩库，它的设计目标旨在高速和合理压缩。这个库在Google内部广泛使用，在Hadoop产品家族中也被广泛采纳。今天我们要解决的问题是如何让ArcGIS GA 大数据分析工具能够顺利读取（解压缩）和输出（压缩）snappy压缩格式的数据。
+配置GA支持读写snappy压缩数据，关键的环节有两步：一是编译Hadoop Snappy库让Hadoop支持sn......
         </div>
     </a>
     
@@ -236,9 +234,11 @@
             
               <a href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
             
-              <a href="/tags/#GA" title="GA">GA</a>
+              <a href="/tags/#BigData" title="BigData">BigData</a>
             
-              <a href="/tags/#HADOOP" title="HADOOP">HADOOP</a>
+              <a href="/tags/#Apache" title="Apache">Apache</a>
+            
+              <a href="/tags/#Deployment" title="Deployment">Deployment</a>
             
         </div>
     
@@ -281,11 +281,11 @@ hive: apache-hive-3.1.0......
             
               <a href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
             
-              <a href="/tags/#Big Data" title="Big Data">Big Data</a>
-            
               <a href="/tags/#Apache" title="Apache">Apache</a>
             
               <a href="/tags/#Deployment" title="Deployment">Deployment</a>
+            
+              <a href="/tags/#Big Data" title="Big Data">Big Data</a>
             
         </div>
     
@@ -612,11 +612,17 @@ hive: apache-hive-3.1.0......
             
         
             
+        
+            
+            <a href="/tags/#Apache" title="Apache" rel="2">Apache</a>
+            
+        
+            
+            <a href="/tags/#Deployment" title="Deployment" rel="2">Deployment</a>
+            
+        
+            
             <a href="/tags/#Big Data" title="Big Data" rel="3">Big Data</a>
-            
-        
-            
-        
             
         
             
@@ -653,10 +659,6 @@ hive: apache-hive-3.1.0......
         
             
             <a href="/tags/#apache" title="apache" rel="2">apache</a>
-            
-        
-            
-        
             
         
             
