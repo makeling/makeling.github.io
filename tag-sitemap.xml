@@ -142,36 +142,29 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/iOS/</loc>
-        <lastmod>2018-12-18T02:11:50.324Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/ArcGIS/</loc>
-        <lastmod>2019-03-20T08:42:58.045Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite.com/tags/Apache/</loc>
-        <lastmod>2019-03-20T08:42:58.045Z</lastmod>
+        <lastmod>2018-10-26T01:58:18.606Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite.com/tags/Deployment/</loc>
-        <lastmod>2019-03-20T08:42:58.045Z</lastmod>
+        <lastmod>2018-10-26T01:58:18.606Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/BigData/</loc>
-        <lastmod>2019-03-20T08:42:58.045Z</lastmod>
+        <loc>http://yoursite.com/tags/ArcGIS/</loc>
+        <lastmod>2018-12-18T02:11:50.324Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/iOS/</loc>
+        <lastmod>2018-12-18T02:11:50.324Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
