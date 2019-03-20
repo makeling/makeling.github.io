@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          配置ArcGIS GA分析工具支持HADOOP SNAPPY压缩 - UbuntuSpace | 分享空间
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/Big-data/35980786.html">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('Demo.png')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/MaklSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                            
+                              <a class="tag" href="/tags/#GA" title="GA">GA</a>
+                            
+                              <a class="tag" href="/tags/#HADOOP" title="HADOOP">HADOOP</a>
+                            
+                        </div>
+                        <h1>配置ArcGIS GA分析工具支持HADOOP SNAPPY压缩</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Keling Ma on
+                            2019-03-20
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">UBUNTU SPACE</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>配置GA支持读写snappy压缩数据，关键的环节有两部分：一是编译Hadoop Snappy库让Hadoop支持snappy，这个过程有点繁琐，详情参见下述配置向导的前三步；第二个环节就是配置GA依赖的jre包含Hadoop snappy so库。总体思路清晰了，就下来就动手编译所需的库，配置GA支持snappy。</p>
+<h1 id="一-编译snappy-114">一 编译snappy-1.1.4</h1>
+<h3 id="1下载snappy-114安装包">1,下载snappy-1.1.4安装包</h3>
+<p>下载地址：<a href="https://github.com/google/snappy/releases/tag/1.1.4" target="_blank" rel="noopener">https://github.com/google/snappy/releases/tag/1.1.4</a></p>
+<h3 id="2-解压安装包">2, 解压安装包</h3>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> software]<span class="meta"># tar -xvf snappy-1.1.1.tar.gz -C /usr/local</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-安装编译所需的包">3, 安装编译所需的包</h3>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> software]<span class="meta"># yum install gcc</span></span><br><span class="line">[root<span class="symbol">@gis088</span> software]<span class="meta"># yum install gcc-c++</span></span><br><span class="line">[root<span class="symbol">@gis088</span> software]<span class="meta"># yum install autoconf, automake, libtool</span></span><br></pre></td></tr></table></figure>
+<h3 id="4-cd到snappy解压目录开始编译">4, cd到snappy解压目录开始编译</h3>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis089</span> software]<span class="meta">#cd /usr/local/snappy-1.1.4/</span></span><br><span class="line">[root<span class="symbol">@gis088</span> snappy<span class="number">-1.1</span><span class="number">.4</span>]<span class="meta"># ./configure</span></span><br><span class="line">[root<span class="symbol">@gis088</span> snappy<span class="number">-1.1</span><span class="number">.4</span>]<span class="meta"># make</span></span><br><span class="line">[root<span class="symbol">@gis088</span> snappy<span class="number">-1.1</span><span class="number">.4</span>]<span class="meta"># make install</span></span><br></pre></td></tr></table></figure>
+<h2 id="5检查编译后文件">5，检查编译后文件</h2>
+<p>默认会编译到/usr/local/lib目录下</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@gis088 snappy-1.1.4]<span class="comment"># ls -al /usr/local/lib</span></span><br><span class="line">total 796</span><br><span class="line">drwxr-xr-x. <span class="number"> 3 </span>root root   <span class="number"> 130 </span>Mar<span class="number"> 19 </span>18:48 .</span><br><span class="line">drwxr-xr-x.<span class="number"> 15 </span>root root   <span class="number"> 272 </span>Mar<span class="number"> 19 </span>18:44 ..</span><br><span class="line">-rw-r--r--. <span class="number"> 1 </span>root root<span class="number"> 541800 </span>Mar<span class="number"> 19 </span>18:48 libsnappy.a</span><br><span class="line">-rwxr-xr-x. <span class="number"> 1 </span>root root   <span class="number"> 955 </span>Mar<span class="number"> 19 </span>18:48 libsnappy.la</span><br><span class="line">lrwxrwxrwx. <span class="number"> 1 </span>root root    <span class="number"> 18 </span>Mar<span class="number"> 19 </span>18:48 libsnappy.so -&gt; libsnappy.so.1.3.1</span><br><span class="line">lrwxrwxrwx. <span class="number"> 1 </span>root root    <span class="number"> 18 </span>Mar<span class="number"> 19 </span>18:48 libsnappy.so.1 -&gt; libsnappy.so.1.3.1</span><br><span class="line">-rwxr-xr-x. <span class="number"> 1 </span>root root<span class="number"> 263600 </span>Mar<span class="number"> 19 </span>18:48 libsnappy.so.1.3.1</span><br><span class="line">drwxr-xr-x. <span class="number"> 2 </span>root root    <span class="number"> 23 </span>Mar<span class="number"> 19 </span>18:48 pkgconfig</span><br></pre></td></tr></table></figure>
+<h1 id="二-编译hadoop-snappy">二 编译hadoop-snappy</h1>
+<p>hadoop-snappy库的编译需要基于Maven，因此我们先来部署maven。</p>
+<h2 id="一部署maven">（一）部署maven</h2>
+<h3 id="1下载maven安装包">1，下载maven安装包</h3>
+<p>下载地址：<a href="http://maven.apache.org/download.cgi" target="_blank" rel="noopener">http://maven.apache.org/download.cgi</a></p>
+<p>这里选择下载的版本是3.6.0</p>
+<h3 id="2-解压缩安装包">2, 解压缩安装包</h3>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> software]<span class="meta"># tar -xvf apache-maven-3.6.0-bin.tar -C /home</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-配置环境变量">3, 配置环境变量</h3>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> software]<span class="meta"># vim /etc/profile</span></span><br></pre></td></tr></table></figure>
+<p>添加环境变量：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">export</span> MAVEN_HOME = /home/apache-maven-3.6.0</span><br><span class="line"><span class="builtin-name">export</span> PATH = <span class="variable">$MAVEN_HOME</span>/bin:PATH</span><br><span class="line">[root@gis088 software]# source /etc/profile</span><br></pre></td></tr></table></figure>
+<h3 id="4-验证">4, 验证</h3>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@gis088 apache-maven-3.6.0]# mvn -version</span><br><span class="line">Apache Maven 3.6.0 (97c98ec64a1fdfee7767ce5ffb20918da4f719f3; 2018-10-25T02:41:47+08:00)</span><br><span class="line">Maven home: /home/apache-maven-3.6.0</span><br><span class="line">Java version: 1.8.0_111, vendor: Oracle Corporation, runtime: /usr/local/jdk1.8.0_111/jre</span><br><span class="line">Default locale: en_US, platform encoding: UTF-8</span><br><span class="line">OS name: <span class="string">"linux"</span>, version: <span class="string">"3.10.0-693.el7.x86_64"</span>, arch: <span class="string">"amd64"</span>, family: <span class="string">"unix"</span></span><br></pre></td></tr></table></figure>
+<p>##（二）编译hadoop-snappy</p>
+<h3 id="1-下载hadoop-snappy-源码">1, 下载hadoop-snappy 源码</h3>
+<p>下载地址：<a href="https://github.com/electrum/hadoop-snappy" target="_blank" rel="noopener">https://github.com/electrum/hadoop-snappy</a></p>
+<h3 id="2编译hadoop-snappy">2，编译Hadoop snappy</h3>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> hadoop_snappy]<span class="meta"># cd hadoop-snappy-master/</span></span><br></pre></td></tr></table></figure>
+<p>在这里snappy编译到了默认的目录/usr/local，可以省略参数，否则通过-Dsnappy.prefix=SNAPPY_INSTALLATION_DIR指定snappy安装目录。</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> hadoop-snappy-master]<span class="meta"># mvn package</span></span><br></pre></td></tr></table></figure>
+<p>编译后的结果位于target文件夹。</p>
+<h1 id="三-在hadoop中部署hadoop-snappy库">三 在Hadoop中部署Hadoop Snappy库</h1>
+<h3 id="1安装库文件">1，安装库文件</h3>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@gis088 hadoop-snappy-master]<span class="comment"># cd target</span></span><br><span class="line">[root@gis088 target]<span class="comment"># tar -zxvf hadoop-snappy-0.0.1-SNAPSHOT.tar.gz -C /home</span></span><br><span class="line">[root@gis088 target]<span class="comment"># cd /home/hadoop-snappy-0.0.1-SNAPSHOT/</span></span><br><span class="line">[root@gis088 hadoop-snappy-0.0.1-SNAPSHOT]<span class="comment"># cp -rf lib/* /home/hadoop-2.8.1/lib</span></span><br><span class="line">[root@gis088 hadoop-snappy-0.0.1-SNAPSHOT]<span class="comment"># cd /home/hadoop-2.8.1/lib/native</span></span><br><span class="line">[root@gis088 native]<span class="comment"># cp -rf /usr/local/lib/* ./</span></span><br><span class="line">[root@gis088 native]<span class="comment"># ls -al</span></span><br><span class="line">total 5280</span><br><span class="line">drwxrwxr-x.<span class="number"> 5 </span><span class="number"> 500 </span><span class="number"> 500 </span>  <span class="number"> 4096 </span>Mar<span class="number"> 19 </span>19:59 .</span><br><span class="line">drwxrwxr-x.<span class="number"> 3 </span><span class="number"> 500 </span><span class="number"> 500 </span>    <span class="number"> 60 </span>Mar<span class="number"> 19 </span>19:58 ..</span><br><span class="line">drwxrwxr-x.<span class="number"> 2 </span><span class="number"> 500 </span><span class="number"> 500 </span>    <span class="number"> 94 </span>Jun <span class="number"> 2 </span><span class="number"> 2017 </span>examples</span><br><span class="line">-rw-rw-r--.<span class="number"> 1 </span><span class="number"> 500 </span><span class="number"> 500 </span>1200084 Jun <span class="number"> 2 </span><span class="number"> 2017 </span>libhadoop.a</span><br><span class="line">-rw-rw-r--.<span class="number"> 1 </span><span class="number"> 500 </span><span class="number"> 500 </span>1487164 Jun <span class="number"> 2 </span><span class="number"> 2017 </span>libhadooppipes.a</span><br><span class="line">lrwxrwxrwx.<span class="number"> 1 </span><span class="number"> 500 </span><span class="number"> 500 </span>    <span class="number"> 18 </span>Jun <span class="number"> 3 </span><span class="number"> 2017 </span>libhadoop.so -&gt; libhadoop.so.1.0.0</span><br><span class="line">-rwxrwxr-x.<span class="number"> 1 </span><span class="number"> 500 </span><span class="number"> 500 </span><span class="number"> 711938 </span>Jun <span class="number"> 2 </span><span class="number"> 2017 </span>libhadoop.so.1.0.0</span><br><span class="line">-rw-rw-r--.<span class="number"> 1 </span><span class="number"> 500 </span><span class="number"> 500 </span><span class="number"> 581808 </span>Jun <span class="number"> 2 </span><span class="number"> 2017 </span>libhadooputils.a</span><br><span class="line">-rw-rw-r--.<span class="number"> 1 </span><span class="number"> 500 </span><span class="number"> 500 </span><span class="number"> 365076 </span>Jun <span class="number"> 2 </span><span class="number"> 2017 </span>libhdfs.a</span><br><span class="line">lrwxrwxrwx.<span class="number"> 1 </span><span class="number"> 500 </span><span class="number"> 500 </span>    <span class="number"> 16 </span>Jun <span class="number"> 3 </span><span class="number"> 2017 </span>libhdfs.so -&gt; libhdfs.so.0.0.0</span><br><span class="line">-rwxrwxr-x.<span class="number"> 1 </span><span class="number"> 500 </span><span class="number"> 500 </span><span class="number"> 229297 </span>Jun <span class="number"> 2 </span><span class="number"> 2017 </span>libhdfs.so.0.0.0</span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root <span class="number"> 541800 </span>Mar<span class="number"> 19 </span>19:59 libsnappy.a</span><br><span class="line">-rwxr-xr-x.<span class="number"> 1 </span>root root    <span class="number"> 955 </span>Mar<span class="number"> 19 </span>19:59 libsnappy.la</span><br><span class="line">lrwxrwxrwx.<span class="number"> 1 </span>root root     <span class="number"> 18 </span>Mar<span class="number"> 19 </span>19:59 libsnappy.so -&gt; libsnappy.so.1.3.1</span><br><span class="line">lrwxrwxrwx.<span class="number"> 1 </span>root root     <span class="number"> 18 </span>Mar<span class="number"> 19 </span>19:59 libsnappy.so.1 -&gt; libsnappy.so.1.3.1</span><br><span class="line">-rwxr-xr-x.<span class="number"> 1 </span>root root <span class="number"> 263600 </span>Mar<span class="number"> 19 </span>19:59 libsnappy.so.1.3.1</span><br><span class="line">drwxr-xr-x.<span class="number"> 3 </span>root root    <span class="number"> 177 </span>Mar<span class="number"> 19 </span>19:58 Linux-amd64-64</span><br><span class="line">drwxr-xr-x.<span class="number"> 2 </span>root root     <span class="number"> 23 </span>Mar<span class="number"> 19 </span>19:59 pkgconfig</span><br></pre></td></tr></table></figure>
+<h3 id="2修改core-sitexml和mapred-sitexml配置文件">2，修改core-site.xml和mapred-site.xml配置文件</h3>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> hadoop]<span class="meta"># vim core-site.xml</span></span><br></pre></td></tr></table></figure>
+<p>添加属性：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">  &lt;name&gt;io<span class="selector-class">.compression</span><span class="selector-class">.codecs</span>&lt;/name&gt;</span><br><span class="line">  &lt;value&gt;</span><br><span class="line">    org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.io</span><span class="selector-class">.compress</span><span class="selector-class">.GzipCodec</span>,</span><br><span class="line">    org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.io</span><span class="selector-class">.compress</span><span class="selector-class">.DefaultCodec</span>,</span><br><span class="line">    org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.io</span><span class="selector-class">.compress</span><span class="selector-class">.BZip2Codec</span>,</span><br><span class="line">    org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.io</span><span class="selector-class">.compress</span><span class="selector-class">.SnappyCodec</span></span><br><span class="line">  &lt;/value&gt;</span><br><span class="line">  &lt;description&gt;A list of the compression codec classes that can be used <span class="keyword">for</span> compression/decompression.&lt;/description&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[root@gis088 hadoop]</span># <span class="selector-tag">cp</span> <span class="selector-tag">mapred-site</span><span class="selector-class">.xml</span><span class="selector-class">.template</span> <span class="selector-tag">mapred-site</span><span class="selector-class">.xml</span></span><br><span class="line"><span class="selector-attr">[root@gis088 hadoop]</span># <span class="selector-tag">vim</span> <span class="selector-tag">mapred-site</span><span class="selector-class">.xml</span></span><br></pre></td></tr></table></figure>
+<p>添加属性:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">       &lt;name&gt;mapreduce<span class="selector-class">.map</span><span class="selector-class">.output</span><span class="selector-class">.compress</span>&lt;/name&gt;</span><br><span class="line">       &lt;value&gt;true&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">       &lt;name&gt;mapreduce<span class="selector-class">.map</span><span class="selector-class">.output</span><span class="selector-class">.compression</span><span class="selector-class">.codec</span>&lt;/name&gt;</span><br><span class="line">       &lt;value&gt;org<span class="selector-class">.apache</span><span class="selector-class">.hadoop</span><span class="selector-class">.io</span><span class="selector-class">.compress</span><span class="selector-class">.SnappyCodec</span>&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="3-验证hadoop环境中是否成功支持snappy">3， 验证hadoop环境中是否成功支持snappy</h3>
+<p>之前我已经在hdfs 中导入测试数据，位于/data/test.snappy。</p>
+<p>测试过程是通过执行hadoop自带的样例程序wordcount来验证，计算结果输出到/output目录：</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@gis088 hadoop<span class="string">-2</span>.8.1]# hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples<span class="string">-2</span>.8.1.jar wordcount /data/test.snappy /output</span><br><span class="line">[root@gis088 hadoop<span class="string">-2</span>.8.1]# hdfs dfs -ls /output</span><br><span class="line">Found 2 items</span><br><span class="line">-rw-r--r--   1 root supergroup          0 2019<span class="string">-03</span><span class="string">-19</span> 20:27 /output/_SUCCESS</span><br><span class="line">-rw-r--r--   1 root supergroup      29844 2019<span class="string">-03</span><span class="string">-19</span> 20:27 /output/part-r<span class="string">-00000</span></span><br></pre></td></tr></table></figure>
+<p>以上过程完成了Hadoop支持snappy压缩的安装配置，为了让GA能支持读写snappy压缩的文件，还需要进一步配置hadoop snappy库到GA依赖的jre下。</p>
+<h1 id="四-部署hadoop-snappy库文件到ga-jre">四 部署hadoop snappy库文件到GA Jre</h1>
+<p>在没有经过任何snappy部署的GA环境下，如果我们尝试读取snappy压缩的数据，通常会收到以下类似的报错信息：</p>
+<p>py4j.protocol.Py4JJavaError: An error occurred while calling o34.collectToPython.</p>
+<p>: org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 0.0 failed 1 times, most recent failure: Lost task 0.0 in stage 0.0 (TID 0, localhost, executor driver): java.lang.RuntimeException: native snappy library not available: this version of libhadoop was built without snappy support.</p>
+<p>接下来我们就部署如何让GA支持snappy。</p>
+<h3 id="1-查询ga-spark进程基于的jre">1, 查询GA Spark进程基于的jre</h3>
+<p>通过Linux ps命令查询GA spark进程，获取GA使用的jre所在目录</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@gis088 <span class="built_in">home</span>]<span class="meta"># ps -ef|grep spark</span></span><br></pre></td></tr></table></figure>
+<p>在我的部署环境中，jre目录位于/home/ags107/arcgis/server/framework/runtime/jre8/</p>
+<h3 id="2-从hadooplibnative目录拷贝hadoop-snappy动态链接库到ltjre_homegtlibamd64">2, 从hadoop/lib/native目录拷贝hadoop , snappy动态链接库到&lt;jre_home&gt;/lib/amd64</h3>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@gis088 amd64]<span class="comment"># cp -f /home/hadoop-2.8.1/lib/native/libhadoop.so* /home/ags107/arcgis/server/framework/runtime/jre8/lib/amd64/</span></span><br><span class="line"></span><br><span class="line">[root@gis088 amd64]<span class="comment"># cp -f /home/hadoop-2.8.1/lib/native/libsnappy.so* /home/ags107/arcgis/server/framework/runtime/jre8/lib/amd64/</span></span><br></pre></td></tr></table></figure>
+<p>ls 检查amd64目录下是否包含了所有需要的动态链接库</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@gis088 amd64]# ls -al <span class="regexp">/home/</span>ags107<span class="regexp">/arcgis/</span>server<span class="regexp">/framework/</span><span class="keyword">runtime</span><span class="regexp">/jre8/</span>lib<span class="regexp">/amd64/</span></span><br></pre></td></tr></table></figure>
+<h3 id="3通过run-python-script工具测试ga可以支持snappy格式数据的读写">3，通过Run Python Script工具测试GA可以支持snappy格式数据的读写</h3>
+<p>在浏览器中打开run python script 提交页面：</p>
+<p><a href="https://gis039.esri.local/arcgis/rest/services/System/GeoAnalyticsTools/GPServer/RunPythonScript/submitJob" target="_blank" rel="noopener">https://gis039.esri.local/arcgis/rest/services/System/GeoAnalyticsTools/GPServer/RunPythonScript/submitJob</a></p>
+<p>在Python Script 窗口，输入以下示例测试GA是否可以成功读取和写入snappy压缩过的数据</p>
+<p><code>示例一</code>：读取hdfs中snappy压缩的csv 数据</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">"start..."</span>)</span></span></span><br><span class="line">snappy_data = <span class="string">"hdfs://10.10.20.88:9000/data/test.snappy"</span></span><br><span class="line">input_layer = spark<span class="selector-class">.read</span><span class="selector-class">.csv</span>(snappy_data)</span><br><span class="line">input_layer.show()</span><br></pre></td></tr></table></figure>
+<p><code>示例二</code>：读取hdfs中的csv数据，然后以snappy压缩格式输出到hdfs</p>
+<p>对于写出操作，GA执行时需要使用GA进程账户，而不是root, 因此要确保GA 进程账户对输出目录拥有写权限。</p>
+<p>默认用root账户创建的hdfs 目录权限,可以看到对于非root用户并没有写权限：</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drwxr-xr-x   - root supergroup          0 2019<span class="string">-03</span><span class="string">-20</span> 14:00 /out</span><br></pre></td></tr></table></figure>
+<p>这里我简单赋予其它用户和组写权限，确保样例可以正确执行：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> makl]<span class="meta"># hdfs dfs -chmod 777 /out</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span>(“start…”)</span><br><span class="line">csv_data = <span class="comment">"hdfs://10.10.20.88:9000/data/bjRAIN.csv”</span></span><br><span class="line">input_layer = spark.<span class="keyword">read</span>.csv(csv_data)</span><br><span class="line">input_layer.show()</span><br><span class="line">out_path = “hdf<span class="variable">s:</span>//<span class="number">10.10</span>.<span class="number">20.88</span>:<span class="number">9000</span>/out/bjRAIN”</span><br><span class="line">input_layer.<span class="keyword">write</span>.csv(out_path, compression=“snappy”)</span><br></pre></td></tr></table></figure>
+<p>如果上述样例通过Run Python Script工具都可以成功执行，那恭喜你，大功告成！接下来就可以愉快的在GA环境中使用snappy压缩数据啦。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/bigdata/3752b673.html" data-toggle="tooltip" data-placement="top" title="为ArcGIS GeoAnalytics Server注册Hive数据源超清版">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#一-编译snappy-114"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一 编译snappy-1.1.4</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1下载snappy-114安装包"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">1,下载snappy-1.1.4安装包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-解压安装包"><span class="toc-nav-number">1.0.2.</span> <span class="toc-nav-text">2, 解压安装包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-安装编译所需的包"><span class="toc-nav-number">1.0.3.</span> <span class="toc-nav-text">3, 安装编译所需的包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-cd到snappy解压目录开始编译"><span class="toc-nav-number">1.0.4.</span> <span class="toc-nav-text">4, cd到snappy解压目录开始编译</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5检查编译后文件"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">5，检查编译后文件</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#二-编译hadoop-snappy"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二 编译hadoop-snappy</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一部署maven"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">（一）部署maven</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1下载maven安装包"><span class="toc-nav-number">2.1.1.</span> <span class="toc-nav-text">1，下载maven安装包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-解压缩安装包"><span class="toc-nav-number">2.1.2.</span> <span class="toc-nav-text">2, 解压缩安装包</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-配置环境变量"><span class="toc-nav-number">2.1.3.</span> <span class="toc-nav-text">3, 配置环境变量</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#4-验证"><span class="toc-nav-number">2.1.4.</span> <span class="toc-nav-text">4, 验证</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-下载hadoop-snappy-源码"><span class="toc-nav-number">2.1.5.</span> <span class="toc-nav-text">1, 下载hadoop-snappy 源码</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2编译hadoop-snappy"><span class="toc-nav-number">2.1.6.</span> <span class="toc-nav-text">2，编译Hadoop snappy</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#三-在hadoop中部署hadoop-snappy库"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">三 在Hadoop中部署Hadoop Snappy库</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1安装库文件"><span class="toc-nav-number">3.0.1.</span> <span class="toc-nav-text">1，安装库文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2修改core-sitexml和mapred-sitexml配置文件"><span class="toc-nav-number">3.0.2.</span> <span class="toc-nav-text">2，修改core-site.xml和mapred-site.xml配置文件</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3-验证hadoop环境中是否成功支持snappy"><span class="toc-nav-number">3.0.3.</span> <span class="toc-nav-text">3， 验证hadoop环境中是否成功支持snappy</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#四-部署hadoop-snappy库文件到ga-jre"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">四 部署hadoop snappy库文件到GA Jre</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-查询ga-spark进程基于的jre"><span class="toc-nav-number">4.0.1.</span> <span class="toc-nav-text">1, 查询GA Spark进程基于的jre</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-从hadooplibnative目录拷贝hadoop-snappy动态链接库到ltjre_homegtlibamd64"><span class="toc-nav-number">4.0.2.</span> <span class="toc-nav-text">2, 从hadoop/lib/native目录拷贝hadoop , snappy动态链接库到&lt;jre_home&gt;/lib/amd64</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3通过run-python-script工具测试ga可以支持snappy格式数据的读写"><span class="toc-nav-number">4.0.3.</span> <span class="toc-nav-text">3，通过Run Python Script工具测试GA可以支持snappy格式数据的读写</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
+                        
+                          <a class="tag" href="/tags/#GA" title="GA">GA</a>
+                        
+                          <a class="tag" href="/tags/#HADOOP" title="HADOOP">HADOOP</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://blog.newnaw.com" target="_blank">菩提老王的葡萄架</a></li>
+                    
+                        <li><a href="http://www.giser.net" target="_blank">barry的后院</a></li>
+                    
+                        <li><a href="http://oopsliu.com" target="_blank">OOPSLIU</a></li>
+                    
+                        <li><a href="http://kikitamap.com/" target="_blank">kikita &amp; Maps</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite.com/Big-data/35980786.html";
+    var disqus_url = "http://yoursite.com/Big-data/35980786.html";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: '💡'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/makeling">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/keling ma">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Keling Ma 2019 
+                    <br>
+                    Theme by <a href="http://beantech.org">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Customized by <a href="https://makeling.github.io">UbuntuSpace</a>
+                    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                    <span id="busuanzi_container_site_uv">
+                         | Total Visits:<span id="busuanzi_value_site_uv"></span>
+                    </span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript  -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'null';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
