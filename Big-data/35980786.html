@@ -92,11 +92,11 @@
                             
                               <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                             
-                              <a class="tag" href="/tags/#BigData" title="BigData">BigData</a>
-                            
                               <a class="tag" href="/tags/#Apache" title="Apache">Apache</a>
                             
                               <a class="tag" href="/tags/#Deployment" title="Deployment">Deployment</a>
+                            
+                              <a class="tag" href="/tags/#BigData" title="BigData">BigData</a>
                             
                         </div>
                         <h1>配置ArcGIS GA分析工具支持HADOOP SNAPPY压缩</h1>
@@ -232,7 +232,7 @@
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> software]<span class="meta"># yum install gcc</span></span><br><span class="line">[root<span class="symbol">@gis088</span> software]<span class="meta"># yum install gcc-c++</span></span><br><span class="line">[root<span class="symbol">@gis088</span> software]<span class="meta"># yum install autoconf, automake, libtool</span></span><br></pre></td></tr></table></figure>
 <h3 id="4cd到snappy解压目录开始编译">4，cd到snappy解压目录开始编译</h3>
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis089</span> software]<span class="meta">#cd /usr/local/snappy-1.1.4/</span></span><br><span class="line">[root<span class="symbol">@gis088</span> snappy<span class="number">-1.1</span><span class="number">.4</span>]<span class="meta"># ./configure</span></span><br><span class="line">[root<span class="symbol">@gis088</span> snappy<span class="number">-1.1</span><span class="number">.4</span>]<span class="meta"># make</span></span><br><span class="line">[root<span class="symbol">@gis088</span> snappy<span class="number">-1.1</span><span class="number">.4</span>]<span class="meta"># make install</span></span><br></pre></td></tr></table></figure>
-<h3 id="5检查编译后文件">5，检查编译后文件</h3>
+<h3 id="5检查编译后的文件">5，检查编译后的文件</h3>
 <p>默认会编译到/usr/local/lib目录下</p>
 <figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@gis088 snappy-1.1.4]<span class="comment"># ls -al /usr/local/lib</span></span><br><span class="line">total 796</span><br><span class="line">drwxr-xr-x. <span class="number"> 3 </span>root root   <span class="number"> 130 </span>Mar<span class="number"> 19 </span>18:48 .</span><br><span class="line">drwxr-xr-x.<span class="number"> 15 </span>root root   <span class="number"> 272 </span>Mar<span class="number"> 19 </span>18:44 ..</span><br><span class="line">-rw-r--r--. <span class="number"> 1 </span>root root<span class="number"> 541800 </span>Mar<span class="number"> 19 </span>18:48 libsnappy.a</span><br><span class="line">-rwxr-xr-x. <span class="number"> 1 </span>root root   <span class="number"> 955 </span>Mar<span class="number"> 19 </span>18:48 libsnappy.la</span><br><span class="line">lrwxrwxrwx. <span class="number"> 1 </span>root root    <span class="number"> 18 </span>Mar<span class="number"> 19 </span>18:48 libsnappy.so -&gt; libsnappy.so.1.3.1</span><br><span class="line">lrwxrwxrwx. <span class="number"> 1 </span>root root    <span class="number"> 18 </span>Mar<span class="number"> 19 </span>18:48 libsnappy.so.1 -&gt; libsnappy.so.1.3.1</span><br><span class="line">-rwxr-xr-x. <span class="number"> 1 </span>root root<span class="number"> 263600 </span>Mar<span class="number"> 19 </span>18:48 libsnappy.so.1.3.1</span><br><span class="line">drwxr-xr-x. <span class="number"> 2 </span>root root    <span class="number"> 23 </span>Mar<span class="number"> 19 </span>18:48 pkgconfig</span><br></pre></td></tr></table></figure>
 <h1 id="二-编译hadoop-snappy">二 编译hadoop-snappy</h1>
@@ -254,7 +254,7 @@
 <p>下载地址：<a href="https://github.com/electrum/hadoop-snappy" target="_blank" rel="noopener">https://github.com/electrum/hadoop-snappy</a></p>
 <h3 id="2编译hadoop-snappy">2，编译Hadoop snappy</h3>
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> hadoop_snappy]<span class="meta"># cd hadoop-snappy-master/</span></span><br></pre></td></tr></table></figure>
-<p>在这里snappy编译到了默认的目录/usr/local，可以省略参数，否则通过-Dsnappy.prefix=SNAPPY_INSTALLATION_DIR指定snappy安装目录。</p>
+<p>由于snappy编译到了默认的目录/usr/local，可以省略参数，否则通过-Dsnappy.prefix=SNAPPY_INSTALLATION_DIR指定snappy的安装目录。</p>
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> hadoop-snappy-master]<span class="meta"># mvn package</span></span><br></pre></td></tr></table></figure>
 <p>编译后的结果位于target文件夹。</p>
 <h1 id="三-在hadoop中部署hadoop-snappy库">三 在Hadoop中部署Hadoop Snappy库</h1>
@@ -272,12 +272,12 @@
 <p>测试过程是通过执行hadoop自带的样例程序wordcount来验证，计算结果输出到/output目录：</p>
 <figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@gis088 hadoop<span class="string">-2</span>.8.1]# hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples<span class="string">-2</span>.8.1.jar wordcount /data/test.snappy /output</span><br><span class="line">[root@gis088 hadoop<span class="string">-2</span>.8.1]# hdfs dfs -ls /output</span><br><span class="line">Found 2 items</span><br><span class="line">-rw-r--r--   1 root supergroup          0 2019<span class="string">-03</span><span class="string">-19</span> 20:27 /output/_SUCCESS</span><br><span class="line">-rw-r--r--   1 root supergroup      29844 2019<span class="string">-03</span><span class="string">-19</span> 20:27 /output/part-r<span class="string">-00000</span></span><br></pre></td></tr></table></figure>
 <p>以上过程完成了Hadoop支持snappy压缩的安装配置，为了让GA能支持读写snappy压缩的文件，还需要进一步配置hadoop snappy库到GA依赖的jre下。</p>
-<h1 id="四-部署hadoop-snappy库文件到ga-jre">四 部署hadoop snappy库文件到GA Jre</h1>
+<h1 id="四-配置ga支持snappy">四 配置GA支持Snappy</h1>
 <p>在没有经过任何snappy部署的GA环境下，如果我们尝试读取snappy压缩的数据，通常会收到以下类似的报错信息：</p>
 <p>py4j.protocol.Py4JJavaError: An error occurred while calling o34.collectToPython.</p>
 <p>: org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 0.0 failed 1 times, most recent failure: Lost task 0.0 in stage 0.0 (TID 0, localhost, executor driver): java.lang.RuntimeException: native snappy library not available: this version of libhadoop was built without snappy support.</p>
 <p>接下来我们就部署hadoop snappy库，让GA支持snappy。</p>
-<h3 id="1查询ga-spark进程基于的jre">1，查询GA Spark进程基于的jre</h3>
+<h3 id="1查询ga-spark进程依赖的jre">1，查询GA Spark进程依赖的jre</h3>
 <p>通过Linux ps命令查询GA spark进程，获取GA使用的jre所在目录</p>
 <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@gis088 <span class="built_in">home</span>]<span class="meta"># ps -ef|grep spark</span></span><br></pre></td></tr></table></figure>
 <p>在我的部署环境中，jre目录位于/home/ags107/arcgis/server/framework/runtime/jre8/</p>
@@ -286,10 +286,10 @@
 <figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@gis088 amd64]<span class="comment"># cp -f /home/hadoop-2.8.1/lib/native/libhadoop.so* /home/ags107/arcgis/server/framework/runtime/jre8/lib/amd64/</span></span><br><span class="line"></span><br><span class="line">[root@gis088 amd64]<span class="comment"># cp -f /home/hadoop-2.8.1/lib/native/libsnappy.so* /home/ags107/arcgis/server/framework/runtime/jre8/lib/amd64/</span></span><br></pre></td></tr></table></figure>
 <p>ls 检查amd64目录下是否包含了所有需要的动态链接库</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@gis088 amd64]# ls -al <span class="regexp">/home/</span>ags107<span class="regexp">/arcgis/</span>server<span class="regexp">/framework/</span><span class="keyword">runtime</span><span class="regexp">/jre8/</span>lib<span class="regexp">/amd64/</span></span><br></pre></td></tr></table></figure>
-<h3 id="3通过run-python-script工具测试ga可以支持snappy压缩数据的读写">3，通过Run Python Script工具测试GA可以支持snappy压缩数据的读写</h3>
-<p>在浏览器中打开run python script 提交页面：</p>
+<h3 id="3验证成果">3，验证成果</h3>
+<p>通过Run Python Script工具测试GA可以支持snappy压缩数据的读写，在浏览器中打开run python script 提交页面：</p>
 <p><a href="https://gis039.esri.local/arcgis/rest/services/System/GeoAnalyticsTools/GPServer/RunPythonScript/submitJob" target="_blank" rel="noopener">https://gis039.esri.local/arcgis/rest/services/System/GeoAnalyticsTools/GPServer/RunPythonScript/submitJob</a></p>
-<p>在Python Script 窗口，输入以下示例测试GA是否可以成功读取和写入snappy压缩过的数据</p>
+<p>在Python Script 窗口，输入以下示例：</p>
 <p><code>示例一</code>：读取hdfs中snappy压缩的csv 数据</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">"start..."</span>)</span></span></span><br><span class="line">snappy_data = <span class="string">"hdfs://10.10.20.88:9000/data/test.snappy"</span></span><br><span class="line">input_layer = spark<span class="selector-class">.read</span><span class="selector-class">.csv</span>(snappy_data)</span><br><span class="line">input_layer.show()</span><br></pre></td></tr></table></figure>
 <p><code>示例二</code>：读取hdfs中的csv数据，然后以snappy压缩格式输出到hdfs</p>
@@ -350,11 +350,11 @@
                        
                           <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                         
-                          <a class="tag" href="/tags/#BigData" title="BigData">BigData</a>
-                        
                           <a class="tag" href="/tags/#Apache" title="Apache">Apache</a>
                         
                           <a class="tag" href="/tags/#Deployment" title="Deployment">Deployment</a>
+                        
+                          <a class="tag" href="/tags/#BigData" title="BigData">BigData</a>
                         
                     </div>
                 </section>
