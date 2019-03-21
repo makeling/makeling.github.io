@@ -42,13 +42,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/categories/bigdata/</loc>
-        <lastmod>2018-10-26T01:58:18.606Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite.com/categories/ArcGIS/</loc>
         <lastmod>2018-12-18T02:11:50.324Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -56,8 +49,8 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/categories/Big-data/</loc>
-        <lastmod>2019-03-21T04:03:50.116Z</lastmod>
+        <loc>http://yoursite.com/categories/bigdata/</loc>
+        <lastmod>2019-03-21T04:06:20.363Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
