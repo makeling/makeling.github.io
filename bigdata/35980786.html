@@ -92,11 +92,11 @@
                             
                               <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                             
+                              <a class="tag" href="/tags/#BigData" title="BigData">BigData</a>
+                            
                               <a class="tag" href="/tags/#Apache" title="Apache">Apache</a>
                             
                               <a class="tag" href="/tags/#Deployment" title="Deployment">Deployment</a>
-                            
-                              <a class="tag" href="/tags/#BigData" title="BigData">BigData</a>
                             
                         </div>
                         <h1>配置ArcGIS GA分析工具支持HADOOP SNAPPY压缩</h1>
@@ -298,7 +298,7 @@
 <figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drwxr-xr-x   - root supergroup          0 2019<span class="string">-03</span><span class="string">-20</span> 14:00 /out</span><br></pre></td></tr></table></figure>
 <p>这里我简单赋予其它用户和组写权限，确保样例可以正确执行：</p>
 <figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> makl]<span class="meta"># hdfs dfs -chmod 777 /out</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span>(“start…”)</span><br><span class="line">csv_data = <span class="comment">"hdfs://10.10.20.88:9000/data/bjRAIN.csv”</span></span><br><span class="line">input_layer = spark.<span class="keyword">read</span>.csv(csv_data)</span><br><span class="line">input_layer.show()</span><br><span class="line">out_path = “hdf<span class="variable">s:</span>//<span class="number">10.10</span>.<span class="number">20.88</span>:<span class="number">9000</span>/out/bjRAIN”</span><br><span class="line">input_layer.<span class="keyword">write</span>.csv(out_path, compression=“snappy”)</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">"start…"</span>)</span></span></span><br><span class="line">csv_data = <span class="string">"hdfs://10.10.20.88:9000/data/bjRAIN.csv"</span></span><br><span class="line">input_layer = spark<span class="selector-class">.read</span><span class="selector-class">.csv</span>(csv_data)</span><br><span class="line">input_layer.show()</span><br><span class="line">out_path = <span class="string">"hdfs://10.10.20.88:9000/out/bjRAIN"</span></span><br><span class="line">input_layer<span class="selector-class">.write</span><span class="selector-class">.csv</span>(out_path, compression=<span class="string">"snappy"</span>)</span><br></pre></td></tr></table></figure>
 <p>如果上述样例通过Run Python Script工具都可以成功执行，那恭喜你，大功告成！接下来就可以愉快的在GA环境中使用snappy压缩数据啦。</p>
 
                 
@@ -350,11 +350,11 @@
                        
                           <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                         
+                          <a class="tag" href="/tags/#BigData" title="BigData">BigData</a>
+                        
                           <a class="tag" href="/tags/#Apache" title="Apache">Apache</a>
                         
                           <a class="tag" href="/tags/#Deployment" title="Deployment">Deployment</a>
-                        
-                          <a class="tag" href="/tags/#BigData" title="BigData">BigData</a>
                         
                     </div>
                 </section>
