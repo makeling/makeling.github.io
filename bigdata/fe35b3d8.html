@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          自动化部署ArcGIS WebAdaptor for Linux 工具使用说明 - UbuntuSpace | 分享空间
+          为GA Server for Linux 环境配置依赖的Python库 - UbuntuSpace | 分享空间
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/automation/ab79e547.html">
+    <link rel="canonical" href="http://yoursite.com/bigdata/fe35b3d8.html">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -92,14 +92,18 @@
                             
                               <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                             
-                              <a class="tag" href="/tags/#Tool" title="Tool">Tool</a>
+                              <a class="tag" href="/tags/#Deployment" title="Deployment">Deployment</a>
+                            
+                              <a class="tag" href="/tags/#BigData" title="BigData">BigData</a>
+                            
+                              <a class="tag" href="/tags/#Python" title="Python">Python</a>
                             
                         </div>
-                        <h1>自动化部署ArcGIS WebAdaptor for Linux 工具使用说明</h1>
+                        <h1>为GA Server for Linux 环境配置依赖的Python库</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Keling Ma on
-                            2018-04-16
+                            2019-04-01
                         </span>
                     </div>
                 
@@ -216,56 +220,56 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>在Linux上部署ArcGIS WebAdaptor，是一个不太难但是相当繁琐的工作。由于Linux环境的复杂性，在Esri官方推出的ArcGIS_Enterprise_Builder_Linux_106 中也并未涵盖Web Adaptor的部署部分，仍然需要用户自行安装。为了提高效率，同时也降低linux上部署Enterprise的技术门槛，这个工具实现了针对java jdk + tomcat + web adaptor的全自动部署，满足更多测试或生成环境的用户需求。</p>
-<h2 id="系统需求">系统需求</h2>
-<h3 id="修改主机名为全域名">修改主机名为全域名</h3>
-<p>For RedHad 7.x 或CentOS 7.x版本</p>
-<p>1， 通过hostnamectl 命令设置主机全域名，例如：</p>
-<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">hostnamectl </span><span class="built_in">set-hostname</span> <span class="string">beserver.</span><span class="string">esrichina.</span><span class="string">com</span></span><br></pre></td></tr></table></figure>
-<p>2， 修改/etc/hosts文件，添加ip 和域名映射，例如：</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br><span class="line"></span><br><span class="line"><span class="number">192.168</span><span class="number">.100</span><span class="number">.66</span> beserver.esrichina.com beserver</span><br></pre></td></tr></table></figure>
-<h3 id="需要root用户的权限来执行脚本">需要root用户的权限，来执行脚本</h3>
-<h2 id="功能说明">功能说明</h2>
+                <p>Run Python Script task 是ArcGIS GA Server 10.7提供的一项新功能，让GA的分析能力从封闭走向开放，通过Run Python Script工具你可以直接调用PySpark库，也可以基于当下流行的机器学习库实现空间大数据的智能分析，可以说这是一项相当激动人心的突破。美中不足的是在GA for Linux平台上，需要用户手动配置GA依赖的python库，这篇配置短文希望能帮到你更快上手。</p>
+<h1 id="一-安装python-包">一 安装Python 包</h1>
+<h2 id="1官网下载安装包">1，官网下载安装包</h2>
+<p>下载地址：<a href="https://www.python.org/downloads/source/" target="_blank" rel="noopener">https://www.python.org/downloads/source/</a></p>
+<p>在文章写的当下，python最新的稳定版本是3.7.3，更新时间是2019年3月25日。</p>
+<p>For linux版本需要下载源码包自行编译，这里我测试下载了Gzipped source tarball。</p>
+<h2 id="2安装依赖包">2，安装依赖包</h2>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@gis088 <span class="built_in">home</span>]<span class="meta"># yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make</span></span><br></pre></td></tr></table></figure>
+<h2 id="3编译python包">3，编译python包</h2>
 <ul>
-<li>解压缩安装包</li>
-<li>部署java jdk和tomcat 到/home/webServer文件夹下</li>
-<li>修改/etc/profile文件，添加java环境变量</li>
-<li>安装web adaptor到 /home/webadaptor目录下</li>
-<li>根据-i 传递的实例名，按次序部署web adaptor到tomcat</li>
-<li>自动生成证书,部署目录为：&lt;tomcat根目录&gt;/certs/tomcat.keystore</li>
-<li>自动修改配置文件server.xml，修改端口为80，443， 并开启SSL</li>
-<li>启动tomcat</li>
-<li>删除临时工作空间</li>
+<li>进入tar包所在目录,解压缩tar包</li>
 </ul>
-<h2 id="使用入门">使用入门</h2>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> home]<span class="meta"># cd /home/makl</span></span><br><span class="line">[root<span class="symbol">@gis088</span> makl]<span class="meta"># tar -xvf Python-3.7.3.tar</span></span><br><span class="line">[root<span class="symbol">@gis088</span> makl]<span class="meta"># cd Python-3.7.3/</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>下载工具到目标linux服务器</li>
-<li>打开终端，切换到root用户</li>
-<li>通过系统自带的python环境直接运行<br>
-例如：</li>
+<li>编译python库到/usr/local/python3</li>
 </ul>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python automated_deploy_arcgis_webadaptor_tool<span class="selector-class">.py</span> -j /home/software/jdk-<span class="number">8</span>u151-linux-x64<span class="selector-class">.tar</span><span class="selector-class">.gz</span> -t /home/software/apache-tomcat-<span class="number">8.0</span>.<span class="number">47</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> -w /home/software/Web_Adaptor_Java_Linux_106_161911<span class="selector-class">.tar</span><span class="selector-class">.gz</span> -<span class="selector-tag">i</span> <span class="string">'portal'</span>,<span class="string">'server'</span></span><br></pre></td></tr></table></figure>
-<p>工具包含了4个参数：<br>
-[required] -j 用于指定java jdk的安装tar包<br>
-[required] -t 用于指定tomcat的安装tar包<br>
-[required] -w 用于指定arcgis web adaptor 的安装tar包<br>
-[optional] -i 用于指定需要部署的web adaptor的实例名队列<br>
-	- 如果-i 不指定，默认自动使用arcgis为实例名;<br>
-	- 如果指定为’portal’, 那会自动部署为portal 实例名;<br>
-	- 如果需要在同一个tomcat下部署多个webadapor，那可以在-i参数后面，通过”,”分隔多个实例名，程序会依次部署，例如 -i ‘portal’,’server’。</p>
-<p><em>注意： 在指定多个实例名时， “逗号”后面不要有多余空格，需要连着写入多个实例名。</em></p>
-<h2 id="检测成果">检测成果</h2>
-<p>部署好后，可以通过curl命令，在shell中直接检测tomcat配置是否成功。例如：<br>
--检测tomcat http 响应是否正常</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">curl</span> <span class="string">'http://beserver.esrichina.com'</span></span><br></pre></td></tr></table></figure>
-<p>-检测tomcat https响应是否正常</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">curl</span> <span class="string">'https://beserver.esrichina.com'</span> -k</span><br></pre></td></tr></table></figure>
-<p>-检测web adaptor 实例部署是否正常, 以实例名为arcgis为例</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">curl</span> <span class="string">'https://hostname/arcgis/webadaptor'</span> -k</span><br></pre></td></tr></table></figure>
-<h2 id="工具运行样例">工具运行样例</h2>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">[root@beserver home]# python automated_deploy_arcgis_webadaptor_tool.py -j /home/software/jdk<span class="number">-8</span>u151-linux-x64.tar.gz -t /home/software/apache-tomcat<span class="number">-8.0</span><span class="number">.47</span>.tar.gz -w /home/software/Web_Adaptor_Java_Linux_106_161911.tar.gz -i <span class="string">'portal'</span>,<span class="string">'server'</span></span><br><span class="line"></span><br><span class="line">====================Start unzip tar package====================</span><br><span class="line"></span><br><span class="line">(<span class="string">'Web adaptor install package path: '</span>, <span class="string">'/home/temp_unzip/WebAdaptor'</span>)</span><br><span class="line">(<span class="string">'Java jdk deploy path: '</span>, <span class="string">'/home/webServer/jdk1.8.0_151'</span>)</span><br><span class="line">(<span class="string">'Tomcat deploy path: '</span>, <span class="string">'/home/webServer/apache-tomcat-8.0.47'</span>)</span><br><span class="line"></span><br><span class="line">====================Write java environment <span class="keyword">variable</span> to <span class="comment">profile====================</span></span><br><span class="line"></span><br><span class="line">JAVA_HOME= /home/webServer/jdk1<span class="number">.8</span><span class="number">.0</span>_151</span><br><span class="line">CLASSPATH= .:/home/webServer/jdk1.8.0_151/lib/tools.jar:/home/webServer/jdk1<span class="number">.8</span><span class="number">.0</span>_151/lib/tools.jar </span><br><span class="line">PATH= /home/webServer/jdk1.8.0_151/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin;/home/webServer/jdk1.8.0_151/bin</span><br><span class="line"></span><br><span class="line">====================Start install web adaptor====================</span><br><span class="line"></span><br><span class="line">/home/temp_unzip/WebAdaptor/Setup -m silent -l <span class="keyword">yes</span> -d /home/webadaptor</span><br><span class="line"></span><br><span class="line">====================Deploy war package to tomcat====================</span><br><span class="line"></span><br><span class="line">Deploying instance portal.war</span><br><span class="line"></span><br><span class="line">cp -rf /home/webadaptor/arcgis/webadaptor10<span class="number">.6</span>/java/arcgis.war /home/webServer/apache-tomcat-8.0.47/webapps/portal.war</span><br><span class="line">Deploying <span class="comment">instance server.war</span></span><br><span class="line"></span><br><span class="line">cp <span class="comment">-rf</span> /home/<span class="comment">webadaptor</span>/arcgis/<span class="comment">webadaptor10.6</span>/java/<span class="comment">arcgis.war</span> /home/<span class="comment">webServer</span>/apache-tomcat<span class="number">-8.0</span><span class="number">.47</span>/<span class="comment">webapps</span>/server.war</span><br><span class="line">deploy war package successfully!</span><br><span class="line"></span><br><span class="line">====================Generate certificat <span class="keyword">for</span> enable SSL request====================</span><br><span class="line"></span><br><span class="line">keytool -genkey -<span class="keyword">alias</span> tomcat -keyalg RSA -keysize <span class="number">1024</span> -keystore /<span class="comment">home</span>/webServer/<span class="comment">apache-tomcat-8.0.47</span>/certs/<span class="comment">tomcat.keystore -validity 36500 -dname</span> <span class="comment">"CN=beserver.esrichina.com, OU=esrichina, O=esrichina, L=beijing, ST=beijing, C=CN"</span><span class="comment"> -storepass</span> <span class="comment">'123456'</span><span class="comment"> -keypass</span> <span class="comment">'123456'</span></span><br><span class="line"></span><br><span class="line">(<span class="string">'keystore path: '</span>, <span class="string">'/home/webServer/apache-tomcat-8.0.47/certs/tomcat.keystore'</span>)</span><br><span class="line"></span><br><span class="line">====================Repair <span class="comment">server.xml file====================</span></span><br><span class="line"></span><br><span class="line">repair <span class="comment">server.xml successfully!</span></span><br><span class="line"></span><br><span class="line">====================Start <span class="comment">tomcat====================</span></span><br><span class="line"></span><br><span class="line">/home/webServer/apache-tomcat<span class="number">-8.0</span><span class="number">.47</span>/bin/startup.sh</span><br><span class="line">start tomcat successfully!</span><br><span class="line"></span><br><span class="line">deploy finished!</span><br></pre></td></tr></table></figure>
-<h2 id="下载链接">下载链接</h2>
-<p>git:  <a href="https://github.com/makeling/arcgis_enterprise_automated_tools.git" target="_blank" rel="noopener">https://github.com/makeling/arcgis_enterprise_automated_tools.git</a></p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="title">@gis088</span> Python<span class="number">-3.7</span>.<span class="number">3</span>]# mkdir <span class="keyword">target</span></span><br><span class="line">[root<span class="title">@gis088</span> Python<span class="number">-3.7</span>.<span class="number">3</span>]# cd <span class="keyword">target</span></span><br><span class="line">[root<span class="title">@gis088</span> <span class="keyword">target</span>]#../configure --<span class="keyword">prefix</span>=/usr/local/python<span class="number">3</span></span><br><span class="line">[root<span class="title">@gis088</span> <span class="keyword">target</span>]# make </span><br><span class="line">[root<span class="title">@gis088</span> <span class="keyword">target</span>]# make install</span><br></pre></td></tr></table></figure>
+<p>最终我们用到的python库位于/usr/local/python3。</p>
+<h1 id="二-部署python包到ga-server">二 部署Python包到GA Server</h1>
+<p>在GA集群环境下，为了让每台GA 在执行任务时都能访问到python库，还需要拷贝上面编译好的python库到每台GA服务器，确保python 路径在所有服务器上保持一致。</p>
+<p>在我的测试环境中GA集群中共有三台服务器：39，40，41，现在通过scp命令拷贝编译好的文件到所有GA服务器的/usr/local/python3目录：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@gis088</span> <span class="keyword">local</span>]<span class="meta"># scp -r python3/ 10.10.20.39:/usr/local</span></span><br><span class="line">[root<span class="symbol">@gis088</span> <span class="keyword">local</span>]<span class="meta"># scp -r python3/ 10.10.20.40:/usr/local</span></span><br><span class="line">[root<span class="symbol">@gis088</span> <span class="keyword">local</span>]<span class="meta"># scp -r python3/ 10.10.20.41:/usr/local</span></span><br></pre></td></tr></table></figure>
+<h1 id="三-更新server属性">三 更新Server属性</h1>
+<p>更新Server属性，让Server能正确识别Python库。</p>
+<ul>
+<li>浏览器中打开Server 管理目录，并以管理员身份登陆</li>
+</ul>
+<p>目录格式：<a href="https://server:port/arcgis/admin" target="_blank" rel="noopener">https://server:port/arcgis/admin</a></p>
+<p>我的测试样例：<a href="https://server:port/arcgis/admin/system/properties" target="_blank" rel="noopener">https://gis039.esri.local/arcgis/admin</a></p>
+<ul>
+<li>导航到system/properties页面</li>
+</ul>
+<p><a href="https://gis039.esri.local/arcgis/admin/system/properties%EF%BC%8C" target="_blank" rel="noopener">https://gis039.esri.local/arcgis/admin/system/properties，</a></p>
+<ul>
+<li>添加属性</li>
+</ul>
+<p>{“pysparkPython”:&quot;/usr/local/python3/bin/python3&quot;}</p>
+<h1 id="四-验证">四 验证</h1>
+<p>现在我们通过Run python script工具来验证前面部署的python库是否成功。</p>
+<ul>
+<li>以管理员身份，登陆GA所在的Server REST 服务目录</li>
+</ul>
+<p>例如：<a href="https://gis039.esri.local/arcgis/rest/services" target="_blank" rel="noopener">https://gis039.esri.local/arcgis/rest/services</a>&gt;</p>
+<ul>
+<li>按照System-&gt;GeoAnalyticsTools-&gt;RunPythonScript-&gt;Submit Job步骤，打开Run python script Summit Job页面</li>
+<li>在Python Script 窗口输入print(“hello world!”)</li>
+<li>点击Sumbit Job按钮（get or post都可以），提交请求。</li>
+</ul>
+<p>如果你能看到任务成功执行，那就说明之前的部署生效啦。事实上在日志中已经打印出来GA实际使用的python库。</p>
+<p>![pythonlib](<a href="https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/deploy" target="_blank" rel="noopener">https://raw.githubusercontent.com/makeling/makeling.github.io/master/img/blog_imgs/deploy</a> python library for GA Linux.png)</p>
 
                 
 
@@ -273,13 +277,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/ArcGIS/3df23b0.html" data-toggle="tooltip" data-placement="top" title="ArcGIS Enterprise 10.6 用户体验改进测评">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/ArcGIS/1b6f1cbb.html" data-toggle="tooltip" data-placement="top" title="ArcGIS Monitor配置监控数据库">Next Post &rarr;</a>
+                            <a href="/bigdata/35980786.html" data-toggle="tooltip" data-placement="top" title="配置ArcGIS GA分析工具支持HADOOP SNAPPY压缩">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -304,17 +304,6 @@
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
 
-    
-      <aside id="sidebar">
-        <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
-        
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#系统需求"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">系统需求</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#修改主机名为全域名"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">修改主机名为全域名</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#需要root用户的权限来执行脚本"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">需要root用户的权限，来执行脚本</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#功能说明"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">功能说明</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#使用入门"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">使用入门</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#检测成果"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">检测成果</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#工具运行样例"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">工具运行样例</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#下载链接"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">下载链接</span></a></li></ol>
-        
-        </div>
-      </aside>
-    
-
                 
             <!-- Sidebar Container -->
             <div class="
@@ -331,7 +320,11 @@
                        
                           <a class="tag" href="/tags/#ArcGIS" title="ArcGIS">ArcGIS</a>
                         
-                          <a class="tag" href="/tags/#Tool" title="Tool">Tool</a>
+                          <a class="tag" href="/tags/#Deployment" title="Deployment">Deployment</a>
+                        
+                          <a class="tag" href="/tags/#BigData" title="BigData">BigData</a>
+                        
+                          <a class="tag" href="/tags/#Python" title="Python">Python</a>
                         
                     </div>
                 </section>
@@ -366,8 +359,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite.com/automation/ab79e547.html";
-    var disqus_url = "http://yoursite.com/automation/ab79e547.html";
+    var disqus_identifier = "http://yoursite.com/bigdata/fe35b3d8.html";
+    var disqus_url = "http://yoursite.com/bigdata/fe35b3d8.html";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

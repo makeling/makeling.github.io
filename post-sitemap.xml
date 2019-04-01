@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yoursite.com/bigdata/fe35b3d8.html</loc>
+        <lastmod>2019-04-01T13:20:26.586Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite.com/bigdata/35980786.html</loc>
         <lastmod>2019-03-21T04:09:55.300Z</lastmod>
         <changefreq>weekly</changefreq>
