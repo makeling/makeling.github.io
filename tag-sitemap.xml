@@ -107,14 +107,14 @@
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/Statistics/</loc>
+        <loc>http://yoursite.com/tags/Spatial-analysis/</loc>
         <lastmod>2018-06-29T06:41:47.553Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite.com/tags/Spatial-analysis/</loc>
+        <loc>http://yoursite.com/tags/Statistics/</loc>
         <lastmod>2018-06-29T06:41:47.553Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -157,28 +157,28 @@
 
     <url>
         <loc>http://yoursite.com/tags/ArcGIS/</loc>
-        <lastmod>2019-04-01T13:20:26.586Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite.com/tags/Deployment/</loc>
-        <lastmod>2019-04-01T13:20:26.586Z</lastmod>
+        <lastmod>2019-04-01T13:25:23.611Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite.com/tags/BigData/</loc>
-        <lastmod>2019-04-01T13:20:26.586Z</lastmod>
+        <lastmod>2019-04-01T13:25:23.611Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite.com/tags/Deployment/</loc>
+        <lastmod>2019-04-01T13:25:23.611Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite.com/tags/Python/</loc>
-        <lastmod>2019-04-01T13:20:26.586Z</lastmod>
+        <lastmod>2019-04-01T13:25:23.611Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
